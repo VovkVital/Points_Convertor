@@ -1,4 +1,5 @@
 import json
+import tkinter.ttk
 from tkinter import *
 from PANDAS import CSV
 from tkinter import filedialog, ttk
@@ -28,6 +29,8 @@ MAIN_WIDTH=210
 MAIN_HEIGHT=70
 SECONDARY_WIDTH=150
 SECONDARY_HEIGHT=50
+TAB_BUTTON_WIDTH =120
+TAB_BUTTON_HEIGHT=40
 ENTRY_WIDTH=350
 ENTRY_HEIGHT=50
 
@@ -93,6 +96,7 @@ class Interface(customtkinter.CTk):
         self.tab_1()
         self.tab_2()
         self.frame_tab_2()
+        self.control_tab_2()
 
 
     #------------------------ App Logo---------------------------
@@ -164,12 +168,13 @@ class Interface(customtkinter.CTk):
         self.frame_tab_2 = customtkinter.CTkTabview(master=self.frame_3_1.tab("Restore box Conversion"), corner_radius=25,
                                                     segmented_button_selected_color=SELECTED_BLUE)
         self.frame_tab_2.add("Designs Folders")
-        self.frame_tab_2.add("Machine Files")
         self.frame_tab_2.add("Config Files")
+        self.frame_tab_2.add("Machine Files")
+
         self.frame_tab_2.grid(row=3, column=1, sticky="news", columnspan=4, rowspan=125)
 
         self.frame_tab_2.tab("Designs Folders").grid_columnconfigure(0, minsize=5)
-        self.frame_tab_2.tab("Designs Folders").grid_columnconfigure(1, weight=2)
+        self.frame_tab_2.tab("Designs Folders").grid_columnconfigure(1, weight=3)
         self.frame_tab_2.tab("Designs Folders").grid_columnconfigure(2, minsize=5)
         self.frame_tab_2.tab("Designs Folders").grid_columnconfigure(3, weight=1)
         self.frame_tab_2.tab("Designs Folders").grid_columnconfigure(4, minsize=5)
@@ -186,7 +191,7 @@ class Interface(customtkinter.CTk):
         self.frame_tab_2.tab("Designs Folders").grid_rowconfigure(10, minsize=5)
 
         self.frame_tab_2.tab("Machine Files").grid_columnconfigure(0, minsize=5)
-        self.frame_tab_2.tab("Machine Files").grid_columnconfigure(1, weight=2)
+        self.frame_tab_2.tab("Machine Files").grid_columnconfigure(1, weight=3)
         self.frame_tab_2.tab("Machine Files").grid_columnconfigure(2, minsize=5)
         self.frame_tab_2.tab("Machine Files").grid_columnconfigure(3, weight=1)
         self.frame_tab_2.tab("Machine Files").grid_columnconfigure(4, minsize=5)
@@ -203,7 +208,7 @@ class Interface(customtkinter.CTk):
         self.frame_tab_2.tab("Machine Files").grid_rowconfigure(10, minsize=5)
 
         self.frame_tab_2.tab("Config Files").grid_columnconfigure(0, minsize=5)
-        self.frame_tab_2.tab("Config Files").grid_columnconfigure(1, weight=2)
+        self.frame_tab_2.tab("Config Files").grid_columnconfigure(1, weight=3)
         self.frame_tab_2.tab("Config Files").grid_columnconfigure(2, minsize=5)
         self.frame_tab_2.tab("Config Files").grid_columnconfigure(3, weight=1)
         self.frame_tab_2.tab("Config Files").grid_columnconfigure(4, minsize=5)
@@ -218,6 +223,55 @@ class Interface(customtkinter.CTk):
         self.frame_tab_2.tab("Config Files").grid_rowconfigure(8, minsize=5)
         self.frame_tab_2.tab("Config Files").grid_rowconfigure(9, weight=1)
         self.frame_tab_2.tab("Config Files").grid_rowconfigure(10, minsize=5)
+
+
+
+
+
+
+    def control_tab_2 (self):
+        tab_name=["Designs Folders", "Machine Files", "Config Files" ]
+        for name in tab_name:
+            self.button_tab_2_keep = customtkinter.CTkButton(master=self.frame_tab_2.tab(name), text="Keep", font=FONT_BUTTON,
+                                                            width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
+            self.button_tab_2_keep.grid(row=1, column=3, sticky="e")
+
+            self.button_tab_2_delete = customtkinter.CTkButton(master=self.frame_tab_2.tab(name), text="Delete",
+                                                             font=FONT_BUTTON,
+                                                             width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
+            self.button_tab_2_delete.grid(row=3, column=3, sticky="e")
+
+            self.button_tab_2_add = customtkinter.CTkButton(master=self.frame_tab_2.tab(name), text="ADD",
+                                                             font=FONT_BUTTON,
+                                                             width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
+            self.button_tab_2_add.grid(row=5, column=3, sticky="e")
+
+            self.button_tab_2_create = customtkinter.CTkButton(master=self.frame_tab_2.tab(name),
+                                                               text="Create",
+                                                               font=FONT_BUTTON,
+                                                               width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
+            self.button_tab_2_create.grid(row=7, column=3, sticky="se")
+
+            self.message_box_tab_2_all = customtkinter.CTkFrame(master=self.frame_tab_2.tab(name), height=150)
+            self.message_box_tab_2_all.grid(row=10, column=0, columnspan=4, sticky="ew" )
+
+            self.tree_tab_2 = tkinter.ttk.Treeview(master=self.frame_tab_2.tab(name))
+
+    #         --------- Define Columns ______-------
+            self.tree_tab_2["columns"] = ("#", "Name", "Date")
+            self.tree_tab_2.column("#0", width=10, minwidth=25)
+            self.tree_tab_2.column("#", anchor=W, width=50, minwidth=25)
+            self.tree_tab_2.column("Name", anchor=CENTER, width=50, minwidth=25)
+            self.tree_tab_2.column("Date", anchor=E, width=50, minwidth=25)
+    #      --------------- Create Headings --------------------------
+            self.tree_tab_2.heading("#0", text="#0", anchor=W)
+            self.tree_tab_2.heading("#", text="#", anchor=W)
+            self.tree_tab_2.heading("Name", text="Name", anchor=CENTER)
+            self.tree_tab_2.heading("Date", text="Date", anchor=W)
+            self.tree_tab_2.grid(row=1, rowspan=7, column=1, columnspan=2, sticky="news")
+
+
+
 
     def left_side_app(self):
         # -------------------------------Select System----------------------------------------------------
