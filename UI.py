@@ -13,7 +13,7 @@ customtkinter.set_default_color_theme("dark-blue")
 
 
 # -------------- Fonts -----------------------------
-FONT = ("Futura", 10, "bold")
+FONT = ("Robot", 15, "bold")
 FONT_CONVERSION = ("Roboto", 16)
 FONT_BUTTON = ("Roboto", 16)
 FONT_LABEL = ("Roboto", 16)
@@ -24,6 +24,7 @@ SELECT_FILE_PATH = r"C:\Trimble Synchronizer Data\PC\Trimble SCS900 Data"
 PROGRAM_NAME = "Points Convertor"
 FRAME_PICK_YOUR_SYSTEM = "Choose your system"
 
+
 # ---------------Buttons Size------------------------
 MAIN_WIDTH=210
 MAIN_HEIGHT=70
@@ -33,8 +34,6 @@ TAB_BUTTON_WIDTH =120
 TAB_BUTTON_HEIGHT=40
 ENTRY_WIDTH=350
 ENTRY_HEIGHT=50
-
-
 
 
 # -------COLORS_--------
@@ -48,6 +47,20 @@ SELECTED_BLUE = "#008fd7"
 NOT_SELECTED = "#44657e"
 FONT_NOT_SELECTED = "gray60"
 FONT_SELECTED = "gray94"
+
+#  ------------------------------------------------------- Test Data -------------------------------------
+DATA = [["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],
+        ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],
+        ["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],
+        ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],
+        ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],
+        ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],
+        ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],
+        ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],
+        ["Test", 1, "Vovk END"]]
+
+
+
 
 
 # ------------------- Images ------------------------
@@ -253,22 +266,55 @@ class Interface(customtkinter.CTk):
             self.button_tab_2_create.grid(row=7, column=3, sticky="se")
 
             self.message_box_tab_2_all = customtkinter.CTkFrame(master=self.frame_tab_2.tab(name), height=150)
-            self.message_box_tab_2_all.grid(row=10, column=0, columnspan=4, sticky="ew" )
+            self.message_box_tab_2_all.grid(row=10, column=0, columnspan=4, sticky="ew")
+
+            # ------------------------------------Tree view ---------------------------------------
+            tree_style = ttk.Style()
+            tree_style.theme_use("clam")
+            tree_style.configure("Treeview",
+                background="silver",
+                foreground="white",
+                rowheight=50,
+                fieldbackround="silver",
+                font=FONT,
+                text_color=FONT_SELECTED
+
+            )
+
+            tree_style.configure("Treeview.Heading", font=("Roboto", 15), background="grey")
+            tree_style.map("Treeview", background=[("selected", SELECTED_BLUE)])
 
             self.tree_tab_2 = tkinter.ttk.Treeview(master=self.frame_tab_2.tab(name))
+    #         ------------------------------------------Scroll Bar ________________________________
+            self.tree_scroll = customtkinter.CTkScrollbar(master=self.frame_tab_2.tab(name), command=self.tree_tab_2.yview)
+            self.tree_scroll.grid(row=1, rowspan=7, column=2, sticky="ns")
+            self.tree_tab_2.tag_configure("odd", background="#212121")
+            self.tree_tab_2.tag_configure("even", background="#696969")
+            count = 0
+            row_count = 1
+            for record in DATA:
+                if count % 2 ==0:
+                    self.tree_tab_2.insert(parent="", index="end", text=row_count, iid=count,
+                                           values=(record[0], record[1], record[2]), tags=("odd",))
+                else :
+                    self.tree_tab_2.insert(parent="", index="end", text=row_count, iid=count,
+                                           values=(record[0], record[1], record[2]), tags=("even",))
+                count += 1
+                row_count +=1
 
     #         --------- Define Columns ______-------
             self.tree_tab_2["columns"] = ("#", "Name", "Date")
             self.tree_tab_2.column("#0", width=10, minwidth=25)
             self.tree_tab_2.column("#", anchor=W, width=50, minwidth=25)
             self.tree_tab_2.column("Name", anchor=CENTER, width=50, minwidth=25)
-            self.tree_tab_2.column("Date", anchor=E, width=50, minwidth=25)
+            self.tree_tab_2.column("Date", anchor=W, width=50, minwidth=25)
     #      --------------- Create Headings --------------------------
             self.tree_tab_2.heading("#0", text="#0", anchor=W)
             self.tree_tab_2.heading("#", text="#", anchor=W)
             self.tree_tab_2.heading("Name", text="Name", anchor=CENTER)
             self.tree_tab_2.heading("Date", text="Date", anchor=W)
             self.tree_tab_2.grid(row=1, rowspan=7, column=1, columnspan=2, sticky="news")
+            self.tree_tab_2.configure(yscrollcommand=self.tree_scroll.set)
 
 
 
