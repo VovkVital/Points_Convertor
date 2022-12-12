@@ -60,9 +60,6 @@ DATA = [["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 
         ["Test", 1, "Vovk END"]]
 
 
-
-
-
 # ------------------- Images ------------------------
 image_add_folder = customtkinter.CTkImage(light_image=Image.open("./Images/add_folder_light.png"),
                                           size=(30, 30))
@@ -73,10 +70,6 @@ image_teichert_logo = customtkinter.CTkImage(light_image=Image.open("./Images/te
                                           size=(300, 300))
 image_teichert_logo_blue = customtkinter.CTkImage(light_image=Image.open("./Images/teichert-Logo_blue_2.png"),
                                           size=(300, 300))
-
-
-
-
 
 
 
@@ -111,8 +104,6 @@ class Interface(customtkinter.CTk):
         self.frame_tab_2()
         self.control_tab_2()
 
-
-    #------------------------ App Logo---------------------------
 
     # ------------- Lable Frames -----------------
     def frame_col_1_1 (self):
@@ -151,7 +142,6 @@ class Interface(customtkinter.CTk):
         self.frame_3_1.tab("Simple Point Conversion").grid_rowconfigure(6, minsize=5)
 
 
-
         #----------------------------Columns----------------------
         self.frame_3_1.tab("Restore box Conversion").grid_columnconfigure(0, minsize=5)
         self.frame_3_1.tab("Restore box Conversion").grid_columnconfigure(1, weight=2)
@@ -165,6 +155,7 @@ class Interface(customtkinter.CTk):
         self.frame_3_1.tab("Restore box Conversion").grid_rowconfigure(3, weight=5)
         self.frame_3_1.tab("Restore box Conversion").grid_rowconfigure(4, weight=1)
         self.frame_3_1.tab("Restore box Conversion").grid_rowconfigure(5, minsize=1)
+
 
     def frame_message_box(self):
         self.frame_3_3 = customtkinter.CTkFrame(master=self.frame_3_1.tab("Simple Point Conversion"), corner_radius=25)
@@ -236,10 +227,6 @@ class Interface(customtkinter.CTk):
         self.frame_tab_2.tab("Config Files").grid_rowconfigure(8, minsize=5)
         self.frame_tab_2.tab("Config Files").grid_rowconfigure(9, weight=1)
         self.frame_tab_2.tab("Config Files").grid_rowconfigure(10, minsize=5)
-
-
-
-
 
 
     def control_tab_2 (self):
@@ -317,8 +304,6 @@ class Interface(customtkinter.CTk):
             self.tree_tab_2.configure(yscrollcommand=self.tree_scroll.set)
 
 
-
-
     def left_side_app(self):
         # -------------------------------Select System----------------------------------------------------
         self.button_gcs_900_choice = customtkinter.CTkButton(master=self.frame_1_1, text="GCS 900", corner_radius=10,
@@ -342,10 +327,10 @@ class Interface(customtkinter.CTk):
         self.image_teichert_logo = customtkinter.CTkLabel(master=self, text="", image=image_teichert_logo_blue)
         self.image_teichert_logo.grid(row=1, column=1)
 
+
+
     def tab_1(self):
-
-
-        # ---------------------------------------------------Machine Name -----------------------------------
+    # ---------------------------------------------------Machine Name -----------------------------------
         self.button_machine_save = customtkinter.CTkButton(master=self.frame_3_1.tab("Simple Point Conversion"),text="Save",
                                                            command=lambda:[self.event_button_save(),
                                                                            self.message_saved_name()],
@@ -353,10 +338,6 @@ class Interface(customtkinter.CTk):
                                                            width=SECONDARY_WIDTH, height=SECONDARY_HEIGHT,
                                                            corner_radius=15, font=FONT_BUTTON)
         self.button_machine_save.grid(row=1, column=4)
-
-
-
-
 
         self.entry_machine_name = customtkinter.CTkEntry(master=self.frame_3_1.tab("Simple Point Conversion"),
                                                          corner_radius=15, width=ENTRY_WIDTH, height=ENTRY_HEIGHT )
@@ -373,8 +354,6 @@ class Interface(customtkinter.CTk):
                                                                          self.message_file_selected()],
                                                          corner_radius=15, width=SECONDARY_WIDTH, height=SECONDARY_HEIGHT)
         self.button_rover_file.grid(row=2, column=4)
-
-
 
         self.label_select_file = customtkinter.CTkLabel(master=self.frame_3_1.tab("Simple Point Conversion"), text="Select Point File on the Rover",
                                                         font=FONT_LABEL)
@@ -433,9 +412,6 @@ class Interface(customtkinter.CTk):
         self.entry_machine_name_tab2.grid(column=1, row=1, sticky="w")
         self.entry_machine_name_tab2.insert(0, panda.get_machine_name())
 
-
-
-
     def message_file_created (self):
         new_text ="Point File was created\n" \
                   "Desktop - Points GCS 900 "
@@ -460,10 +436,6 @@ class Interface(customtkinter.CTk):
         new_text ="Earthwork - Selected"
         self.label_message_box.configure(text=new_text)
 
-
-
-
-
     def event_button_system_gcs(self):
         self.button_gcs_900_choice.configure(fg_color=SELECTED_BLUE, text_color=FONT_SELECTED)
         self.button_earth_work_choice.configure(fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED)
@@ -486,9 +458,6 @@ class Interface(customtkinter.CTk):
         except:
             pass
 
-
-
-
     def event_button_select(self):
         self.button_rover_file.configure(fg_color=SELECTED_BLUE, text_color=FONT_SELECTED)
         select = filedialog.askopenfilename(initialdir=SELECT_FILE_PATH)
@@ -497,9 +466,8 @@ class Interface(customtkinter.CTk):
                 upload_file = {"Selected File":select}
                 json.dump(upload_file, file, indent =4)
 
-
         except:
-            print("Except ativated file explorer  ")
+            print("Except  file explorer Error  ")
 
         return select
 
