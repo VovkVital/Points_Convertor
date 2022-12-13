@@ -28,12 +28,14 @@ FRAME_PICK_YOUR_SYSTEM = "Choose your system"
 # ---------------Buttons Size------------------------
 MAIN_WIDTH=210
 MAIN_HEIGHT=70
-SECONDARY_WIDTH=150
-SECONDARY_HEIGHT=50
+SECONDARY_WIDTH=120
+SECONDARY_HEIGHT=40
 TAB_BUTTON_WIDTH =120
 TAB_BUTTON_HEIGHT=40
-ENTRY_WIDTH=350
-ENTRY_HEIGHT=50
+ENTRY_WIDTH=300
+ENTRY_HEIGHT=40
+ENTRY_2_WIDTH=170
+ENTRY_2_HEIGHT=40
 
 
 # -------COLORS_--------
@@ -64,7 +66,7 @@ DATA = [["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 
 image_add_folder = customtkinter.CTkImage(light_image=Image.open("./Images/add_folder_light.png"),
                                           size=(30, 30))
 image_create_file = customtkinter.CTkImage(light_image=Image.open("./Images/create_file.png"),
-                                           size=(45, 45))
+                                           size=(30, 30))
 
 image_teichert_logo = customtkinter.CTkImage(light_image=Image.open("./Images/teichert-logo.png"),
                                           size=(300, 300))
@@ -75,8 +77,8 @@ image_teichert_logo_blue = customtkinter.CTkImage(light_image=Image.open("./Imag
 
 class Interface(customtkinter.CTk):
     # ---APP Size-----
-    WIDTH = 1280
-    HEIGHT = 800
+    WIDTH = 1280 - 320
+    HEIGHT = 800 - 200
     def __init__(self):
         super().__init__()
     # ------- Main Screen SetUP --- - --
@@ -138,7 +140,7 @@ class Interface(customtkinter.CTk):
         self.frame_3_1.tab("Simple Point Conversion").grid_rowconfigure(2, weight=1)
         self.frame_3_1.tab("Simple Point Conversion").grid_rowconfigure(3, weight=1)
         self.frame_3_1.tab("Simple Point Conversion").grid_rowconfigure(4, minsize=15)
-        self.frame_3_1.tab("Simple Point Conversion").grid_rowconfigure(5, minsize=460)
+        self.frame_3_1.tab("Simple Point Conversion").grid_rowconfigure(5, minsize=260)
         self.frame_3_1.tab("Simple Point Conversion").grid_rowconfigure(6, minsize=5)
 
 
@@ -150,7 +152,7 @@ class Interface(customtkinter.CTk):
         self.frame_3_1.tab("Restore box Conversion").grid_columnconfigure(4, minsize=5)
 
         self.frame_3_1.tab("Restore box Conversion").grid_rowconfigure(0, minsize=5)
-        self.frame_3_1.tab("Restore box Conversion").grid_rowconfigure(1, weight=1)
+        self.frame_3_1.tab("Restore box Conversion").grid_rowconfigure(1, minsize=60)
         self.frame_3_1.tab("Restore box Conversion").grid_rowconfigure(2, minsize=5)
         self.frame_3_1.tab("Restore box Conversion").grid_rowconfigure(3, weight=5)
         self.frame_3_1.tab("Restore box Conversion").grid_rowconfigure(4, weight=1)
@@ -253,7 +255,7 @@ class Interface(customtkinter.CTk):
             self.button_tab_2_create.grid(row=7, column=3, sticky="se")
 
             self.message_box_tab_2_all = customtkinter.CTkFrame(master=self.frame_tab_2.tab(name), height=150)
-            self.message_box_tab_2_all.grid(row=10, column=0, columnspan=4, sticky="ew")
+            self.message_box_tab_2_all.grid(row=9, column=0, columnspan=4, sticky="ew")
 
             # ------------------------------------Tree view ---------------------------------------
             tree_style = ttk.Style()
@@ -331,7 +333,7 @@ class Interface(customtkinter.CTk):
 
     def tab_1(self):
     # ---------------------------------------------------Machine Name -----------------------------------
-        self.button_machine_save = customtkinter.CTkButton(master=self.frame_3_1.tab("Simple Point Conversion"),text="Save",
+        self.button_machine_save = customtkinter.CTkButton(master=self.frame_3_1.tab("Simple Point Conversion"),text="Save  ",
                                                            command=lambda:[self.event_button_save(),
                                                                            self.message_saved_name()],
                                                            fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED,
@@ -347,7 +349,7 @@ class Interface(customtkinter.CTk):
 
     #     #  ----------------------------------- Select_Create_Frame ------------------------------------
     #
-        self.button_rover_file = customtkinter.CTkButton(master=self.frame_3_1.tab("Simple Point Conversion"), text="Select         ", image=image_add_folder,
+        self.button_rover_file = customtkinter.CTkButton(master=self.frame_3_1.tab("Simple Point Conversion"), text="Select  ", image=image_add_folder,
                                                          compound= "right", font=FONT_BUTTON,
                                                          fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED,
                                                          command=lambda:[self.event_button_select(),
@@ -359,7 +361,7 @@ class Interface(customtkinter.CTk):
                                                         font=FONT_LABEL)
         self.label_select_file.grid(row=2, column=1)
 
-        self.button_create = customtkinter.CTkButton(master=self.frame_3_1.tab("Simple Point Conversion"), text="Create File",
+        self.button_create = customtkinter.CTkButton(master=self.frame_3_1.tab("Simple Point Conversion"), text="Create  ",
                                                      image=image_create_file, compound="right", corner_radius=15,
                                                      fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED,
                                                      command=lambda:[panda.create_file(), self.message_file_created(),
@@ -378,7 +380,7 @@ class Interface(customtkinter.CTk):
     def tab_2(self):
         # -------------------------------------Buttons Tab2 -----------------------------------------------------------
         self.button_machine_save_tab2 = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"),
-                                                                text="Save",
+                                                                text="Save  ",
                                                                 command=lambda: [self.event_button_save(),
                                                                                  self.message_saved_name()],
                                                                 fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED,
@@ -387,7 +389,7 @@ class Interface(customtkinter.CTk):
         self.button_machine_save_tab2.grid(row=1, column=2, sticky="w")
 
         self.button_rover_file_tab2 = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"),
-                                                              text="Select         ", image=image_add_folder,
+                                                              text="Select  ", image=image_add_folder,
                                                               compound="right", font=FONT_BUTTON,
                                                               fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED,
                                                               command=lambda: [self.event_button_select(),
@@ -408,7 +410,7 @@ class Interface(customtkinter.CTk):
 
         # --------------------------------------------------- Entry Tab2--------------------------------------------
         self.entry_machine_name_tab2 = customtkinter.CTkEntry(master=self.frame_3_1.tab("Restore box Conversion"),
-                                                              corner_radius=15, width=250, height=ENTRY_HEIGHT)
+                                                              corner_radius=15, width=ENTRY_2_WIDTH, height=ENTRY_2_HEIGHT)
         self.entry_machine_name_tab2.grid(column=1, row=1, sticky="w")
         self.entry_machine_name_tab2.insert(0, panda.get_machine_name())
 
