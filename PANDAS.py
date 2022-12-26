@@ -33,9 +33,10 @@ class CSV:
             rover = pd.read_csv(loaded_file["Selected File" ])
             cleaned_rover = rover[["Point Name", "Northing", "Easting", "Elevation", "Point Code", "Date", ]].copy()
             cleaned_rover["UTM Zone"] = "None"
+            cleaned_rover["Date"] = pd.to_datetime(cleaned_rover['Date'])
             final_rover = cleaned_rover.rename(
                 columns={"Point Name": "PointID", "Northing": "Northing(FT)", "Easting": "Easting(FT)",
-                         "Elevation": "Elevation(FT)", "Date": "Time-UTC (YYYY/MM/DD HH:MM:SS)"}).copy()
+                         "Elevation": "Elevation(FT)", "Date": "Time-UTC (YYYY/MM/DD HH:MM)"}).copy()
             home_dir = SAVE_FILE_PATH
             if not os.path.isdir(home_dir):
                 os.makedirs(home_dir)
