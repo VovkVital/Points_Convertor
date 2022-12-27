@@ -7,7 +7,10 @@ import customtkinter
 import tkinter
 from PIL import Image, ImageTk
 import pandas as pd
-import os
+# import os
+from USB import Usb_drive
+
+usb = Usb_drive()
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("dark-blue")
 
@@ -50,16 +53,11 @@ NOT_SELECTED = "#44657e"
 FONT_NOT_SELECTED = "gray60"
 FONT_SELECTED = "gray94"
 
-#  ------------------------------------------------------- Test Data -------------------------------------
-DATA = [["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],
-        ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],
-        ["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],
-        ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],
-        ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],
-        ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],
-        ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],
-        ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],["Test", 1, "Vovk"], ["Test", 1, "Vovk"], ["Test", 1, "Vovk"],
-        ["Test", 1, "Vovk END"]]
+#  -------------------------------------------------------USB Data -------------------------------------
+LIST_DESIGN = usb.usb_folders_design
+LIST_CFG = usb.usb_file_cfg
+LIST_MCH = usb.usb_file_mch
+print(LIST_CFG)
 
 
 # ------------------- Images ------------------------
@@ -105,7 +103,6 @@ class Interface(customtkinter.CTk):
         self.tab_2()
         self.frame_tab_2()
         self.control_tab_2()
-
 
     # ------------- Lable Frames -----------------
     def frame_col_1_1 (self):
@@ -173,28 +170,29 @@ class Interface(customtkinter.CTk):
     def frame_tab_2 (self):
         self.frame_tab_2 = customtkinter.CTkTabview(master=self.frame_3_1.tab("Restore box Conversion"), corner_radius=25,
                                                     segmented_button_selected_color=SELECTED_BLUE)
-        self.frame_tab_2.add("Designs Folders")
+        self.frame_tab_2.add("Design Folders")
         self.frame_tab_2.add("Config Files")
         self.frame_tab_2.add("Machine Files")
+        self.frame_tab_2.tab("Config Files").configure()
 
         self.frame_tab_2.grid(row=3, column=1, sticky="news", columnspan=4, rowspan=125)
 
-        self.frame_tab_2.tab("Designs Folders").grid_columnconfigure(0, minsize=5)
-        self.frame_tab_2.tab("Designs Folders").grid_columnconfigure(1, weight=3)
-        self.frame_tab_2.tab("Designs Folders").grid_columnconfigure(2, minsize=5)
-        self.frame_tab_2.tab("Designs Folders").grid_columnconfigure(3, weight=1)
-        self.frame_tab_2.tab("Designs Folders").grid_columnconfigure(4, minsize=5)
-        self.frame_tab_2.tab("Designs Folders").grid_rowconfigure(0, minsize=5)
-        self.frame_tab_2.tab("Designs Folders").grid_rowconfigure(1, weight=1)
-        self.frame_tab_2.tab("Designs Folders").grid_rowconfigure(2, minsize=5)
-        self.frame_tab_2.tab("Designs Folders").grid_rowconfigure(3, weight=1)
-        self.frame_tab_2.tab("Designs Folders").grid_rowconfigure(4, minsize=5)
-        self.frame_tab_2.tab("Designs Folders").grid_rowconfigure(5, weight=1)
-        self.frame_tab_2.tab("Designs Folders").grid_rowconfigure(6, minsize=5)
-        self.frame_tab_2.tab("Designs Folders").grid_rowconfigure(7, weight=1)
-        self.frame_tab_2.tab("Designs Folders").grid_rowconfigure(8, minsize=5)
-        self.frame_tab_2.tab("Designs Folders").grid_rowconfigure(9, weight=1)
-        self.frame_tab_2.tab("Designs Folders").grid_rowconfigure(10, minsize=5)
+        self.frame_tab_2.tab("Design Folders").grid_columnconfigure(0, minsize=5)
+        self.frame_tab_2.tab("Design Folders").grid_columnconfigure(1, weight=3)
+        self.frame_tab_2.tab("Design Folders").grid_columnconfigure(2, minsize=5)
+        self.frame_tab_2.tab("Design Folders").grid_columnconfigure(3, weight=1)
+        self.frame_tab_2.tab("Design Folders").grid_columnconfigure(4, minsize=5)
+        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(0, minsize=5)
+        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(1, weight=1)
+        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(2, minsize=5)
+        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(3, weight=1)
+        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(4, minsize=5)
+        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(5, weight=1)
+        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(6, minsize=5)
+        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(7, weight=1)
+        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(8, minsize=5)
+        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(9, weight=1)
+        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(10, minsize=5)
 
         self.frame_tab_2.tab("Machine Files").grid_columnconfigure(0, minsize=5)
         self.frame_tab_2.tab("Machine Files").grid_columnconfigure(1, weight=3)
@@ -232,10 +230,11 @@ class Interface(customtkinter.CTk):
 
 
     def control_tab_2 (self):
-        tab_name=["Designs Folders", "Machine Files", "Config Files" ]
+        tab_name=["Design Folders", "Config Files", "Machine Files"]
         for name in tab_name:
+            print(name)
             self.button_tab_2_keep = customtkinter.CTkButton(master=self.frame_tab_2.tab(name), text="Keep", font=FONT_BUTTON,
-                                                            width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
+                                                            width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT ,)
             self.button_tab_2_keep.grid(row=1, column=3, sticky="e")
 
             self.button_tab_2_delete = customtkinter.CTkButton(master=self.frame_tab_2.tab(name), text="Delete",
@@ -251,7 +250,8 @@ class Interface(customtkinter.CTk):
             self.button_tab_2_create = customtkinter.CTkButton(master=self.frame_tab_2.tab(name),
                                                                text="Create",
                                                                font=FONT_BUTTON,
-                                                               width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
+                                                               width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
+                                                               command=self.click_cfg)
             self.button_tab_2_create.grid(row=7, column=3, sticky="se")
 
             self.message_box_tab_2_all = customtkinter.CTkFrame(master=self.frame_tab_2.tab(name), height=150)
@@ -272,38 +272,149 @@ class Interface(customtkinter.CTk):
 
             tree_style.configure("Treeview.Heading", font=("Roboto", 15), background="grey")
             tree_style.map("Treeview", background=[("selected", SELECTED_BLUE)])
-
-            self.tree_tab_2 = tkinter.ttk.Treeview(master=self.frame_tab_2.tab(name))
-    #         ------------------------------------------Scroll Bar ________________________________
-            self.tree_scroll = customtkinter.CTkScrollbar(master=self.frame_tab_2.tab(name), command=self.tree_tab_2.yview)
-            self.tree_scroll.grid(row=1, rowspan=7, column=2, sticky="ns")
-            self.tree_tab_2.tag_configure("odd", background="#212121")
-            self.tree_tab_2.tag_configure("even", background="#696969")
-            count = 0
-            row_count = 1
-            for record in DATA:
-                if count % 2 ==0:
-                    self.tree_tab_2.insert(parent="", index="end", text=row_count, iid=count,
-                                           values=(record[0], record[1], record[2]), tags=("odd",))
-                else :
-                    self.tree_tab_2.insert(parent="", index="end", text=row_count, iid=count,
-                                           values=(record[0], record[1], record[2]), tags=("even",))
-                count += 1
-                row_count +=1
+            if name == tab_name[0]:
+                self.tree_tab_D = tkinter.ttk.Treeview(master=self.frame_tab_2.tab(name))
+    #             ------------------------------------------Scroll Bar ________________________________
+                self.tree_scroll = customtkinter.CTkScrollbar(master=self.frame_tab_2.tab(name), command=self.tree_tab_D.yview)
+                self.tree_scroll.grid(row=1, rowspan=7, column=2, sticky="ns")
+                self.tree_tab_D.tag_configure("odd", background="#212121")
+                self.tree_tab_D.tag_configure("even", background="#696969")
+                count = 0
+                row_count = 1
+                for record in LIST_DESIGN:
+                    if count % 2 == 0:
+                        self.tree_tab_D.insert(parent="", index="end", text=row_count, iid=count,
+                                               values=(record[0], record[1]), tags=("odd",))
+                    else:
+                        self.tree_tab_D.insert(parent="", index="end", text=row_count, iid=count,
+                                               values=(record[0], record[1]), tags=("even",))
+                    count += 1
+                    row_count +=1
 
     #         --------- Define Columns ______-------
-            self.tree_tab_2["columns"] = ("#", "Name", "Date")
-            self.tree_tab_2.column("#0", width=10, minwidth=25)
-            self.tree_tab_2.column("#", anchor=W, width=50, minwidth=25)
-            self.tree_tab_2.column("Name", anchor=CENTER, width=50, minwidth=25)
-            self.tree_tab_2.column("Date", anchor=W, width=50, minwidth=25)
-    #      --------------- Create Headings --------------------------
-            self.tree_tab_2.heading("#0", text="#0", anchor=W)
-            self.tree_tab_2.heading("#", text="#", anchor=W)
-            self.tree_tab_2.heading("Name", text="Name", anchor=CENTER)
-            self.tree_tab_2.heading("Date", text="Date", anchor=W)
-            self.tree_tab_2.grid(row=1, rowspan=7, column=1, columnspan=2, sticky="news")
-            self.tree_tab_2.configure(yscrollcommand=self.tree_scroll.set)
+                self.tree_tab_D["columns"] = ("Name", "Date")
+                self.tree_tab_D.column("#0", width=10, minwidth=25)
+                self.tree_tab_D.column("Name", anchor=CENTER, width=50, minwidth=25)
+                self.tree_tab_D.column("Date", anchor=W, width=50, minwidth=25)
+    #      -    -------------- Create Headings --------------------------
+                self.tree_tab_D.heading("#0", text="#0", anchor=W)
+                self.tree_tab_D.heading("Name", text="Name", anchor=CENTER)
+                self.tree_tab_D.heading("Date", text="Date", anchor=W)
+                self.tree_tab_D.grid(row=1, rowspan=7, column=1, columnspan=2, sticky="news")
+                self.tree_tab_D.configure(yscrollcommand=self.tree_scroll.set)
+
+            if name == tab_name[1]:
+                self.tree_tab_C = tkinter.ttk.Treeview(master=self.frame_tab_2.tab(name))
+                #             ------------------------------------------Scroll Bar ________________________________
+                self.tree_scroll = customtkinter.CTkScrollbar(master=self.frame_tab_2.tab(name),
+                                                              command=self.tree_tab_D.yview)
+                self.tree_scroll.grid(row=1, rowspan=7, column=2, sticky="ns")
+                self.tree_tab_C.tag_configure("odd", background="#212121")
+                self.tree_tab_C.tag_configure("even", background="#696969")
+                count = 0
+                row_count = 1
+                for record in LIST_CFG:
+                    if count % 2 == 0:
+                        self.tree_tab_C.insert(parent="", index="end", text=row_count, iid=count,
+                                               values=(record[0], record[1]), tags=("odd",))
+                    else:
+                        self.tree_tab_C.insert(parent="", index="end", text=row_count, iid=count,
+                                               values=(record[0], record[1]), tags=("even",))
+                    count += 1
+                    row_count += 1
+                #         --------- Define Columns ______-------
+                self.tree_tab_C["columns"] = ("Name", "Date")
+                self.tree_tab_C.column("#0", width=10, minwidth=25)
+                self.tree_tab_C.column("Name", anchor=CENTER, width=50, minwidth=25)
+                self.tree_tab_C.column("Date", anchor=W, width=50, minwidth=25)
+                #      -    -------------- Create Headings --------------------------
+                self.tree_tab_C.heading("#0", text="#0", anchor=W)
+                self.tree_tab_C.heading("Name", text="Name", anchor=CENTER)
+                self.tree_tab_C.heading("Date", text="Date", anchor=W)
+                self.tree_tab_C.grid(row=1, rowspan=7, column=1, columnspan=2, sticky="news")
+                self.tree_tab_C.configure(yscrollcommand=self.tree_scroll.set)
+
+            if name == tab_name[2]:
+                self.tree_tab_M = tkinter.ttk.Treeview(master=self.frame_tab_2.tab(name))
+                #             ------------------------------------------Scroll Bar ________________________________
+                self.tree_scroll = customtkinter.CTkScrollbar(master=self.frame_tab_2.tab(name),
+                                                              command=self.tree_tab_D.yview)
+                self.tree_scroll.grid(row=1, rowspan=7, column=2, sticky="ns")
+                self.tree_tab_M.tag_configure("odd", background="#212121")
+                self.tree_tab_M.tag_configure("even", background="#696969")
+                count = 0
+                row_count = 1
+                for record in LIST_MCH:
+                    if count % 2 == 0:
+                        self.tree_tab_M.insert(parent="", index="end", text=row_count, iid=count,
+                                               values=(record[0], record[1]), tags=("odd",))
+                    else:
+                        self.tree_tab_M.insert(parent="", index="end", text=row_count, iid=count,
+                                               values=(record[0], record[1]), tags=("even",))
+                    count += 1
+                    row_count += 1
+                #         --------- Define Columns ______-------
+                self.tree_tab_M["columns"] = ("Name", "Date")
+                self.tree_tab_M.column("#0", width=10, minwidth=25)
+                self.tree_tab_M.column("Name", anchor=CENTER, width=50, minwidth=25)
+                self.tree_tab_M.column("Date", anchor=W, width=50, minwidth=25)
+                #      -    -------------- Create Headings --------------------------
+                self.tree_tab_M.heading("#0", text="#0", anchor=W)
+                self.tree_tab_M.heading("Name", text="Name", anchor=CENTER)
+                self.tree_tab_M.heading("Date", text="Date", anchor=W)
+                self.tree_tab_M.grid(row=1, rowspan=7, column=1, columnspan=2, sticky="news")
+                self.tree_tab_M.configure(yscrollcommand=self.tree_scroll.set)
+    def click_design(self):
+        count = 0
+        row_count = 1
+        for item in self.tree_tab_D.get_children():
+            print(item)
+            self.tree_tab_D.delete(item)
+        for record in LIST_DESIGN:
+            if count % 2 == 0:
+                self.tree_tab_D.insert(parent="Machine Files", index="end", text=row_count, iid=count,
+                                       values=(record[0], record[1]), tags=("odd",))
+            else:
+                self.tree_tab_D.insert(parent="", index="end", text=row_count, iid=count,
+                                       values=(record[0], record[1]), tags=("even",))
+            count += 1
+            row_count += 1
+            print("Clicked called")
+    def click_cfg(self):
+        count = 0
+        row_count = 1
+        for item in self.tree_tab_C.get_children():
+            print(item)
+            self.tree_tab_C.delete(item)
+        for record in LIST_CFG:
+            if count % 2 == 0:
+                self.tree_tab_C.insert(parent="", index="end", text=row_count, iid=count,
+                                       values=(record[0], record[1]), tags=("odd",))
+            else:
+                self.tree_tab_C.insert(parent="", index="end", text=row_count, iid=count,
+                                       values=(record[0], record[1]), tags=("even",))
+            count += 1
+            row_count += 1
+            print("Clicked called")
+
+    def click_mch(self):
+        count = 0
+        row_count = 1
+        for item in self.tree_tab_M.get_children():
+            print(item)
+            self.tree_tab_M.delete(item)
+        for record in LIST_MCH:
+            if count % 2 == 0:
+                self.tree_tab_M.insert(parent="", index="end", text=row_count, iid=count,
+                                       values=(record[0], record[1]), tags=("odd",))
+            else:
+                self.tree_tab_M.insert(parent="", index="end", text=row_count, iid=count,
+                                       values=(record[0], record[1]), tags=("even",))
+            count += 1
+            row_count += 1
+            print("Clicked called")
+
+
 
 
     def left_side_app(self):

@@ -1,3 +1,5 @@
+import pathlib
+
 import win32file
 import os
 from glob import glob
@@ -11,11 +13,14 @@ class Usb_drive:
     usb_folders_design = []
     usb_file_cfg = []
     usb_file_mch = []
+
     def __init__(self):
         self.detect_usb()
         self.list_designs()
         self.list_cfg()
         self.list_mch()
+        self.list_designs = Usb_drive.usb_folders_design
+        print(self.list_designs)
 
 
     def detect_usb(self):
@@ -38,12 +43,13 @@ class Usb_drive:
                             path = check_path[0]
                             if os.path.exists(path) == True:
                                 self.correct_usb.append(right_usb)
-                                os.chdir(path)
-                                self.current_cwd = os.getcwd()
+                                self.current_cwd = path
+                                print(os.getcwd())
+                                print(path)
                                 return self.correct_usb
 
     def list_designs(self):
-        for design_f in os.listdir():
+        for design_f in os.listdir(self.current_cwd):
             check_path_svd = glob(f"{self.current_cwd}\\{design_f}\\*.svd")
             check_path_svl = glob(f"{self.current_cwd}\\{design_f}\\*.svl")
             if check_path_svd or check_path_svl:
@@ -58,12 +64,13 @@ class Usb_drive:
             file = os.path.basename(check_path_cfg[cfg])
             Usb_drive.usb_file_cfg.append([file, time])
     def list_mch(self):
-
         check_path_mch = glob(f"{self.current_cwd}\\*.MCH")
         for mch in range(0, (len(check_path_mch))):
             time = datetime.fromtimestamp(os.path.getmtime(check_path_mch[mch])).strftime('%m/%d/%Y')
             file = os.path.basename(check_path_mch[mch])
             Usb_drive.usb_file_mch.append([file, time])
+        print(Usb_drive.usb_folders_design)
 
 
-test = Usb_drive()
+if __name__ == "__main__":
+    Usb_drive()
