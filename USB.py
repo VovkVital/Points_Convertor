@@ -50,6 +50,7 @@ class Usb_drive:
                                 return self.correct_usb
 
     def list_designs(self):
+        list_designs = []
         for design_f in os.listdir(self.current_path):
             check_path_svd = glob(f"{self.current_path}\\{design_f}\\*.svd")
             check_path_svl = glob(f"{self.current_path}\\{design_f}\\*.svl")
@@ -57,19 +58,24 @@ class Usb_drive:
                 path_svd = check_path_svd[0]
                 path_svl = check_path_svl[0]
                 time = datetime.fromtimestamp(os.path.getmtime(path_svd)).strftime('%m/%d/%Y')
-                Usb_drive.usb_folders_design.append([design_f, time])
+                list_designs.append([design_f, time])
+        return list_designs
     def list_cfg(self):
         check_path_cfg = glob(f"{self.current_path}\\*.cfg")
+        list_cfg = []
         for cfg in range(0, (len(check_path_cfg))):
             time = datetime.fromtimestamp(os.path.getmtime(check_path_cfg[cfg])).strftime('%m/%d/%Y')
             file = os.path.basename(check_path_cfg[cfg])
-            Usb_drive.usb_file_cfg.append([file, time])
+            list_cfg.append([file, time])
+        return list_cfg
     def list_mch(self):
+        list_mch = []
         check_path_mch = glob(f"{self.current_path}\\*.MCH")
         for mch in range(0, (len(check_path_mch))):
             time = datetime.fromtimestamp(os.path.getmtime(check_path_mch[mch])).strftime('%m/%d/%Y')
             file = os.path.basename(check_path_mch[mch])
-            Usb_drive.usb_file_mch.append([file, time])
+            list_mch.append([file, time])
+        return list_mch
 
 
 if __name__ == "__main__":
