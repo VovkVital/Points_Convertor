@@ -13,14 +13,16 @@ class Usb_drive:
     usb_folders_design = []
     usb_file_cfg = []
     usb_file_mch = []
+    USB_PATH = ""
 
     def __init__(self):
         self.detect_usb()
         self.list_designs()
         self.list_cfg()
         self.list_mch()
-        self.list_designs = Usb_drive.usb_folders_design
-        print(self.list_designs)
+        self.new = 0
+
+
 
 
     def detect_usb(self):
@@ -43,33 +45,31 @@ class Usb_drive:
                             path = check_path[0]
                             if os.path.exists(path) == True:
                                 self.correct_usb.append(right_usb)
-                                self.current_cwd = path
-                                print(os.getcwd())
-                                print(path)
+                                self.current_path = path
+                                Usb_drive.USB_PATH = path
                                 return self.correct_usb
 
     def list_designs(self):
-        for design_f in os.listdir(self.current_cwd):
-            check_path_svd = glob(f"{self.current_cwd}\\{design_f}\\*.svd")
-            check_path_svl = glob(f"{self.current_cwd}\\{design_f}\\*.svl")
+        for design_f in os.listdir(self.current_path):
+            check_path_svd = glob(f"{self.current_path}\\{design_f}\\*.svd")
+            check_path_svl = glob(f"{self.current_path}\\{design_f}\\*.svl")
             if check_path_svd or check_path_svl:
                 path_svd = check_path_svd[0]
                 path_svl = check_path_svl[0]
                 time = datetime.fromtimestamp(os.path.getmtime(path_svd)).strftime('%m/%d/%Y')
                 Usb_drive.usb_folders_design.append([design_f, time])
     def list_cfg(self):
-        check_path_cfg = glob(f"{self.current_cwd}\\*.cfg")
+        check_path_cfg = glob(f"{self.current_path}\\*.cfg")
         for cfg in range(0, (len(check_path_cfg))):
             time = datetime.fromtimestamp(os.path.getmtime(check_path_cfg[cfg])).strftime('%m/%d/%Y')
             file = os.path.basename(check_path_cfg[cfg])
             Usb_drive.usb_file_cfg.append([file, time])
     def list_mch(self):
-        check_path_mch = glob(f"{self.current_cwd}\\*.MCH")
+        check_path_mch = glob(f"{self.current_path}\\*.MCH")
         for mch in range(0, (len(check_path_mch))):
             time = datetime.fromtimestamp(os.path.getmtime(check_path_mch[mch])).strftime('%m/%d/%Y')
             file = os.path.basename(check_path_mch[mch])
             Usb_drive.usb_file_mch.append([file, time])
-        print(Usb_drive.usb_folders_design)
 
 
 if __name__ == "__main__":
