@@ -61,6 +61,7 @@ SELECTED_BLUE = "#008fd7"
 NOT_SELECTED = "#44657e"
 FONT_NOT_SELECTED = "gray60"
 FONT_SELECTED = "gray94"
+ROW_EVEN = customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][1]
 
 #  -------------------------------------------------------USB Data -------------------------------------
 USB_PATH = Usb_drive.USB_PATH
@@ -184,9 +185,8 @@ class Interface(customtkinter.CTk):
         self.frame_tab_2.add("Design Folders")
         self.frame_tab_2.add("Config Files")
         self.frame_tab_2.add("Machine Files")
-        self.frame_tab_2.tab("Config Files")
 
-        self.frame_tab_2.grid(row=3, column=1, sticky="news", columnspan=4, rowspan=125)
+        self.frame_tab_2.grid(row=3, column=0, sticky="news", columnspan=5, rowspan=125)
 
         self.frame_tab_2.tab("Design Folders").grid_columnconfigure(0, minsize=5)
         self.frame_tab_2.tab("Design Folders").grid_columnconfigure(1, weight=3)
@@ -244,41 +244,41 @@ class Interface(customtkinter.CTk):
         global TAB_NAME
         tab_name_count = 0
         for tab in TAB_NAME:
-            self.button_tab_2_keep = customtkinter.CTkButton(master=self.frame_tab_2.tab(tab), text="Keep", font=FONT_BUTTON,
+            self.button_tab_2_keep = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"), text="Keep", font=FONT_BUTTON,
                                                             width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
                                                              command=self.but_tr_keep)
-            self.button_tab_2_keep.grid(row=1, column=3, sticky="e")
+            self.button_tab_2_keep.grid(row=1, column=0, sticky="e")
 
-            self.button_tab_2_delete = customtkinter.CTkButton(master=self.frame_tab_2.tab(tab), text="Delete",
+            self.button_tab_2_delete = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"), text="Delete",
                                                              font=FONT_BUTTON,
                                                              width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
                                                                command=self.but_tr_delete)
-            self.button_tab_2_delete.grid(row=3, column=3, sticky="e")
+            self.button_tab_2_delete.grid(row=1, column=1, sticky="e")
 
-            self.button_tab_2_add = customtkinter.CTkButton(master=self.frame_tab_2.tab(tab), text="ADD",
+            self.button_tab_2_add = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"), text="ADD",
                                                             font=FONT_BUTTON,
                                                             width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
                                                             command=self.but_tr_add)
-            self.button_tab_2_add.grid(row=5, column=3, sticky="e")
+            self.button_tab_2_add.grid(row=1, column=2, sticky="e")
             if TAB_NAME[tab_name_count] == TAB_NAME[0]:
-                self.button_tab_2_create_ds = customtkinter.CTkButton(master=self.frame_tab_2.tab(tab),
+                self.button_tab_2_create_ds = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"),
                                                                    text="Create",
                                                                    font=FONT_BUTTON,
                                                                    width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
                                                                    state ="disabled", command=self.but_tr_cr)
-                self.button_tab_2_create_ds.grid(row=7, column=3, sticky="se")
+                self.button_tab_2_create_ds.grid(row=1, column=3, sticky="se")
                 tab_name_count += 1
             else:
-                self.button_tab_2_create = customtkinter.CTkButton(master=self.frame_tab_2.tab(tab),
+                self.button_tab_2_create = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"),
                                                                    text="Create",
                                                                    font=FONT_BUTTON,
                                                                    width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
                                                                    state="disabled")
-                self.button_tab_2_create.grid(row=7, column=3, sticky="se")
+                self.button_tab_2_create.grid(row=1, column=3, sticky="se")
                 tab_name_count += 1
 
             self.message_box_tab_2_all = customtkinter.CTkFrame(master=self.frame_tab_2.tab(tab), height=150)
-            self.message_box_tab_2_all.grid(row=9, column=0, columnspan=4, sticky="ew")
+            self.message_box_tab_2_all.grid(row=9, column=0, columnspan=5, sticky="ew")
 
             # ------------------------------------Tree view ---------------------------------------
 
@@ -286,37 +286,80 @@ class Interface(customtkinter.CTk):
     def TAB_NAME(self):
         global TAB_NAME
         for name in TAB_NAME:
-            tree_style = ttk.Style()
-            tree_style.theme_use("clam")
-            tree_style.configure("Treeview",
-                                 background="silver",
-                                 foreground="white",
-                                 rowheight=50,
-                                 fieldbackround="silver",
-                                 font=FONT,
-                                 text_color=FONT_SELECTED)
+            treestyle = ttk.Style()
+            treestyle.theme_use('default')
+            treestyle.configure("Treeview", background=customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][1],
+                                foreground=customtkinter.ThemeManager.theme["CTkLabel"]["text_color"][1],
+                                fieldbackground=customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][1],
+                                borderwidth=0, font=FONT, rowheight=50)
+            treestyle.configure("Treeview.Heading", font=("Roboto", 17),
+                                background=(customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][1]),
+                                foreground=FONT_NOT_SELECTED, borderwidth=0,
+                                selected=SELECTED_BLUE)
+            treestyle.map("Treeview.Heading", background=[('active', customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][1])])
+            treestyle.map('Treeview',
+                          background=[("selected", SELECTED_BLUE)],
+                          foreground=[('selected', FONT_SELECTED)])
+            # style = ttk.Style()
+            #
+            # style.theme_use("default")
+            #
+            # style.configure("Treeview",
+            #                 background="#2a2d2e",
+            #                 foreground="white",
+            #                 rowheight=50,
+            #                 fieldbackground="#343638",
+            #                 bordercolor="#343638",
+            #                 borderwidth=0,
+            #                 font = FONT,
+            #                 text_color = FONT_SELECTED)
+            # style.map('Treeview', background=[('selected', '#22559b')])
+            #
+            # style.configure("Treeview.Heading",
+            #                 background="#565b5e",
+            #                 foreground="white",
+            #                 relief="flat")
+            # style.map("Treeview.Heading",
+            #           # font=("Roboto", 15),
+            #           background=[('active', '#3484F0')])
 
-            tree_style.configure("Treeview.Heading", font=("Roboto", 15), background="grey")
-            tree_style.map("Treeview", background=[("selected", SELECTED_BLUE)])
+
+
+
+
+
+
+            # tree_style = ttk.Style()
+            # tree_style.theme_use("clam")
+            # tree_style.configure("Treeview",
+            #                      background="silver",
+            #                      foreground="white",
+            #                      rowheight=50,
+            #                      fieldbackround="silver",
+            #                      font=FONT,
+            #                      text_color=FONT_SELECTED)
+            #
+            # tree_style.configure("Treeview.Heading", font=("Roboto", 15), background="grey")
+            # tree_style.map("Treeview", background=[("selected", SELECTED_BLUE)])
             if name == TAB_NAME[0]:
                 count = 0
                 row_count = 1
                 self.tree_tab_D = tkinter.ttk.Treeview(master=self.frame_tab_2.tab(name))
     #             ------------------------------------------Scroll Bar ________________________________
                 self.tree_scroll = customtkinter.CTkScrollbar(master=self.frame_tab_2.tab(name), command=self.tree_tab_D.yview)
-                self.tree_scroll.grid(row=1, rowspan=7, column=2, sticky="ns")
+                self.tree_scroll.grid(row=1, rowspan=7, column=5, sticky="ns")
                 self.tree_tab_D.tag_configure("odd", background="#212121")
-                self.tree_tab_D.tag_configure("even", background="#696969")
+                self.tree_tab_D.tag_configure("even", background= ROW_EVEN)
                 #         --------- Define Columns ______-------
                 self.tree_tab_D["columns"] = ("Name", "Date")
-                self.tree_tab_D.column("#0", width=10, minwidth=25)
-                self.tree_tab_D.column("Name", anchor=CENTER, width=50, minwidth=25)
-                self.tree_tab_D.column("Date", anchor=W, width=50, minwidth=25)
+                self.tree_tab_D.column("#0", anchor=W, width=45, minwidth=45,  stretch=False)
+                self.tree_tab_D.column("Name", anchor=W, width=350, minwidth=100)
+                self.tree_tab_D.column("Date", anchor=W, width=40, minwidth=40)
                 #      -    -------------- Create Headings --------------------------
-                self.tree_tab_D.heading("#0", text="#0", anchor=W)
-                self.tree_tab_D.heading("Name", text="Name", anchor=CENTER)
+                self.tree_tab_D.heading("#0", text="", anchor=W)
+                self.tree_tab_D.heading("Name", text="Name", anchor=W)
                 self.tree_tab_D.heading("Date", text="Date", anchor=W)
-                self.tree_tab_D.grid(row=1, rowspan=7, column=1, columnspan=2, sticky="news")
+                self.tree_tab_D.grid(row=1, rowspan=7, column=0, columnspan=4, sticky="news",)
                 self.tree_tab_D.configure(yscrollcommand=self.tree_scroll.set)
 
                 # ----------------insert in Treeveiw --------------------------------
@@ -339,19 +382,20 @@ class Interface(customtkinter.CTk):
                 #             ------------------------------------------Scroll Bar ________________________________
                 self.tree_scroll = customtkinter.CTkScrollbar(master=self.frame_tab_2.tab(name),
                                                               command=self.tree_tab_D.yview)
-                self.tree_scroll.grid(row=1, rowspan=7, column=2, sticky="ns")
+                self.tree_scroll.grid(row=1, rowspan=7, column=5, sticky="ns")
+
                 self.tree_tab_C.tag_configure("odd", background="#212121")
-                self.tree_tab_C.tag_configure("even", background="#696969")
+                self.tree_tab_C.tag_configure("even", background=ROW_EVEN)
                 #         --------- Define Columns ______-------
                 self.tree_tab_C["columns"] = ("Name", "Date")
-                self.tree_tab_C.column("#0", width=10, minwidth=25)
-                self.tree_tab_C.column("Name", anchor=CENTER, width=50, minwidth=25)
-                self.tree_tab_C.column("Date", anchor=W, width=50, minwidth=25)
+                self.tree_tab_C.column("#0", anchor=W, width=45, minwidth=45,  stretch=False)
+                self.tree_tab_C.column("Name", anchor=W, width=350, minwidth=100)
+                self.tree_tab_C.column("Date", anchor=W, width=40, minwidth=40)
                 #      -    -------------- Create Headings --------------------------
-                self.tree_tab_C.heading("#0", text="#0", anchor=W)
-                self.tree_tab_C.heading("Name", text="Name", anchor=CENTER)
+                self.tree_tab_C.heading("#0", text="", anchor=W)
+                self.tree_tab_C.heading("Name", text="Name", anchor=W)
                 self.tree_tab_C.heading("Date", text="Date", anchor=W)
-                self.tree_tab_C.grid(row=1, rowspan=7, column=1, columnspan=2, sticky="news")
+                self.tree_tab_C.grid(row=1, rowspan=7, column=0, columnspan=4, sticky="news")
                 self.tree_tab_C.configure(yscrollcommand=self.tree_scroll.set)
                 # ----------------insert in Treeveiw --------------------------------
                 for record in USB.list_cfg():
@@ -370,19 +414,19 @@ class Interface(customtkinter.CTk):
                 self.tree_tab_M = tkinter.ttk.Treeview(master=self.frame_tab_2.tab(name))
                 #             ------------------------------------------Scroll Bar ________________________________
                 self.tree_scroll = customtkinter.CTkScrollbar(master=self.frame_tab_2.tab(name),
-                                                              command=self.tree_tab_D.yview)
-                self.tree_scroll.grid(row=1, rowspan=7, column=2, sticky="ns")
+                                                              command=self.tree_tab_M.yview)
+                self.tree_scroll.grid(row=1, rowspan=7, column=5, sticky="ns")
                 self.tree_tab_M.tag_configure("odd", background="#212121")
-                self.tree_tab_M.tag_configure("even", background="#696969")
+                self.tree_tab_M.tag_configure("even", background=ROW_EVEN)
                 self.tree_tab_M["columns"] = ("Name", "Date")
-                self.tree_tab_M.column("#0", width=10, minwidth=25)
-                self.tree_tab_M.column("Name", anchor=CENTER, width=50, minwidth=25)
-                self.tree_tab_M.column("Date", anchor=W, width=50, minwidth=25)
+                self.tree_tab_M.column("#0", anchor=W, width=45, minwidth=45,  stretch=False)
+                self.tree_tab_M.column("Name", anchor=W, width=350, minwidth=100)
+                self.tree_tab_M.column("Date", anchor=W, width=40, minwidth=40)
                 #      -    -------------- Create Headings --------------------------
-                self.tree_tab_M.heading("#0", text="#0", anchor=W)
-                self.tree_tab_M.heading("Name", text="Name", anchor=CENTER)
+                self.tree_tab_M.heading("#0", text="", anchor=W)
+                self.tree_tab_M.heading("Name", text="Name", anchor=W)
                 self.tree_tab_M.heading("Date", text="Date", anchor=W)
-                self.tree_tab_M.grid(row=1, rowspan=7, column=1, columnspan=2, sticky="news")
+                self.tree_tab_M.grid(row=1, rowspan=7, column=0, columnspan=4, sticky="news")
                 self.tree_tab_M.configure(yscrollcommand=self.tree_scroll.set)
                 # ----------------insert in Treeveiw --------------------------------
                 for record in USB.list_mch():
@@ -400,6 +444,7 @@ class Interface(customtkinter.CTk):
         global LIST_DESIGN
         count = 0
         row_count = 1
+        index = 0
         try:
             for find_index in LIST_DESIGN:
                 selected_item = self.tree_tab_D.item(self.tree_tab_D.focus())
@@ -420,11 +465,23 @@ class Interface(customtkinter.CTk):
                                        values=(record[0], record[1]), tags=("even",))
             count += 1
             row_count += 1
+        try:
+            self.tree_tab_D.focus_set()
+            self.tree_tab_D.focus(index)
+            self.tree_tab_D.selection_add(index)
+        except TclError:
+            if index > 0:
+                self.tree_tab_D.focus_set()
+                self.tree_tab_D.focus(index - 1)
+                self.tree_tab_D.selection_add(index - 1)
+            else:
+                pass
 
     def click_cfg(self):
         global LIST_CFG
         count = 0
         row_count = 1
+        index = 0
         try:
             for find_index in LIST_CFG:
                 selected_item = self.tree_tab_C.item(self.tree_tab_C.focus())
@@ -445,12 +502,24 @@ class Interface(customtkinter.CTk):
                                        values=(record[0], record[1]), tags=("even",))
             count += 1
             row_count += 1
+        try:
+            self.tree_tab_C.focus_set()
+            self.tree_tab_C.focus(index)
+            self.tree_tab_C.selection_add(index)
+        except TclError:
+            if index > 0:
+                self.tree_tab_C.focus_set()
+                self.tree_tab_C.focus(index - 1)
+                self.tree_tab_C.selection_add(index - 1)
+            else:
+                pass
 
 
     def click_mch(self):
         global LIST_MCG
         count = 0
         row_count = 1
+        index = 0
         try:
             for find_index in LIST_MCG:
                 selected_item = self.tree_tab_M.item(self.tree_tab_M.focus())
@@ -471,7 +540,17 @@ class Interface(customtkinter.CTk):
                                        values=(record[0], record[1]), tags=("even",))
             count += 1
             row_count += 1
-
+        try:
+            self.tree_tab_M.focus_set()
+            self.tree_tab_M.focus(index)
+            self.tree_tab_M.selection_add(index)
+        except TclError:
+            if index > 0:
+                self.tree_tab_M.focus_set()
+                self.tree_tab_M.focus(index - 1)
+                self.tree_tab_M.selection_add(index - 1)
+            else:
+                pass
 
     def left_side_app(self):
         # -------------------------------Select System----------------------------------------------------
@@ -649,6 +728,7 @@ class Interface(customtkinter.CTk):
         selected_tab = self.frame_tab_2.get()
         trees = [self.tree_tab_D, self.tree_tab_C, self.tree_tab_M]
         for tab in range(0, len(TAB_NAME)):
+            index = 0
             if TAB_NAME[tab] == selected_tab:
                 count = 0
                 row_count = 1
@@ -669,6 +749,17 @@ class Interface(customtkinter.CTk):
                                                values=(record[0], record[1]), tags=("even",))
                     count += 1
                     row_count += 1
+                try:
+                    trees[tab].focus_set()
+                    trees[tab].focus(index)
+                    trees[tab].selection_add(index)
+                except TclError:
+                    if index > 0:
+                        trees[tab].focus_set()
+                        trees[tab].focus(index-1)
+                        trees[tab].selection_add(index-1)
+                    else:
+                        pass
 
     def but_tr_delete (self):
         global TAB_NAME
@@ -676,6 +767,7 @@ class Interface(customtkinter.CTk):
         trees = [self.tree_tab_D, self.tree_tab_C, self.tree_tab_M]
         for tab in range(0, len(TAB_NAME)):
             if TAB_NAME[tab] == selected_tab:
+                index = 0
                 selected_item = trees[tab].item(trees[tab].selection()[0])
                 src = pathlib.Path(USB_PATH).joinpath(selected_item["values"][0])
                 dst = pathlib.WindowsPath("~\\Desktop\\PC Deleted Files").expanduser()
