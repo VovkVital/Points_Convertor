@@ -1,10 +1,13 @@
 import json
 import pandas as pd
 import os
+import pathlib
+
 
 SELECT_FILE_PATH = "C:\Trimble Synchronizer Data\PC\Trimble SCS900 Data"
 SAVE_FILE_PATH = os.path.expanduser("~/Desktop/Points GCS 900")
 S_FOLDER_NAME = "Point Folder GCS 900"
+
 
 
 class CSV:
@@ -26,7 +29,7 @@ class CSV:
 
 
 
-    def create_file(self):
+    def create_file(self, *args):
         try:
             with open ("TempFile.json", "r") as file:
                 loaded_file = json.load(file)
@@ -38,11 +41,15 @@ class CSV:
                 columns={"Point Name": "PointID", "Northing": "Northing(FT)", "Easting": "Easting(FT)",
                          "Elevation": "Elevation(FT)", "Date": "Time-UTC (YYYY/MM/DD HH:MM)"}).copy()
             home_dir = SAVE_FILE_PATH
-            if not os.path.isdir(home_dir):
-                os.makedirs(home_dir)
-            machine_name = self.get_machine_name()
-
-            csv = final_rover.to_csv(fr"{SAVE_FILE_PATH}\Points_{machine_name}_001.csv", index=False)
+            if len(args) > 0:
+                path = args[0]
+                machine_name = self.get_machine_name()
+                csv = final_rover.to_csv(fr"{path}\Points_{machine_name}_001.csv", index=False)
+            else:
+                if not os.path.isdir(home_dir):
+                    os.makedirs(home_dir)
+                machine_name = self.get_machine_name()
+                csv = final_rover.to_csv(fr"{SAVE_FILE_PATH}\Points_{machine_name}_001.csv", index=False)
         except KeyError:
             print("Select .CSV File Please")
         except json.decoder.JSONDecodeError:
@@ -54,5 +61,5 @@ class CSV:
             with open("TempFile.json", "w") as file:
                 place_holder = {}
                 json.dump(place_holder, file)
-                print(f"Loaded fi is empty back")
+                print("Link is removed from Settings")
 

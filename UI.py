@@ -15,6 +15,7 @@ import pandas as pd
 from USB import Usb_drive
 import shutil
 from glob import glob
+from datetime import datetime
 
 USB = Usb_drive()
 customtkinter.set_appearance_mode("dark")
@@ -37,16 +38,16 @@ FRAME_PICK_YOUR_SYSTEM = "Choose your system"
 TAB_NAME=["Design Folders", "Config Files", "Machine Files"]
 
 # ---------------Buttons Size------------------------
-MAIN_WIDTH=210
-MAIN_HEIGHT=70
-SECONDARY_WIDTH=120
-SECONDARY_HEIGHT=40
-TAB_BUTTON_WIDTH =120
-TAB_BUTTON_HEIGHT=40
-ENTRY_WIDTH=300
-ENTRY_HEIGHT=40
-ENTRY_2_WIDTH=170
-ENTRY_2_HEIGHT=40
+MAIN_WIDTH = 210
+MAIN_HEIGHT = 70
+SECONDARY_WIDTH = 120
+SECONDARY_HEIGHT = 40
+TAB_BUTTON_WIDTH = 120
+TAB_BUTTON_HEIGHT = 40
+ENTRY_WIDTH = 300
+ENTRY_HEIGHT = 40
+ENTRY_2_WIDTH = 170
+ENTRY_2_HEIGHT = 40
 
 
 # -------COLORS_--------
@@ -109,7 +110,7 @@ class Interface(customtkinter.CTk):
         self.frame_message_box()
         self.left_side_app()
         self.tab_1()
-        self.tab_2()
+        # self.tab_2()
         self.frame_tab_2()
         self.create_buttons_tabs()
         self.TAB_NAME()
@@ -241,30 +242,42 @@ class Interface(customtkinter.CTk):
 
     def create_buttons_tabs (self):
         global TAB_NAME
-        for name in TAB_NAME:
-            self.button_tab_2_keep = customtkinter.CTkButton(master=self.frame_tab_2.tab(name), text="Keep", font=FONT_BUTTON,
+        tab_name_count = 0
+        for tab in TAB_NAME:
+            self.button_tab_2_keep = customtkinter.CTkButton(master=self.frame_tab_2.tab(tab), text="Keep", font=FONT_BUTTON,
                                                             width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
                                                              command=self.but_tr_keep)
             self.button_tab_2_keep.grid(row=1, column=3, sticky="e")
 
-            self.button_tab_2_delete = customtkinter.CTkButton(master=self.frame_tab_2.tab(name), text="Delete",
+            self.button_tab_2_delete = customtkinter.CTkButton(master=self.frame_tab_2.tab(tab), text="Delete",
                                                              font=FONT_BUTTON,
                                                              width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
                                                                command=self.but_tr_delete)
             self.button_tab_2_delete.grid(row=3, column=3, sticky="e")
 
-            self.button_tab_2_add = customtkinter.CTkButton(master=self.frame_tab_2.tab(name), text="ADD",
-                                                             font=FONT_BUTTON,
-                                                             width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
+            self.button_tab_2_add = customtkinter.CTkButton(master=self.frame_tab_2.tab(tab), text="ADD",
+                                                            font=FONT_BUTTON,
+                                                            width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
+                                                            command=self.but_tr_add)
             self.button_tab_2_add.grid(row=5, column=3, sticky="e")
+            if TAB_NAME[tab_name_count] == TAB_NAME[0]:
+                self.button_tab_2_create_ds = customtkinter.CTkButton(master=self.frame_tab_2.tab(tab),
+                                                                   text="Create",
+                                                                   font=FONT_BUTTON,
+                                                                   width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
+                                                                   state ="disabled", command=self.but_tr_cr)
+                self.button_tab_2_create_ds.grid(row=7, column=3, sticky="se")
+                tab_name_count += 1
+            else:
+                self.button_tab_2_create = customtkinter.CTkButton(master=self.frame_tab_2.tab(tab),
+                                                                   text="Create",
+                                                                   font=FONT_BUTTON,
+                                                                   width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
+                                                                   state="disabled")
+                self.button_tab_2_create.grid(row=7, column=3, sticky="se")
+                tab_name_count += 1
 
-            self.button_tab_2_create = customtkinter.CTkButton(master=self.frame_tab_2.tab(name),
-                                                               text="Create",
-                                                               font=FONT_BUTTON,
-                                                               width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
-            self.button_tab_2_create.grid(row=7, column=3, sticky="se")
-
-            self.message_box_tab_2_all = customtkinter.CTkFrame(master=self.frame_tab_2.tab(name), height=150)
+            self.message_box_tab_2_all = customtkinter.CTkFrame(master=self.frame_tab_2.tab(tab), height=150)
             self.message_box_tab_2_all.grid(row=9, column=0, columnspan=4, sticky="ew")
 
             # ------------------------------------Tree view ---------------------------------------
@@ -483,8 +496,6 @@ class Interface(customtkinter.CTk):
         self.image_teichert_logo = customtkinter.CTkLabel(master=self, text="", image=image_teichert_logo_blue)
         self.image_teichert_logo.grid(row=1, column=1)
 
-
-
     def tab_1(self):
     # ---------------------------------------------------Machine Name -----------------------------------
         self.button_machine_save = customtkinter.CTkButton(master=self.frame_3_1.tab("Simple Point Conversion"),text="Save  ",
@@ -515,6 +526,7 @@ class Interface(customtkinter.CTk):
                                                         font=FONT_LABEL)
         self.label_select_file.grid(row=2, column=1)
 
+
         self.button_create = customtkinter.CTkButton(master=self.frame_3_1.tab("Simple Point Conversion"), text="Create  ",
                                                      image=image_create_file, compound="right", corner_radius=15,
                                                      fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED,
@@ -531,42 +543,42 @@ class Interface(customtkinter.CTk):
         self.label_copy_rights = customtkinter.CTkLabel(master=self, text="@VITALII_VOVK", font=FONT_COPY_RIGHTS)
         self.label_copy_rights.grid(row=4, column=0, sticky="news")
 
-    def tab_2(self):
+    # def tab_2(self):
         # -------------------------------------Buttons Tab2 -----------------------------------------------------------
-        self.button_machine_save_tab2 = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"),
-                                                                text="Save  ",
-                                                                command=lambda: [self.event_button_save(),
-                                                                                 self.message_saved_name()],
-                                                                fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED,
-                                                                width=SECONDARY_WIDTH, height=SECONDARY_HEIGHT,
-                                                                corner_radius=15, font=FONT_BUTTON)
-        self.button_machine_save_tab2.grid(row=1, column=2, sticky="w")
-
-        self.button_rover_file_tab2 = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"),
-                                                              text="Select  ", image=image_add_folder,
-                                                              compound="right", font=FONT_BUTTON,
-                                                              fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED,
-                                                              command=lambda: [self.event_button_select(),
-                                                                               self.message_file_selected()],
-                                                              corner_radius=15, width=SECONDARY_WIDTH, height=SECONDARY_HEIGHT)
-        self.button_rover_file_tab2.grid(row=1, column=4)
-
-        # self.button_create_tab2 = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"),
-        #                                                   text="Create File",
-        #                                                   image=image_create_file, compound="right",
-        #                                                   corner_radius=15,
-        #                                                   fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED,
-        #                                                   command=lambda: [panda.create_file(),
-        #                                                                    self.message_file_created(),
-        #                                                                    self.event_button_create()],
-        #                                                   width=SECONDARY_WIDTH, height=SECONDARY_HEIGHT, font=FONT_BUTTON)
-        # self.button_create_tab2.grid(row=3, column=4)
-
-        # --------------------------------------------------- Entry Tab2--------------------------------------------
-        self.entry_machine_name_tab2 = customtkinter.CTkEntry(master=self.frame_3_1.tab("Restore box Conversion"),
-                                                              corner_radius=15, width=ENTRY_2_WIDTH, height=ENTRY_2_HEIGHT)
-        self.entry_machine_name_tab2.grid(column=1, row=1, sticky="w")
-        self.entry_machine_name_tab2.insert(0, panda.get_machine_name())
+        # self.button_machine_save_tab2 = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"),
+        #                                                         text="Save  ",
+        #                                                         command=lambda: [self.event_button_save(),
+        #                                                                          self.message_saved_name()],
+        #                                                         fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED,
+        #                                                         width=SECONDARY_WIDTH, height=SECONDARY_HEIGHT,
+        #                                                         corner_radius=15, font=FONT_BUTTON)
+        # self.button_machine_save_tab2.grid(row=1, column=2, sticky="w")
+        #
+        # self.button_rover_file_tab2 = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"),
+        #                                                       text="Select  ", image=image_add_folder,
+        #                                                       compound="right", font=FONT_BUTTON,
+        #                                                       fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED,
+        #                                                       command=lambda: [self.event_button_select(),
+        #                                                                        self.message_file_selected()],
+        #                                                       corner_radius=15, width=SECONDARY_WIDTH, height=SECONDARY_HEIGHT)
+        # self.button_rover_file_tab2.grid(row=1, column=4)
+        #
+        # # self.button_create_tab2 = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"),
+        # #                                                   text="Create File",
+        # #                                                   image=image_create_file, compound="right",
+        # #                                                   corner_radius=15,
+        # #                                                   fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED,
+        # #                                                   command=lambda: [panda.create_file(),
+        # #                                                                    self.message_file_created(),
+        # #                                                                    self.event_button_create()],
+        # #                                                   width=SECONDARY_WIDTH, height=SECONDARY_HEIGHT, font=FONT_BUTTON)
+        # # self.button_create_tab2.grid(row=3, column=4)
+        #
+        # # --------------------------------------------------- Entry Tab2--------------------------------------------
+        # self.entry_machine_name_tab2 = customtkinter.CTkEntry(master=self.frame_3_1.tab("Restore box Conversion"),
+        #                                                       corner_radius=15, width=ENTRY_2_WIDTH, height=ENTRY_2_HEIGHT)
+        # self.entry_machine_name_tab2.grid(column=1, row=1, sticky="w")
+        # self.entry_machine_name_tab2.insert(0, panda.get_machine_name())
 
     def message_file_created (self):
         new_text ="Point File was created\n" \
@@ -616,6 +628,7 @@ class Interface(customtkinter.CTk):
 
     def event_button_select(self):
         self.button_rover_file.configure(fg_color=SELECTED_BLUE, text_color=FONT_SELECTED)
+        self.button_tab_2_create_ds.configure(state="normal")
         select = filedialog.askopenfilename(initialdir=SELECT_FILE_PATH)
         try:
             with open ("TempFile.json", "w") as file:
@@ -640,12 +653,10 @@ class Interface(customtkinter.CTk):
                 count = 0
                 row_count = 1
                 for find_index in list_pick[tab]:
-                    print(trees[tab].get_children())
                     selected_item = trees[tab].item(trees[tab].focus())
                     if find_index == selected_item["values"]:
                         index = list_pick[tab].index(find_index)
                         list_pick[tab].pop(index)
-
                 for item in range(len(trees[tab].get_children())):
                     selected_item = trees[tab].get_children()[0]
                     trees[tab].delete(selected_item)
@@ -658,7 +669,6 @@ class Interface(customtkinter.CTk):
                                                values=(record[0], record[1]), tags=("even",))
                     count += 1
                     row_count += 1
-
 
     def but_tr_delete (self):
         global TAB_NAME
@@ -678,7 +688,6 @@ class Interface(customtkinter.CTk):
                     shutil.move(src, dst.joinpath("Designs"))
                     self.click_design()
 
-
                 if src.is_file():
                     files = glob(os.path.join(str(src.parent), "*.cfg"))
                     for match in range(0, len(files)):
@@ -686,13 +695,96 @@ class Interface(customtkinter.CTk):
                             shutil.move(src, dst.joinpath("Config Files"))
                             self.click_cfg()
 
-
                 if src.is_file():
                     files = glob(os.path.join(str(src.parent), "*.MCH"))
                     for match in range(0, len(files)):
                         if str(src) == files[match]:
                             shutil.move(src, dst.joinpath("Machine Files"))
                             self.click_mch()
+
+    def but_tr_add(self):
+        global TAB_NAME
+        global LIST_DESIGN
+        global LIST_CFG
+        global LIST_MCG
+        list_pick = [LIST_DESIGN, LIST_CFG, LIST_MCG]
+        selected_file = pathlib.Path(filedialog.askopenfilename(initialdir=pathlib.Path("~\\Desktop").expanduser()))
+        selected_tab = self.frame_tab_2.get()
+        trees = [self.tree_tab_D, self.tree_tab_C, self.tree_tab_M]
+        for tab in range(0, len(TAB_NAME)):
+            if TAB_NAME[1] == selected_tab:
+                list_glob = glob(os.path.join(str(selected_file.parent), "*.cfg"))
+                for math_file in range(0, len(list_glob)):
+                    if str(selected_file) == list_glob[math_file]:
+                        shutil.copy(selected_file, str(USB_PATH))
+                        file_to_append = [os.path.basename(selected_file), datetime.fromtimestamp(os.path.getmtime(selected_file)).strftime('%m/%d/%Y')]
+                        list_pick[tab].append(file_to_append)
+                        count = 0
+                        row_count = 1
+                        for item in range(len(trees[tab].get_children())):
+                            item = trees[tab].get_children()[0]
+                            trees[tab].delete(item)
+                        for item in range(len(trees[tab].get_children())):
+                            selected_item = trees[tab].get_children()[0]
+                            trees[tab].delete(selected_item)
+                        for record in list_pick[tab]:
+                            if count % 2 == 0:
+                                trees[tab].insert(parent="", index="end", text=row_count, iid=count,
+                                                  values=(record[0], record[1]), tags=("odd",))
+                            else:
+                                trees[tab].insert(parent="", index="end", text=row_count, iid=count,
+                                                  values=(record[0], record[1]), tags=("even",))
+                            count += 1
+                            row_count += 1
+            if TAB_NAME[2] == selected_tab:
+                list_glob = glob(os.path.join(str(selected_file.parent), "*.MCH"))
+                for math_file in range(0, len(list_glob)):
+                    if str(selected_file) == list_glob[math_file]:
+                        shutil.copy(selected_file, str(USB_PATH))
+                        file_to_append = [os.path.basename(selected_file),
+                                          datetime.fromtimestamp(os.path.getmtime(selected_file)).strftime('%m/%d/%Y')]
+                        list_pick[tab].append(file_to_append)
+                        count = 0
+                        row_count = 1
+                        for item in range(len(trees[tab].get_children())):
+                            item = trees[tab].get_children()[0]
+                            trees[tab].delete(item)
+                        for item in range(len(trees[tab].get_children())):
+                            selected_item = trees[tab].get_children()[0]
+                            trees[tab].delete(selected_item)
+                        for record in list_pick[tab]:
+                            if count % 2 == 0:
+                                trees[tab].insert(parent="", index="end", text=row_count, iid=count,
+                                                  values=(record[0], record[1]), tags=("odd",))
+                            else:
+                                trees[tab].insert(parent="", index="end", text=row_count, iid=count,
+                                                  values=(record[0], record[1]), tags=("even",))
+                            count += 1
+                            row_count += 1
+    def but_tr_cr(self):
+        selected = self.tree_tab_D.item(self.tree_tab_D.focus())
+        selected_file = selected["values"]
+        design_name = selected_file[0]
+        path = pathlib.Path(os.path.join(USB.detect_usb(), ".Field-Data"))
+        if path.exists():
+            design_path = path.joinpath(design_name)
+            if path.exists():
+                if not design_path.exists():
+                    pathlib.Path(design_path).mkdir()
+                    panda.create_file(str(design_path))
+                else:
+                    panda.create_file(str(design_path))
+
+            else:
+                pass
+
+
+
+
+
+
+
+
 
 
 

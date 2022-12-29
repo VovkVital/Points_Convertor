@@ -47,7 +47,7 @@ class Usb_drive:
                                 self.correct_usb.append(right_usb)
                                 self.current_path = path
                                 Usb_drive.USB_PATH = path
-                                return self.correct_usb
+                                return self.current_path
 
     def list_designs(self):
         list_designs = []
