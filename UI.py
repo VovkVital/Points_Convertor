@@ -28,6 +28,9 @@ FONT_CONVERSION = ("Roboto", 16)
 FONT_BUTTON = ("Roboto", 16)
 FONT_LABEL = ("Roboto", 16)
 FONT_COPY_RIGHTS = ("Roboto", 6)
+FONT_MESSAGE = ("Roboto", 14)
+
+
 panda = CSV ()
 SELECT_FILE_PATH = r"C:\Trimble Synchronizer Data\PC\Trimble SCS900 Data"
 # - ----- Program's Titles, Names ----------
@@ -44,7 +47,7 @@ SECONDARY_WIDTH = 120
 SECONDARY_HEIGHT = 40
 TAB_BUTTON_WIDTH = 120
 TAB_BUTTON_HEIGHT = 40
-ENTRY_WIDTH = 300
+ENTRY_WIDTH = 343
 ENTRY_HEIGHT = 40
 ENTRY_2_WIDTH = 170
 ENTRY_2_HEIGHT = 40
@@ -71,16 +74,14 @@ LIST_MCG = USB.list_mch()
 
 
 
-# ------------------- Images ------------------------
-image_add_folder = customtkinter.CTkImage(light_image=Image.open("./Images/add_folder_light.png"),
-                                          size=(30, 30))
-image_create_file = customtkinter.CTkImage(light_image=Image.open("./Images/create_file.png"),
-                                           size=(30, 30))
 
-image_teichert_logo = customtkinter.CTkImage(light_image=Image.open("./Images/teichert-logo.png"),
-                                          size=(300, 300))
-image_teichert_logo_blue = customtkinter.CTkImage(light_image=Image.open("./Images/teichert-Logo_blue_2.png"),
-                                          size=(300, 300))
+# ------------------- Images ------------------------
+image_add_folder = customtkinter.CTkImage(light_image=Image.open("./Images/add_folder_light.png"), size=(30, 30))
+image_create_file = customtkinter.CTkImage(light_image=Image.open("./Images/create_fileV2.png"), size=(30, 30))
+image_save_name = customtkinter.CTkImage(light_image=Image.open(("./Images/saveV2.png")), size=(30, 30))
+
+image_teichert_logo = customtkinter.CTkImage(light_image=Image.open("./Images/teichert-logo.png"), size=(300, 300))
+image_teichert_logo_blue = customtkinter.CTkImage(light_image=Image.open("./Images/teichert-Logo_blue_2.png"),size=(300, 300))
 
 
 
@@ -173,7 +174,11 @@ class Interface(customtkinter.CTk):
         self.frame_3_3.grid(row=5, column=0,columnspan=5, rowspan=3, sticky="news")
         self.frame_3_3.grid_rowconfigure(0, minsize=5)
         self.frame_3_3.grid_rowconfigure(1, weight=1)
-        self.frame_3_3.grid_rowconfigure(2, minsize=5)
+        self.frame_3_3.grid_rowconfigure(2, weight=1)
+        self.frame_3_3.grid_rowconfigure(3, weight=1)
+        self.frame_3_3.grid_rowconfigure(4, weight=1)
+        self.frame_3_3.grid_rowconfigure(5, minsize=5)
+
         self.frame_3_3.grid_columnconfigure(0, minsize=5)
         self.frame_3_3.grid_columnconfigure(1, weight=1)
         self.frame_3_3.grid_columnconfigure(2, minsize=5)
@@ -181,7 +186,8 @@ class Interface(customtkinter.CTk):
 
     def frame_tab_2 (self):
         self.frame_tab_2 = customtkinter.CTkTabview(master=self.frame_3_1.tab("Restore box Conversion"), corner_radius=25,
-                                                    segmented_button_selected_color=SELECTED_BLUE)
+                                                    segmented_button_selected_color=SELECTED_BLUE,
+                                                    command=self.click_segmented_3_but)
         self.frame_tab_2.add("Design Folders")
         self.frame_tab_2.add("Config Files")
         self.frame_tab_2.add("Machine Files")
@@ -261,6 +267,7 @@ class Interface(customtkinter.CTk):
                                                             command=self.but_tr_add)
             self.button_tab_2_add.grid(row=1, column=2, sticky="e")
             if TAB_NAME[tab_name_count] == TAB_NAME[0]:
+                print(TAB_NAME[tab_name_count])
                 self.button_tab_2_create_ds = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"),
                                                                    text="Create",
                                                                    font=FONT_BUTTON,
@@ -268,15 +275,15 @@ class Interface(customtkinter.CTk):
                                                                    state ="disabled", command=self.but_tr_cr)
                 self.button_tab_2_create_ds.grid(row=1, column=3, sticky="se")
                 tab_name_count += 1
-            else:
-                self.button_tab_2_create = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"),
-                                                                   text="Create",
-                                                                   font=FONT_BUTTON,
-                                                                   width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
-                                                                   state="disabled")
-                self.button_tab_2_create.grid(row=1, column=3, sticky="se")
-                tab_name_count += 1
-
+            # # else:
+            #     self.button_tab_2_create = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"),
+            #                                                        text="Create",
+            #                                                        font=FONT_BUTTON,
+            #                                                        width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
+            #                                                        state="disabled")
+            #     self.button_tab_2_create.grid(row=1, column=3, sticky="se")
+            #     tab_name_count += 1
+            #
             self.message_box_tab_2_all = customtkinter.CTkFrame(master=self.frame_tab_2.tab(tab), height=150)
             self.message_box_tab_2_all.grid(row=9, column=0, columnspan=5, sticky="ew")
 
@@ -300,47 +307,7 @@ class Interface(customtkinter.CTk):
             treestyle.map('Treeview',
                           background=[("selected", SELECTED_BLUE)],
                           foreground=[('selected', FONT_SELECTED)])
-            # style = ttk.Style()
-            #
-            # style.theme_use("default")
-            #
-            # style.configure("Treeview",
-            #                 background="#2a2d2e",
-            #                 foreground="white",
-            #                 rowheight=50,
-            #                 fieldbackground="#343638",
-            #                 bordercolor="#343638",
-            #                 borderwidth=0,
-            #                 font = FONT,
-            #                 text_color = FONT_SELECTED)
-            # style.map('Treeview', background=[('selected', '#22559b')])
-            #
-            # style.configure("Treeview.Heading",
-            #                 background="#565b5e",
-            #                 foreground="white",
-            #                 relief="flat")
-            # style.map("Treeview.Heading",
-            #           # font=("Roboto", 15),
-            #           background=[('active', '#3484F0')])
 
-
-
-
-
-
-
-            # tree_style = ttk.Style()
-            # tree_style.theme_use("clam")
-            # tree_style.configure("Treeview",
-            #                      background="silver",
-            #                      foreground="white",
-            #                      rowheight=50,
-            #                      fieldbackround="silver",
-            #                      font=FONT,
-            #                      text_color=FONT_SELECTED)
-            #
-            # tree_style.configure("Treeview.Heading", font=("Roboto", 15), background="grey")
-            # tree_style.map("Treeview", background=[("selected", SELECTED_BLUE)])
             if name == TAB_NAME[0]:
                 count = 0
                 row_count = 1
@@ -556,7 +523,7 @@ class Interface(customtkinter.CTk):
         # -------------------------------Select System----------------------------------------------------
         self.button_gcs_900_choice = customtkinter.CTkButton(master=self.frame_1_1, text="GCS 900", corner_radius=10,
                                                              font=FONT_BUTTON, width=MAIN_WIDTH, height=MAIN_HEIGHT,
-                                                             fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED,
+                                                             fg_color=SELECTED_BLUE, text_color=FONT_SELECTED,
                                                              command=lambda: [self.event_button_system_gcs(),
                                                                               self.message_gcs_900()]
                                                              )
@@ -566,6 +533,7 @@ class Interface(customtkinter.CTk):
                                                                 corner_radius=10,
                                                                 font=FONT_BUTTON, width=MAIN_WIDTH, height=MAIN_HEIGHT,
                                                                 fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED,
+                                                                state="disabled",
                                                                 command=lambda: [self.event_button_system_earth(),
                                                                                  self.message_earthwork()]
                                                                 )
@@ -578,8 +546,9 @@ class Interface(customtkinter.CTk):
     def tab_1(self):
     # ---------------------------------------------------Machine Name -----------------------------------
         self.button_machine_save = customtkinter.CTkButton(master=self.frame_3_1.tab("Simple Point Conversion"),text="Save  ",
+                                                           image=image_save_name, compound=RIGHT,
                                                            command=lambda:[self.event_button_save(),
-                                                                           self.message_saved_name()],
+                                                                           self.message_save()],
                                                            fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED,
                                                            width=SECONDARY_WIDTH, height=SECONDARY_HEIGHT,
                                                            corner_radius=15, font=FONT_BUTTON)
@@ -592,96 +561,86 @@ class Interface(customtkinter.CTk):
 
 
     #     #  ----------------------------------- Select_Create_Frame ------------------------------------
-    #
+    # ------------------------------------------Select Button and Label --------------------------------
         self.button_rover_file = customtkinter.CTkButton(master=self.frame_3_1.tab("Simple Point Conversion"), text="Select  ", image=image_add_folder,
                                                          compound= "right", font=FONT_BUTTON,
                                                          fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED,
                                                          command=lambda:[self.event_button_select(),
-                                                                         self.message_file_selected()],
+                                                                         self.message_selected()],
                                                          corner_radius=15, width=SECONDARY_WIDTH, height=SECONDARY_HEIGHT)
         self.button_rover_file.grid(row=2, column=4)
 
-        self.label_select_file = customtkinter.CTkLabel(master=self.frame_3_1.tab("Simple Point Conversion"), text="Select Point File on the Rover",
-                                                        font=FONT_LABEL)
+
+        self.label_select_file = customtkinter.CTkLabel(master=self.frame_3_1.tab("Simple Point Conversion"),
+                                                        text="""  Select a Points-File ".csv" """,
+                                                        font=FONT_LABEL, width=ENTRY_WIDTH, anchor="sw")
         self.label_select_file.grid(row=2, column=1)
 
-
+        # -------------------------------------- Create Button and Label ------------------------------------------------
         self.button_create = customtkinter.CTkButton(master=self.frame_3_1.tab("Simple Point Conversion"), text="Create  ",
                                                      image=image_create_file, compound="right", corner_radius=15,
                                                      fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED,
-                                                     command=lambda:[panda.create_file(), self.message_file_created(),
+                                                     command=lambda:[panda.create_file(), self.message_created(),
                                                                      self.event_button_create()],
-                                                     width=SECONDARY_WIDTH, height=SECONDARY_HEIGHT, font=FONT_BUTTON)
+                                                     width=SECONDARY_WIDTH, height=SECONDARY_HEIGHT, font=FONT_BUTTON,
+                                                     state="disabled")
         self.button_create.grid(row=3, column=4)
+
+        self.label_create_file = customtkinter.CTkLabel(master=self.frame_3_1.tab("Simple Point Conversion"),
+                                                        text= """  Creates file in the folder "Points GCS 900" """,
+                                                        width=ENTRY_WIDTH, anchor="sw", font=FONT_LABEL)
+        self.label_create_file.grid(column=1, row=3)
 
 
     # #    --------------------------------------Message-Box -----------------------------------------------------------
-        self.label_message_box = customtkinter.CTkLabel(master=self.frame_3_3, text="Message Box", font=FONT_LABEL)
-        self.label_message_box.grid(row=1, column=1)
+        self.label_created = customtkinter.CTkLabel(master=self.frame_3_3, text="--- System Information ---",
+                                                    font=FONT_LABEL,
+                                                    width=400, anchor="s")
+        self.label_created.grid(row=1, column=1)
+
+
+        self.label_machine_name = customtkinter.CTkLabel(master=self.frame_3_3,
+                                                         text=f"Machine name:     - {self.entry_machine_name.get()}",
+                                                         font=FONT_MESSAGE, width=400, anchor="sw")
+        self.label_machine_name.grid(row=2, column=1)
+
+        self.label_selelected = customtkinter.CTkLabel(master=self.frame_3_3, text="Selected File:         - File not selected",
+                                                       font=FONT_MESSAGE, width=400, anchor="sw")
+        self.label_selelected.grid(row=3, column=1)
+
+        self.label_created = customtkinter.CTkLabel(master=self.frame_3_3, text="File Created:          - File not created",
+                                                    font=FONT_MESSAGE,
+                                                    width=400, anchor="sw")
+        self.label_created.grid(row=4, column=1)
+
+
 
         self.label_copy_rights = customtkinter.CTkLabel(master=self, text="@VITALII_VOVK", font=FONT_COPY_RIGHTS)
         self.label_copy_rights.grid(row=4, column=0, sticky="news")
 
-    # def tab_2(self):
-        # -------------------------------------Buttons Tab2 -----------------------------------------------------------
-        # self.button_machine_save_tab2 = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"),
-        #                                                         text="Save  ",
-        #                                                         command=lambda: [self.event_button_save(),
-        #                                                                          self.message_saved_name()],
-        #                                                         fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED,
-        #                                                         width=SECONDARY_WIDTH, height=SECONDARY_HEIGHT,
-        #                                                         corner_radius=15, font=FONT_BUTTON)
-        # self.button_machine_save_tab2.grid(row=1, column=2, sticky="w")
-        #
-        # self.button_rover_file_tab2 = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"),
-        #                                                       text="Select  ", image=image_add_folder,
-        #                                                       compound="right", font=FONT_BUTTON,
-        #                                                       fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED,
-        #                                                       command=lambda: [self.event_button_select(),
-        #                                                                        self.message_file_selected()],
-        #                                                       corner_radius=15, width=SECONDARY_WIDTH, height=SECONDARY_HEIGHT)
-        # self.button_rover_file_tab2.grid(row=1, column=4)
-        #
-        # # self.button_create_tab2 = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"),
-        # #                                                   text="Create File",
-        # #                                                   image=image_create_file, compound="right",
-        # #                                                   corner_radius=15,
-        # #                                                   fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED,
-        # #                                                   command=lambda: [panda.create_file(),
-        # #                                                                    self.message_file_created(),
-        # #                                                                    self.event_button_create()],
-        # #                                                   width=SECONDARY_WIDTH, height=SECONDARY_HEIGHT, font=FONT_BUTTON)
-        # # self.button_create_tab2.grid(row=3, column=4)
-        #
-        # # --------------------------------------------------- Entry Tab2--------------------------------------------
-        # self.entry_machine_name_tab2 = customtkinter.CTkEntry(master=self.frame_3_1.tab("Restore box Conversion"),
-        #                                                       corner_radius=15, width=ENTRY_2_WIDTH, height=ENTRY_2_HEIGHT)
-        # self.entry_machine_name_tab2.grid(column=1, row=1, sticky="w")
-        # self.entry_machine_name_tab2.insert(0, panda.get_machine_name())
 
-    def message_file_created (self):
-        new_text ="Point File was created\n" \
-                  "Desktop - Points GCS 900 "
-        self.label_message_box.configure(text=new_text)
 
-    def message_file_selected (self):
-        new_text = "Point File was selected\n" \
-                  "Project - ??????????   \n" \
-                  "Workorder - ??????     \n"
-        self.label_message_box.configure(text=new_text)
 
-    def message_saved_name (self):
+    def message_save (self):
+        new_text = f"Machine name:     - {self.entry_machine_name.get()}"
+        self.label_machine_name.configure(text=new_text)
+
+    def message_selected(self):
+        with open("TempFile.json", "r") as file:
+            loaded_file = json.load(file)
+        selected = pathlib.Path(str(loaded_file["Selected File"])).name
+        self.button_tab_2_create_ds.configure(state="normal")
+        if selected == "":
+            pass
+        else:
+            new_text =f"Selected File:         - {selected}"
+            self.label_selelected.configure(text=new_text)
+
+    def message_created(self):
         machine_name = panda.get_machine_name()
-        new_text =f"Machine name saved as\n {machine_name}"
+        new_text ="File Created:          - Desktop/Points GCS 900/"
 
-        self.label_message_box.configure(text=new_text)
-    def message_gcs_900 (self):
-        new_text ="GCS900 - Selected"
-        self.label_message_box.configure(text=new_text)
-
-    def message_earthwork (self):
-        new_text ="Earthwork - Selected"
-        self.label_message_box.configure(text=new_text)
+        self.label_created.configure(text=new_text)
 
     def event_button_system_gcs(self):
         self.button_gcs_900_choice.configure(fg_color=SELECTED_BLUE, text_color=FONT_SELECTED)
@@ -689,6 +648,9 @@ class Interface(customtkinter.CTk):
 
     def event_button_create(self):
         self.button_create.configure(fg_color=SELECTED_BLUE, text_color=FONT_SELECTED)
+        self.button_tab_2_create_ds.configure(state="disabled")
+        self.button_rover_file.configure(fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED)
+
 
     def event_button_system_earth(self):
         self.button_earth_work_choice.configure(fg_color=SELECTED_BLUE, text_color=FONT_SELECTED)
@@ -708,7 +670,9 @@ class Interface(customtkinter.CTk):
     def event_button_select(self):
         self.button_rover_file.configure(fg_color=SELECTED_BLUE, text_color=FONT_SELECTED)
         self.button_tab_2_create_ds.configure(state="normal")
+        self.button_create.configure(state="normal")
         select = filedialog.askopenfilename(initialdir=SELECT_FILE_PATH)
+        self.button_create.configure(fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED)
         try:
             with open ("TempFile.json", "w") as file:
                 upload_file = {"Selected File":select}
@@ -858,6 +822,7 @@ class Interface(customtkinter.CTk):
         selected_file = selected["values"]
         design_name = selected_file[0]
         path = pathlib.Path(os.path.join(USB.detect_usb(), ".Field-Data"))
+        self.label_selelected.configure(text="Selected File:         - File not selected")
         if path.exists():
             design_path = path.joinpath(design_name)
             if path.exists():
@@ -869,6 +834,24 @@ class Interface(customtkinter.CTk):
 
             else:
                 pass
+    def click_segmented_3_but(self):
+        global TAB_NAME
+        with open("TempFile.json", "r") as file:
+            loaded_file = json.load(file)
+        for active_tab in TAB_NAME:
+            selected_tab =self.frame_tab_2.get()
+            if selected_tab != "Design Folders":
+                self.button_tab_2_create_ds.configure(state="disabled")
+            else:
+                try:
+                    if bool(loaded_file["Selected File"]):
+                        self.button_tab_2_create_ds.configure(state="normal")
+                    else:
+                        pass
+                except KeyError:
+                    self.button_tab_2_create_ds.configure(state="disabled")
+
+
 
 
 
