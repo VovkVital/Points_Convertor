@@ -343,7 +343,6 @@ class Interface(customtkinter.CTk):
                     count += 1
                     row_count += 1
 
-
             if name == TAB_NAME[1]:
                 count = 0
                 row_count = 1
