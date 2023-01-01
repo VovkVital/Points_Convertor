@@ -116,6 +116,7 @@ class Interface(customtkinter.CTk):
         self.frame_tab_2()
         self.create_buttons_tabs()
         self.TAB_NAME()
+        self.message_box_m2()
 
     # ------------- Lable Frames -----------------
     def frame_col_1_1 (self):
@@ -138,7 +139,7 @@ class Interface(customtkinter.CTk):
                                                   segmented_button_selected_color=SELECTED_BLUE)
         self.frame_3_1.add("Simple Point Conversion")
         self.frame_3_1.add("Restore box Conversion")
-        self.frame_3_1.grid(row=1, column=3, rowspan=3, sticky ="sewn" )
+        self.frame_3_1.grid(row=1, column=3, rowspan=3, sticky="sewn")
         self.frame_3_1.tab("Simple Point Conversion").grid_columnconfigure(0, minsize=10)
         self.frame_3_1.tab("Simple Point Conversion").grid_columnconfigure(1, weight=2)
         self.frame_3_1.tab("Simple Point Conversion").grid_columnconfigure(2, minsize=10)
@@ -165,8 +166,8 @@ class Interface(customtkinter.CTk):
         self.frame_3_1.tab("Restore box Conversion").grid_rowconfigure(1, minsize=60)
         self.frame_3_1.tab("Restore box Conversion").grid_rowconfigure(2, minsize=5)
         self.frame_3_1.tab("Restore box Conversion").grid_rowconfigure(3, weight=5)
-        self.frame_3_1.tab("Restore box Conversion").grid_rowconfigure(4, weight=1)
-        self.frame_3_1.tab("Restore box Conversion").grid_rowconfigure(5, minsize=1)
+        self.frame_3_1.tab("Restore box Conversion").grid_rowconfigure(4, minsize=10)
+        self.frame_3_1.tab("Restore box Conversion").grid_rowconfigure(5, weight=1)
 
 
     def frame_message_box(self):
@@ -191,59 +192,19 @@ class Interface(customtkinter.CTk):
         self.frame_tab_2.add("Design Folders")
         self.frame_tab_2.add("Config Files")
         self.frame_tab_2.add("Machine Files")
+        self.frame_tab_2.grid(row=3, column=0, sticky="news", columnspan=5, rowspan=1)
 
-        self.frame_tab_2.grid(row=3, column=0, sticky="news", columnspan=5, rowspan=125)
+        self.frame_tab_2.tab("Design Folders").grid_columnconfigure(0, weight=1)
+        self.frame_tab_2.tab("Design Folders").grid_columnconfigure(1, minsize=15)
+        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(0, weight=1)
 
-        self.frame_tab_2.tab("Design Folders").grid_columnconfigure(0, minsize=5)
-        self.frame_tab_2.tab("Design Folders").grid_columnconfigure(1, weight=3)
-        self.frame_tab_2.tab("Design Folders").grid_columnconfigure(2, minsize=5)
-        self.frame_tab_2.tab("Design Folders").grid_columnconfigure(3, weight=1)
-        self.frame_tab_2.tab("Design Folders").grid_columnconfigure(4, minsize=5)
-        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(0, minsize=5)
-        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(1, weight=1)
-        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(2, minsize=5)
-        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(3, weight=1)
-        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(4, minsize=5)
-        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(5, weight=1)
-        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(6, minsize=5)
-        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(7, weight=1)
-        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(8, minsize=5)
-        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(9, weight=1)
-        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(10, minsize=5)
+        self.frame_tab_2.tab("Machine Files").grid_columnconfigure(0, weight=1)
+        self.frame_tab_2.tab("Machine Files").grid_columnconfigure(1, minsize=15)
+        self.frame_tab_2.tab("Machine Files").grid_rowconfigure(0, weight=1)
 
-        self.frame_tab_2.tab("Machine Files").grid_columnconfigure(0, minsize=5)
-        self.frame_tab_2.tab("Machine Files").grid_columnconfigure(1, weight=3)
-        self.frame_tab_2.tab("Machine Files").grid_columnconfigure(2, minsize=5)
-        self.frame_tab_2.tab("Machine Files").grid_columnconfigure(3, weight=1)
-        self.frame_tab_2.tab("Machine Files").grid_columnconfigure(4, minsize=5)
-        self.frame_tab_2.tab("Machine Files").grid_rowconfigure(0, minsize=5)
-        self.frame_tab_2.tab("Machine Files").grid_rowconfigure(1, weight=1)
-        self.frame_tab_2.tab("Machine Files").grid_rowconfigure(2, minsize=5)
-        self.frame_tab_2.tab("Machine Files").grid_rowconfigure(3, weight=1)
-        self.frame_tab_2.tab("Machine Files").grid_rowconfigure(4, minsize=5)
-        self.frame_tab_2.tab("Machine Files").grid_rowconfigure(5, weight=1)
-        self.frame_tab_2.tab("Machine Files").grid_rowconfigure(6, minsize=5)
-        self.frame_tab_2.tab("Machine Files").grid_rowconfigure(7, weight=1)
-        self.frame_tab_2.tab("Machine Files").grid_rowconfigure(8, minsize=5)
-        self.frame_tab_2.tab("Machine Files").grid_rowconfigure(9, weight=1)
-        self.frame_tab_2.tab("Machine Files").grid_rowconfigure(10, minsize=5)
-
-        self.frame_tab_2.tab("Config Files").grid_columnconfigure(0, minsize=5)
-        self.frame_tab_2.tab("Config Files").grid_columnconfigure(1, weight=3)
-        self.frame_tab_2.tab("Config Files").grid_columnconfigure(2, minsize=5)
-        self.frame_tab_2.tab("Config Files").grid_columnconfigure(3, weight=1)
-        self.frame_tab_2.tab("Config Files").grid_columnconfigure(4, minsize=5)
-        self.frame_tab_2.tab("Config Files").grid_rowconfigure(0, minsize=5)
-        self.frame_tab_2.tab("Config Files").grid_rowconfigure(1, weight=1)
-        self.frame_tab_2.tab("Config Files").grid_rowconfigure(2, minsize=5)
-        self.frame_tab_2.tab("Config Files").grid_rowconfigure(3, weight=1)
-        self.frame_tab_2.tab("Config Files").grid_rowconfigure(4, minsize=5)
-        self.frame_tab_2.tab("Config Files").grid_rowconfigure(5, weight=1)
-        self.frame_tab_2.tab("Config Files").grid_rowconfigure(6, minsize=5)
-        self.frame_tab_2.tab("Config Files").grid_rowconfigure(7, weight=1)
-        self.frame_tab_2.tab("Config Files").grid_rowconfigure(8, minsize=5)
-        self.frame_tab_2.tab("Config Files").grid_rowconfigure(9, weight=1)
-        self.frame_tab_2.tab("Config Files").grid_rowconfigure(10, minsize=5)
+        self.frame_tab_2.tab("Config Files").grid_columnconfigure(0, weight=1)
+        self.frame_tab_2.tab("Config Files").grid_columnconfigure(1, minsize=15)
+        self.frame_tab_2.tab("Config Files").grid_rowconfigure(0, weight=1)
 
 
     def create_buttons_tabs (self):
@@ -283,11 +244,53 @@ class Interface(customtkinter.CTk):
             #                                                        state="disabled")
             #     self.button_tab_2_create.grid(row=1, column=3, sticky="se")
             #     tab_name_count += 1
-            #
-            self.message_box_tab_2_all = customtkinter.CTkFrame(master=self.frame_tab_2.tab(tab), height=150)
-            self.message_box_tab_2_all.grid(row=9, column=0, columnspan=5, sticky="ew")
+    def message_box_m2(self):
+            self.message_box_tab_2_all = customtkinter.CTkFrame(master=self.frame_3_1.tab("Restore box Conversion"),
+                                                                corner_radius=25)
+            self.message_box_tab_2_all.grid(row=5, column=0, columnspan=4, sticky="news")
+            self.message_box_tab_2_all.rowconfigure(0, weight=1)
+            self.message_box_tab_2_all.rowconfigure(1, weight=1)
+            self.message_box_tab_2_all.rowconfigure(2, weight=1)
+            self.message_box_tab_2_all.rowconfigure(3, weight=1)
 
-            # ------------------------------------Tree view ---------------------------------------
+            self.message_box_tab_2_all.columnconfigure(0, weight=1)
+            self.message_box_tab_2_all.columnconfigure(1, weight=1)
+
+            # ------------------------------------------------------ Message Box labels ---------------------------------
+            self.label_info_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all, text=" -- System info --")
+            self.label_info_m2.grid(row=0, column=0, columnspan=2)
+
+            self.label_machine_name_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all, text=f"Machine name :  {self.entry_machine_name.get()}")
+            self.label_machine_name_m2.grid(row=1, column=0, sticky="w", padx=15)
+
+            self.label_selected_file_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all,
+                                                                text="Selected File:  None")
+            self.label_selected_file_m2.grid(row=2, column=0, sticky="w", padx=15)
+
+            self.label_created_file_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all,
+                                                                 text="File Created:  File not created")
+            self.label_created_file_m2.grid(row=3, column=0, sticky="w", padx=15)
+
+
+
+            self.label_design_files_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all,
+                                                                text="Design Files: --... Size: --...")
+            self.label_design_files_m2.grid(row=1, column=1, sticky="w", padx=15)
+
+            self.label_config_files_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all,
+                                                                 text="Config Files: --...")
+            self.label_config_files_m2.grid(row=2, column=1, sticky="w", padx=15)
+
+            self.label_machine_files_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all,
+                                                                text="Machine Files: --...")
+            self.label_machine_files_m2.grid(row=3, column=1, sticky="w", padx=15)
+
+
+
+
+
+
+
 
 
     def TAB_NAME(self):
@@ -314,7 +317,7 @@ class Interface(customtkinter.CTk):
                 self.tree_tab_D = tkinter.ttk.Treeview(master=self.frame_tab_2.tab(name))
     #             ------------------------------------------Scroll Bar ________________________________
                 self.tree_scroll = customtkinter.CTkScrollbar(master=self.frame_tab_2.tab(name), command=self.tree_tab_D.yview)
-                self.tree_scroll.grid(row=1, rowspan=7, column=5, sticky="ns")
+                self.tree_scroll.grid(row=0,  column=1, sticky="ns")
                 self.tree_tab_D.tag_configure("odd", background="#212121")
                 self.tree_tab_D.tag_configure("even", background= ROW_EVEN)
                 #         --------- Define Columns ______-------
@@ -326,7 +329,7 @@ class Interface(customtkinter.CTk):
                 self.tree_tab_D.heading("#0", text="", anchor=W)
                 self.tree_tab_D.heading("Name", text="Name", anchor=W)
                 self.tree_tab_D.heading("Date", text="Date", anchor=W)
-                self.tree_tab_D.grid(row=1, rowspan=7, column=0, columnspan=4, sticky="news",)
+                self.tree_tab_D.grid(row=0,  column=0, columnspan=4, sticky="news",)
                 self.tree_tab_D.configure(yscrollcommand=self.tree_scroll.set)
 
                 # ----------------insert in Treeveiw --------------------------------
@@ -349,7 +352,7 @@ class Interface(customtkinter.CTk):
                 #             ------------------------------------------Scroll Bar ________________________________
                 self.tree_scroll = customtkinter.CTkScrollbar(master=self.frame_tab_2.tab(name),
                                                               command=self.tree_tab_D.yview)
-                self.tree_scroll.grid(row=1, rowspan=7, column=5, sticky="ns")
+                self.tree_scroll.grid(row=0, column=1, sticky="ns")
 
                 self.tree_tab_C.tag_configure("odd", background="#212121")
                 self.tree_tab_C.tag_configure("even", background=ROW_EVEN)
@@ -362,7 +365,7 @@ class Interface(customtkinter.CTk):
                 self.tree_tab_C.heading("#0", text="", anchor=W)
                 self.tree_tab_C.heading("Name", text="Name", anchor=W)
                 self.tree_tab_C.heading("Date", text="Date", anchor=W)
-                self.tree_tab_C.grid(row=1, rowspan=7, column=0, columnspan=4, sticky="news")
+                self.tree_tab_C.grid(row=0, column=0, columnspan=4, sticky="news")
                 self.tree_tab_C.configure(yscrollcommand=self.tree_scroll.set)
                 # ----------------insert in Treeveiw --------------------------------
                 for record in USB.list_cfg():
@@ -382,7 +385,7 @@ class Interface(customtkinter.CTk):
                 #             ------------------------------------------Scroll Bar ________________________________
                 self.tree_scroll = customtkinter.CTkScrollbar(master=self.frame_tab_2.tab(name),
                                                               command=self.tree_tab_M.yview)
-                self.tree_scroll.grid(row=1, rowspan=7, column=5, sticky="ns")
+                self.tree_scroll.grid(row=0, column=1, sticky="ns")
                 self.tree_tab_M.tag_configure("odd", background="#212121")
                 self.tree_tab_M.tag_configure("even", background=ROW_EVEN)
                 self.tree_tab_M["columns"] = ("Name", "Date")
@@ -393,7 +396,7 @@ class Interface(customtkinter.CTk):
                 self.tree_tab_M.heading("#0", text="", anchor=W)
                 self.tree_tab_M.heading("Name", text="Name", anchor=W)
                 self.tree_tab_M.heading("Date", text="Date", anchor=W)
-                self.tree_tab_M.grid(row=1, rowspan=7, column=0, columnspan=4, sticky="news")
+                self.tree_tab_M.grid(row=0, column=0, columnspan=4, sticky="news")
                 self.tree_tab_M.configure(yscrollcommand=self.tree_scroll.set)
                 # ----------------insert in Treeveiw --------------------------------
                 for record in USB.list_mch():
@@ -524,8 +527,7 @@ class Interface(customtkinter.CTk):
         self.button_gcs_900_choice = customtkinter.CTkButton(master=self.frame_1_1, text="GCS 900", corner_radius=10,
                                                              font=FONT_BUTTON, width=MAIN_WIDTH, height=MAIN_HEIGHT,
                                                              fg_color=SELECTED_BLUE, text_color=FONT_SELECTED,
-                                                             command=lambda: [self.event_button_system_gcs(),
-                                                                              self.message_gcs_900()]
+                                                             command=lambda: [self.event_button_system_gcs()]
                                                              )
         self.button_gcs_900_choice.grid(row=1, column=1)
 
@@ -534,8 +536,7 @@ class Interface(customtkinter.CTk):
                                                                 font=FONT_BUTTON, width=MAIN_WIDTH, height=MAIN_HEIGHT,
                                                                 fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED,
                                                                 state="disabled",
-                                                                command=lambda: [self.event_button_system_earth(),
-                                                                                 self.message_earthwork()]
+                                                                command=lambda: [self.event_button_system_earth()]
                                                                 )
         self.button_earth_work_choice.grid(row=3, column=1)
 
@@ -622,8 +623,10 @@ class Interface(customtkinter.CTk):
 
 
     def message_save (self):
-        new_text = f"Machine name:     - {self.entry_machine_name.get()}"
-        self.label_machine_name.configure(text=new_text)
+        new_text_m1 = f"Machine name:     - {self.entry_machine_name.get()}"
+        new_text_m2 = f"Machine name:  {self.entry_machine_name.get()}"
+        self.label_machine_name.configure(text=new_text_m1)
+        self.label_machine_name_m2.configure(text=new_text_m2)
 
     def message_selected(self):
         with open("TempFile.json", "r") as file:
@@ -631,16 +634,25 @@ class Interface(customtkinter.CTk):
         selected = pathlib.Path(str(loaded_file["Selected File"])).name
         self.button_tab_2_create_ds.configure(state="normal")
         if selected == "":
-            pass
+            new_text_m1 = f"Selected File:         - File not selected "
+            new_text_m2 = f"Selected File:  None"
+            self.label_selelected.configure(text=new_text_m1)
+            self.label_selected_file_m2.configure(text=new_text_m2)
         else:
-            new_text =f"Selected File:         - {selected}"
-            self.label_selelected.configure(text=new_text)
+            new_text_m1 =f"Selected File:         - {selected}"
+            new_text_m2 = f"Selected File:  {selected}"
+            self.label_selelected.configure(text=new_text_m1)
+            self.label_selected_file_m2.configure(text=new_text_m2)
 
     def message_created(self):
         machine_name = panda.get_machine_name()
         new_text ="File Created:          - Desktop/Points GCS 900/"
 
         self.label_created.configure(text=new_text)
+        new_text_m1 = "File Created:          - Desktop/Points GCS 900/"
+        new_text_m2 = "File Created:  Desktop/Points GCS 900/"
+        self.label_created.configure(text=new_text_m1)
+        self.label_created_file_m2.configure(text=new_text_m2)
 
     def event_button_system_gcs(self):
         self.button_gcs_900_choice.configure(fg_color=SELECTED_BLUE, text_color=FONT_SELECTED)
