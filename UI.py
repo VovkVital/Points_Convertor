@@ -141,7 +141,7 @@ class Interface(customtkinter.CTk):
         self.frame_3_1.add("Restore box Conversion")
         self.frame_3_1.grid(row=1, column=3, rowspan=3, sticky="sewn")
         self.frame_3_1.tab("Simple Point Conversion").grid_columnconfigure(0, minsize=10)
-        self.frame_3_1.tab("Simple Point Conversion").grid_columnconfigure(1, weight=2)
+        self.frame_3_1.tab("Simple Point Conversion").grid_columnconfigure(1, weight=1)
         self.frame_3_1.tab("Simple Point Conversion").grid_columnconfigure(2, minsize=10)
         self.frame_3_1.tab("Simple Point Conversion").grid_columnconfigure(3, weight=1)
         self.frame_3_1.tab("Simple Point Conversion").grid_columnconfigure(4, minsize=10)
@@ -157,7 +157,7 @@ class Interface(customtkinter.CTk):
 
         #----------------------------Columns----------------------
         self.frame_3_1.tab("Restore box Conversion").grid_columnconfigure(0, minsize=5)
-        self.frame_3_1.tab("Restore box Conversion").grid_columnconfigure(1, weight=2)
+        self.frame_3_1.tab("Restore box Conversion").grid_columnconfigure(1, weight=1)
         self.frame_3_1.tab("Restore box Conversion").grid_columnconfigure(2, weight=1)
         self.frame_3_1.tab("Restore box Conversion").grid_columnconfigure(3, weight=1)
         self.frame_3_1.tab("Restore box Conversion").grid_columnconfigure(4, minsize=5)
@@ -213,37 +213,33 @@ class Interface(customtkinter.CTk):
         for tab in TAB_NAME:
             self.button_tab_2_keep = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"), text="Keep", font=FONT_BUTTON,
                                                             width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
+                                                             fg_color=SELECTED_BLUE, text_color=FONT_SELECTED,
                                                              command=self.but_tr_keep)
-            self.button_tab_2_keep.grid(row=1, column=0, sticky="e")
+            self.button_tab_2_keep.grid(row=1, column=0, sticky ="e")
 
             self.button_tab_2_delete = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"), text="Delete",
-                                                             font=FONT_BUTTON,
-                                                             width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
+                                                               font=FONT_BUTTON,
+                                                               width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
+                                                               fg_color = SELECTED_BLUE, text_color = FONT_SELECTED,
                                                                command=self.but_tr_delete)
             self.button_tab_2_delete.grid(row=1, column=1, sticky="e")
 
             self.button_tab_2_add = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"), text="ADD",
                                                             font=FONT_BUTTON,
                                                             width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
+                                                            fg_color = SELECTED_BLUE, text_color = FONT_SELECTED,
                                                             command=self.but_tr_add)
             self.button_tab_2_add.grid(row=1, column=2, sticky="e")
             if TAB_NAME[tab_name_count] == TAB_NAME[0]:
-                print(TAB_NAME[tab_name_count])
                 self.button_tab_2_create_ds = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"),
                                                                    text="Create",
                                                                    font=FONT_BUTTON,
                                                                    width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
+                                                                   fg_color=SELECTED_BLUE, text_color=FONT_SELECTED,
                                                                    state ="disabled", command=self.but_tr_cr)
-                self.button_tab_2_create_ds.grid(row=1, column=3, sticky="se")
+                self.button_tab_2_create_ds.grid(row=1, column=3, sticky="e")
                 tab_name_count += 1
-            # # else:
-            #     self.button_tab_2_create = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"),
-            #                                                        text="Create",
-            #                                                        font=FONT_BUTTON,
-            #                                                        width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
-            #                                                        state="disabled")
-            #     self.button_tab_2_create.grid(row=1, column=3, sticky="se")
-            #     tab_name_count += 1
+
     def message_box_m2(self):
             self.message_box_tab_2_all = customtkinter.CTkFrame(master=self.frame_3_1.tab("Restore box Conversion"),
                                                                 corner_radius=25)
@@ -272,18 +268,34 @@ class Interface(customtkinter.CTk):
             self.label_created_file_m2.grid(row=3, column=0, sticky="w", padx=15)
 
 
+            try:
+                self.label_design_files_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all,
+                                                                text=f"Design Files: -- {len(LIST_DESIGN)}")
+                self.label_design_files_m2.grid(row=1, column=1, sticky="w", padx=15)
+            except TypeError:
+                self.label_design_files_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all,
+                                                                    text=f"Design Files: --...")
+                self.label_design_files_m2.grid(row=1, column=1, sticky="w", padx=15)
 
-            self.label_design_files_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all,
-                                                                text="Design Files: --... Size: --...")
-            self.label_design_files_m2.grid(row=1, column=1, sticky="w", padx=15)
+            try:
+                self.label_config_files_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all,
+                                                                 text=f"Config Files: -- {len(LIST_CFG)}")
+                self.label_config_files_m2.grid(row=2, column=1, sticky="w", padx=15)
+            except TypeError:
+                self.label_config_files_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all,
+                                                                    text=f"Config Files: --...")
+                self.label_config_files_m2.grid(row=2, column=1, sticky="w", padx=15)
 
-            self.label_config_files_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all,
-                                                                 text="Config Files: --...")
-            self.label_config_files_m2.grid(row=2, column=1, sticky="w", padx=15)
 
-            self.label_machine_files_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all,
-                                                                text="Machine Files: --...")
-            self.label_machine_files_m2.grid(row=3, column=1, sticky="w", padx=15)
+            try:
+                self.label_machine_files_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all,
+                                                                text=f"Machine Files: --{len(LIST_MCG)}")
+                self.label_machine_files_m2.grid(row=3, column=1, sticky="w", padx=15)
+            except TypeError:
+                self.label_machine_files_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all,
+                                                                     text=f"Machine Files: --...")
+                self.label_machine_files_m2.grid(row=3, column=1, sticky="w", padx=15)
+
 
 
 
@@ -322,7 +334,7 @@ class Interface(customtkinter.CTk):
                 self.tree_tab_D.tag_configure("even", background= ROW_EVEN)
                 #         --------- Define Columns ______-------
                 self.tree_tab_D["columns"] = ("Name", "Date")
-                self.tree_tab_D.column("#0", anchor=W, width=45, minwidth=45,  stretch=False)
+                self.tree_tab_D.column("#0", anchor=W, width=55, minwidth=55,  stretch=False)
                 self.tree_tab_D.column("Name", anchor=W, width=350, minwidth=100)
                 self.tree_tab_D.column("Date", anchor=W, width=40, minwidth=40)
                 #      -    -------------- Create Headings --------------------------
@@ -333,15 +345,19 @@ class Interface(customtkinter.CTk):
                 self.tree_tab_D.configure(yscrollcommand=self.tree_scroll.set)
 
                 # ----------------insert in Treeveiw --------------------------------
-                for record in USB.list_designs():
-                    if count % 2 == 0:
-                        self.tree_tab_D.insert(parent="", index="end", text=row_count, iid=count,
-                                               values=(record[0], record[1]), tags=("odd",))
-                    else:
-                        self.tree_tab_D.insert(parent="", index="end", text=row_count, iid=count,
-                                               values=(record[0], record[1]), tags=("even",))
-                    count += 1
-                    row_count += 1
+
+                try:
+                    for record in USB.list_designs():
+                        if count % 2 == 0:
+                            self.tree_tab_D.insert(parent="", index="end", text=row_count, iid=count,
+                                                   values=(record[0], record[1]), tags=("odd",))
+                        else:
+                            self.tree_tab_D.insert(parent="", index="end", text=row_count, iid=count,
+                                                   values=(record[0], record[1]), tags=("even",))
+                        count += 1
+                        row_count += 1
+                except TypeError:
+                    LIST_DESIGN = []
 
             if name == TAB_NAME[1]:
                 count = 0
@@ -356,7 +372,7 @@ class Interface(customtkinter.CTk):
                 self.tree_tab_C.tag_configure("even", background=ROW_EVEN)
                 #         --------- Define Columns ______-------
                 self.tree_tab_C["columns"] = ("Name", "Date")
-                self.tree_tab_C.column("#0", anchor=W, width=45, minwidth=45,  stretch=False)
+                self.tree_tab_C.column("#0", anchor=W, width=55, minwidth=55,  stretch=False)
                 self.tree_tab_C.column("Name", anchor=W, width=350, minwidth=100)
                 self.tree_tab_C.column("Date", anchor=W, width=40, minwidth=40)
                 #      -    -------------- Create Headings --------------------------
@@ -366,15 +382,20 @@ class Interface(customtkinter.CTk):
                 self.tree_tab_C.grid(row=0, column=0, columnspan=4, sticky="news")
                 self.tree_tab_C.configure(yscrollcommand=self.tree_scroll.set)
                 # ----------------insert in Treeveiw --------------------------------
-                for record in USB.list_cfg():
-                    if count % 2 == 0:
-                        self.tree_tab_C.insert(parent="", index="end", text=row_count, iid=count,
-                                               values=(record[0], record[1]), tags=("odd",))
-                    else:
-                        self.tree_tab_C.insert(parent="", index="end", text=row_count, iid=count,
-                                               values=(record[0], record[1]), tags=("even",))
-                    count += 1
-                    row_count += 1
+
+                try:
+                    for record in USB.list_cfg():
+                        if count % 2 == 0:
+                            self.tree_tab_C.insert(parent="", index="end", text=row_count, iid=count,
+                                                   values=(record[0], record[1]), tags=("odd",))
+                        else:
+                            self.tree_tab_C.insert(parent="", index="end", text=row_count, iid=count,
+                                                   values=(record[0], record[1]), tags=("even",))
+                        count += 1
+                        row_count += 1
+                except TypeError:
+                    LIST_CFG = []
+
 
             if name == TAB_NAME[2]:
                 count = 0
@@ -387,7 +408,7 @@ class Interface(customtkinter.CTk):
                 self.tree_tab_M.tag_configure("odd", background="#212121")
                 self.tree_tab_M.tag_configure("even", background=ROW_EVEN)
                 self.tree_tab_M["columns"] = ("Name", "Date")
-                self.tree_tab_M.column("#0", anchor=W, width=45, minwidth=45,  stretch=False)
+                self.tree_tab_M.column("#0", anchor=W, width=55, minwidth=55,  stretch=False)
                 self.tree_tab_M.column("Name", anchor=W, width=350, minwidth=100)
                 self.tree_tab_M.column("Date", anchor=W, width=40, minwidth=40)
                 #      -    -------------- Create Headings --------------------------
@@ -397,15 +418,19 @@ class Interface(customtkinter.CTk):
                 self.tree_tab_M.grid(row=0, column=0, columnspan=4, sticky="news")
                 self.tree_tab_M.configure(yscrollcommand=self.tree_scroll.set)
                 # ----------------insert in Treeveiw --------------------------------
-                for record in USB.list_mch():
-                    if count % 2 == 0:
-                        self.tree_tab_M.insert(parent="", index="end", text=row_count, iid=count,
-                                               values=(record[0], record[1]), tags=("odd",))
-                    else:
-                        self.tree_tab_M.insert(parent="", index="end", text=row_count, iid=count,
-                                               values=(record[0], record[1]), tags=("even",))
-                    count += 1
-                    row_count += 1
+
+                try:
+                    for record in USB.list_mch():
+                        if count % 2 == 0:
+                            self.tree_tab_M.insert(parent="", index="end", text=row_count, iid=count,
+                                                   values=(record[0], record[1]), tags=("odd",))
+                        else:
+                            self.tree_tab_M.insert(parent="", index="end", text=row_count, iid=count,
+                                                   values=(record[0], record[1]), tags=("even",))
+                        count += 1
+                        row_count += 1
+                except TypeError:
+                    LIST_CFG = []
 
 
     def click_design(self):
@@ -413,6 +438,7 @@ class Interface(customtkinter.CTk):
         count = 0
         row_count = 1
         index = 0
+
         try:
             for find_index in LIST_DESIGN:
                 selected_item = self.tree_tab_D.item(self.tree_tab_D.focus())
@@ -488,6 +514,7 @@ class Interface(customtkinter.CTk):
         count = 0
         row_count = 1
         index = 0
+
         try:
             for find_index in LIST_MCG:
                 selected_item = self.tree_tab_M.item(self.tree_tab_M.focus())
@@ -672,7 +699,6 @@ class Interface(customtkinter.CTk):
         try:
             with open("Settings.json", "w") as file:
                 upload_date = {"Machine Name": machine_name}
-                print(upload_date)
                 json.dump(upload_date, file, indent=4)
         except:
             pass
@@ -753,6 +779,7 @@ class Interface(customtkinter.CTk):
                 if src.is_dir():
                     shutil.move(src, dst.joinpath("Designs"))
                     self.click_design()
+                    self.label_design_files_m2.configure(text=f"Design Files: -- {len(LIST_DESIGN)}")
 
                 if src.is_file():
                     files = glob(os.path.join(str(src.parent), "*.cfg"))
@@ -760,6 +787,7 @@ class Interface(customtkinter.CTk):
                         if str(src) == files[match]:
                             shutil.move(src, dst.joinpath("Config Files"))
                             self.click_cfg()
+                            self.label_config_files_m2.configure(text=f"Config Files: -- {len(LIST_CFG)}")
 
                 if src.is_file():
                     files = glob(os.path.join(str(src.parent), "*.MCH"))
@@ -767,6 +795,7 @@ class Interface(customtkinter.CTk):
                         if str(src) == files[match]:
                             shutil.move(src, dst.joinpath("Machine Files"))
                             self.click_mch()
+                            self.label_machine_files_m2.configure(text=f"Config Files: -- {len(LIST_MCG)}")
 
     def but_tr_add(self):
         global TAB_NAME
@@ -780,6 +809,7 @@ class Interface(customtkinter.CTk):
         for tab in range(0, len(TAB_NAME)):
             if TAB_NAME[1] == selected_tab:
                 list_glob = glob(os.path.join(str(selected_file.parent), "*.cfg"))
+                self.label_config_files_m2.configure(text=f"Config Files: -- {len(LIST_CFG)}")
                 for math_file in range(0, len(list_glob)):
                     if str(selected_file) == list_glob[math_file]:
                         shutil.copy(selected_file, str(USB_PATH))
@@ -804,6 +834,7 @@ class Interface(customtkinter.CTk):
                             row_count += 1
             if TAB_NAME[2] == selected_tab:
                 list_glob = glob(os.path.join(str(selected_file.parent), "*.MCH"))
+                self.label_machine_files_m2.configure(text=f"Config Files: -- {len(LIST_MCG)}")
                 for math_file in range(0, len(list_glob)):
                     if str(selected_file) == list_glob[math_file]:
                         shutil.copy(selected_file, str(USB_PATH))
@@ -833,6 +864,8 @@ class Interface(customtkinter.CTk):
         design_name = selected_file[0]
         path = pathlib.Path(os.path.join(USB.detect_usb(), ".Field-Data"))
         self.label_selelected.configure(text="Selected File:         - File not selected")
+        self.label_selected_file_m2.configure(text="File Created: File not selected")
+        self.button_tab_2_create_ds.configure(state="disabled")
         if path.exists():
             design_path = path.joinpath(design_name)
             if path.exists():
