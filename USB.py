@@ -23,8 +23,6 @@ class Usb_drive:
         self.new = 0
 
 
-
-
     def detect_usb(self):
         self.correct_usb = []
         drive_list = []
@@ -88,5 +86,3 @@ class Usb_drive:
             pass
 
 
-if __name__ == "__main__":
-    Usb_drive()

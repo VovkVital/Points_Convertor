@@ -172,7 +172,7 @@ class Interface(customtkinter.CTk):
 
     def frame_message_box(self):
         self.frame_3_3 = customtkinter.CTkFrame(master=self.frame_3_1.tab("Simple Point Conversion"), corner_radius=25)
-        self.frame_3_3.grid(row=5, column=0,columnspan=5, rowspan=3, sticky="news")
+        self.frame_3_3.grid(row=5, column=0, columnspan=5, rowspan=3, sticky="news")
         self.frame_3_3.grid_rowconfigure(0, minsize=5)
         self.frame_3_3.grid_rowconfigure(1, weight=1)
         self.frame_3_3.grid_rowconfigure(2, weight=1)
@@ -212,10 +212,10 @@ class Interface(customtkinter.CTk):
         tab_name_count = 0
         for tab in TAB_NAME:
             self.button_tab_2_keep = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"), text="Keep", font=FONT_BUTTON,
-                                                            width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
+                                                             width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
                                                              fg_color=SELECTED_BLUE, text_color=FONT_SELECTED,
                                                              command=self.but_tr_keep)
-            self.button_tab_2_keep.grid(row=1, column=0, sticky ="e")
+            self.button_tab_2_keep.grid(row=1, column=0, sticky="e")
 
             self.button_tab_2_delete = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"), text="Delete",
                                                                font=FONT_BUTTON,
@@ -232,11 +232,11 @@ class Interface(customtkinter.CTk):
             self.button_tab_2_add.grid(row=1, column=2, sticky="e")
             if TAB_NAME[tab_name_count] == TAB_NAME[0]:
                 self.button_tab_2_create_ds = customtkinter.CTkButton(master=self.frame_3_1.tab("Restore box Conversion"),
-                                                                   text="Create",
-                                                                   font=FONT_BUTTON,
-                                                                   width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
-                                                                   fg_color=SELECTED_BLUE, text_color=FONT_SELECTED,
-                                                                   state ="disabled", command=self.but_tr_cr)
+                                                                      text="Create",
+                                                                      font=FONT_BUTTON,
+                                                                      width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
+                                                                      fg_color=SELECTED_BLUE, text_color=FONT_SELECTED,
+                                                                      state ="disabled", command=self.but_tr_cr)
                 self.button_tab_2_create_ds.grid(row=1, column=3, sticky="e")
                 tab_name_count += 1
 
@@ -270,7 +270,7 @@ class Interface(customtkinter.CTk):
 
             try:
                 self.label_design_files_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all,
-                                                                text=f"Design Files: -- {len(LIST_DESIGN)}")
+                                                                    text=f"Design Files: -- {len(LIST_DESIGN)}")
                 self.label_design_files_m2.grid(row=1, column=1, sticky="w", padx=15)
             except TypeError:
                 self.label_design_files_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all,
@@ -279,7 +279,7 @@ class Interface(customtkinter.CTk):
 
             try:
                 self.label_config_files_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all,
-                                                                 text=f"Config Files: -- {len(LIST_CFG)}")
+                                                                    text=f"Config Files: -- {len(LIST_CFG)}")
                 self.label_config_files_m2.grid(row=2, column=1, sticky="w", padx=15)
             except TypeError:
                 self.label_config_files_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all,
@@ -289,7 +289,7 @@ class Interface(customtkinter.CTk):
 
             try:
                 self.label_machine_files_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all,
-                                                                text=f"Machine Files: --{len(LIST_MCG)}")
+                                                                     text=f"Machine Files: --{len(LIST_MCG)}")
                 self.label_machine_files_m2.grid(row=3, column=1, sticky="w", padx=15)
             except TypeError:
                 self.label_machine_files_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all,

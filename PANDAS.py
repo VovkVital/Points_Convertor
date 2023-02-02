@@ -17,14 +17,9 @@ class CSV:
         try:
             with open("Settings.json", "r") as file:
                 machine_name = json.load(file)
-                text = f"""Machine name {machine_name["Machine Name"]} SAVED"""
                 return machine_name["Machine Name"]
-        except FileNotFoundError:
-            return "Type Your Machine Name"
-        except KeyError:
-            print("Key Error in the machine name file")
-        except json.decoder.JSONDecodeError:
-            print("Cant read .json file Machine Name")
+        except BaseException as error:
+            print("An error is ocured: {}" .format(error))
 
 
 
