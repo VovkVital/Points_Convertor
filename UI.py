@@ -21,6 +21,8 @@ USB = Usb_drive()
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("dark-blue")
 
+print(USB.list_designs())
+
 
 # -------------- Fonts -----------------------------
 FONT = ("Robot", 15, "bold")
@@ -777,25 +779,45 @@ class Interface(customtkinter.CTk):
                         dst.joinpath(folders[folder]).mkdir(parents=True, exist_ok=True)
 
                 if src.is_dir():
-                    shutil.move(src, dst.joinpath("Designs"))
-                    self.click_design()
-                    self.label_design_files_m2.configure(text=f"Design Files: -- {len(LIST_DESIGN)}")
+                    if dst.joinpath("Designs").joinpath(pathlib.Path(src).name).exists():
+                        shutil.rmtree(dst.joinpath("Designs").joinpath(pathlib.Path(src).name))
+                        shutil.move(src, dst.joinpath("Designs"))
+                        self.click_design()
+                        self.label_design_files_m2.configure(text=f"Design Files: -- {len(LIST_DESIGN)}")
+                    else:
+                        shutil.move(src, dst.joinpath("Designs"))
+                        self.click_design()
+                        self.label_design_files_m2.configure(text=f"Design Files: -- {len(LIST_DESIGN)}")
+
+
 
                 if src.is_file():
                     files = glob(os.path.join(str(src.parent), "*.cfg"))
                     for match in range(0, len(files)):
                         if str(src) == files[match]:
-                            shutil.move(src, dst.joinpath("Config Files"))
-                            self.click_cfg()
-                            self.label_config_files_m2.configure(text=f"Config Files: -- {len(LIST_CFG)}")
+                            if dst.joinpath("Config Files").joinpath(pathlib.Path(src).name).exists():
+                                pathlib.Path(dst.joinpath("Config Files").joinpath(pathlib.Path(src).name)).unlink()
+                                shutil.move(src, dst.joinpath("Config Files"))
+                                self.click_cfg()
+                                self.label_config_files_m2.configure(text=f"Config Files: -- {len(LIST_CFG)}")
+                            else:
+                                shutil.move(src, dst.joinpath("Config Files"))
+                                self.click_cfg()
+                                self.label_config_files_m2.configure(text=f"Config Files: -- {len(LIST_CFG)}")
 
                 if src.is_file():
                     files = glob(os.path.join(str(src.parent), "*.MCH"))
                     for match in range(0, len(files)):
                         if str(src) == files[match]:
-                            shutil.move(src, dst.joinpath("Machine Files"))
-                            self.click_mch()
-                            self.label_machine_files_m2.configure(text=f"Config Files: -- {len(LIST_MCG)}")
+                            if dst.joinpath("Machine Files").joinpath(pathlib.Path(src).name).exists():
+                                pathlib.Path(dst.joinpath("Machine Files").joinpath(pathlib.Path(src).name)).unlink()
+                                shutil.move(src, dst.joinpath("Machine Files"))
+                                self.click_mch()
+                                self.label_machine_files_m2.configure(text=f"Config Files: -- {len(LIST_MCG)}")
+                            else:
+                                shutil.move(src, dst.joinpath("Machine Files"))
+                                self.click_mch()
+                                self.label_machine_files_m2.configure(text=f"Config Files: -- {len(LIST_MCG)}")
 
     def but_tr_add(self):
         global TAB_NAME
