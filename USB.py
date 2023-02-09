@@ -1,13 +1,9 @@
 import pathlib
-
+import re
 import win32file
 import os
 from glob import glob
-from pathlib import Path
-import time as time
 from datetime import datetime
-
-
 
 class Usb_drive:
     usb_folders_design = []
@@ -21,6 +17,7 @@ class Usb_drive:
         self.list_cfg()
         self.list_mch()
         self.new = 0
+        self.path_switch = 0
 
 
     def detect_usb(self):
@@ -35,17 +32,16 @@ class Usb_drive:
                 t=win32file.GetDriveType(drname)
                 if t == win32file.DRIVE_REMOVABLE:
                     drive_list.append(drname)
-                    # print(f"List{drive_list}")
                     for right_usb in drive_list:
-                        directory_check = os.path.join(right_usb, "Machine Control Data")
-                        check_path = glob(f"{directory_check}\\Backup_*")
-                        if check_path:
-                            path = check_path[0]
-                            if os.path.exists(path) == True:
+                        if pathlib.Path(os.path.join(right_usb, "Machine Control Data")).exists():
+                            Usb_drive.USB_PATH = self.directory_check = os.path.join(right_usb, "Machine Control Data")
+                            check_path = self.multiple_files(os.listdir(self.directory_check))
+                            if check_path != None:
                                 self.correct_usb.append(right_usb)
-                                self.current_path = path
-                                Usb_drive.USB_PATH = path
+                                Usb_drive.USB_PATH = self.current_path = pathlib.Path(self.directory_check).joinpath(check_path)
+                                self.path_switch = 1
                                 return self.current_path
+
 
     def list_designs(self):
         list_designs = []
@@ -84,5 +80,33 @@ class Usb_drive:
             return list_mch
         except:
             pass
+    def multiple_files(self, path):
+        file_list = self.select_file(path)
+        if len(file_list) == 1 or len(file_list) == 0:
+            return file_list[0]
+        else:
+            return None
+
+    def select_file(self, path):
+        check = r"Backup.+|[aA][lL][lL]"
+        return [i for i in path if re.fullmatch(check, i)]
+
+
+
+
+
+        # try:
+        #     for design_f in os.listdir(self.current_path):
+        #         check_path_svd = glob(f"{self.current_path}\\{design_f}\\*.svd")
+        #         check_path_svl = glob(f"{self.current_path}\\{design_f}\\*.svl")
+        #         if check_path_svd or check_path_svl:
+        #             path_svd = check_path_svd[0]
+        #             # path_svl = check_path_svl[0]
+        #             time = datetime.fromtimestamp(os.path.getmtime(path_svd)).strftime('%m/%d/%Y')
+        #             list_designs.append([design_f, time])
+        #     return list_designs
+        # except AttributeError:
+        #     pass
+        #
 
 

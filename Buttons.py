@@ -11,7 +11,7 @@ FONT_NOT_SELECTED = "gray60"
 FONT_SELECTED = "gray94"
 
 class Button(customtkinter.CTkButton):
-    def __init__(self, master, text, sticky, row, column, command, **kwargs):
+    def __init__(self, master, text, sticky, row, column, **kwargs):
         super().__init__(master=master, text=text, width=120, height=40, fg_color=SELECTED_BLUE, font=FONT_BUTTON,
                          text_color=FONT_SELECTED, text_color_disabled=FONT_NOT_SELECTED, hover=False)
         self.configure(**kwargs)
@@ -21,7 +21,6 @@ class Button(customtkinter.CTkButton):
         # except:
         #     print("Error")
         #     self.configure(command=self.flash)
-
         if kwargs:
             try:
                 if kwargs["command"]:

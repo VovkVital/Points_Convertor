@@ -2,6 +2,7 @@ import tkinter
 from tkinter import ttk
 import customtkinter
 from Buttons import Button, Label
+import json
 # _______ Colors _________
 SELECTED_BLUE = "#008fd7"
 NOT_SELECTED = "#44657e"
@@ -18,18 +19,20 @@ TAB_NAME=["Design Folders", "Config Files", "Machine Files"]
 
 
 class Treeview(tkinter.ttk.Treeview):
-    def __init__(self, master, data, **kwargs):
+    def __init__(self, data, **kwargs):
         self.frame()
         self.flash=Button.flash
         super(). __init__(master=self.tree_frame)
         self.data = data
-        self.master=master
         self.Treestyle()
         self.one_frame()
+        self.buttons()
+        self.return_value = 0
 
 
-        if kwargs["message_box"] == True:
-            self.buttons()
+        # if kwargs["message_box"] == True:
+        #     self.buttons()
+
         # if kwargs["multiframe"] == True:
         #     if kwargs["frames"][0] == "Design Folders":
         #         self.multiframe(data[0])
@@ -115,17 +118,27 @@ class Treeview(tkinter.ttk.Treeview):
 
     def buttons(self):
 
-        Button(master=self.box, text="Select", sticky=None, row=3, column=0, command=None)
+        Button(master=self.box, text="Select", sticky=None, row=3, column=0, command=self.selection)
         Button(master=self.box, text="Cancel", sticky=None, row=3, column=1, command=None)
         label = Label(master=self.box, text="Two or more files are present on the USB. Select one!", row=0, column=0)
         label.grid(columnspan=2)
         label.configure(text_color=SELECTED_BLUE, font=FONT_LABEL_ERROR)
 
 
-    def oppa(self):
-        print("Oppa")
-        # label = customtkinter.CTkLabel(master=self.box, text="Two or more files on USB. Select one")
-        # label.grid(row=0, column=0, columnspan=2)
+    def selection(self):
+        selected_item = self.item(self.focus())["values"][0]
+        return print(selected_item)
+        # try:
+        #     with open("Settings.json", "r") as file:
+        #         loaded_file =json.load(file)
+        #     loaded_file = {"Selected File": selected_item}
+        #     print(loaded_file)
+        #     with open("Settings.json", "w") as file:
+        #         json.dump(loaded_file, file, indent=4)
+        #
+        # except:
+        #     pass
+
 
     # def multiframe(self, data, **kwargs):
     #     if kwargs["frames"]:

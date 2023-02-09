@@ -16,12 +16,14 @@ from USB import Usb_drive
 import shutil
 from glob import glob
 from datetime import datetime
+from Treeview import Treeview
+import re
+import asyncio
 
 USB = Usb_drive()
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("dark-blue")
 
-print(USB.list_designs())
 
 
 # -------------- Fonts -----------------------------
@@ -69,7 +71,7 @@ FONT_SELECTED = "gray94"
 ROW_EVEN = customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][1]
 
 #  -------------------------------------------------------USB Data -------------------------------------
-USB_PATH = Usb_drive.USB_PATH
+USB_PATH = str(Usb_drive.USB_PATH)
 LIST_DESIGN = USB.list_designs()
 LIST_CFG = USB.list_cfg()
 LIST_MCG = USB.list_mch()
@@ -134,6 +136,7 @@ class Interface(customtkinter.CTk):
         self.frame_1_1.rowconfigure(3, weight=1)
         self.frame_1_1.rowconfigure(4, minsize=5)
         self.frame_1_1.grid_propagate(False)
+        return self.frame_1_1
 
 
     def frame_col_3_1 (self):
@@ -736,6 +739,7 @@ class Interface(customtkinter.CTk):
                 row_count = 1
                 for find_index in list_pick[tab]:
                     selected_item = trees[tab].item(trees[tab].focus())
+
                     if find_index == selected_item["values"]:
                         index = list_pick[tab].index(find_index)
                         list_pick[tab].pop(index)
@@ -771,6 +775,7 @@ class Interface(customtkinter.CTk):
             if TAB_NAME[tab] == selected_tab:
                 index = 0
                 selected_item = trees[tab].item(trees[tab].selection()[0])
+
                 src = pathlib.Path(USB_PATH).joinpath(selected_item["values"][0])
                 dst = pathlib.WindowsPath("~\\Desktop\\PC Deleted Files").expanduser()
                 if not dst.exists():
@@ -915,6 +920,19 @@ class Interface(customtkinter.CTk):
                         pass
                 except KeyError:
                     self.button_tab_2_create_ds.configure(state="disabled")
+    async def multiple_files_usb(self):
+        path = os.listdir(USB_PATH)
+        check = r"Backup.+|[aA][lL][lL]"
+        matches = [i for i in path if re.fullmatch(check, i)]
+        if len(matches) > 1:
+            files_to_show = []
+            for file in matches:
+                path = pathlib.Path(USB_PATH).joinpath(file)
+                time = datetime.fromtimestamp(path.stat().st_ctime).strftime('%m/%d/%Y')
+                files_to_show.append([file, time])
+            Treeview(data=files_to_show)
+
+
 
 
 
