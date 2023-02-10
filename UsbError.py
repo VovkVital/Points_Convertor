@@ -18,7 +18,7 @@ TAB_NAME=["Design Folders", "Config Files", "Machine Files"]
 
 
 
-class Treeview(tkinter.ttk.Treeview):
+class Message_box(tkinter.ttk.Treeview):
     def __init__(self, data, **kwargs):
         self.frame()
         self.flash=Button.flash
@@ -29,19 +29,6 @@ class Treeview(tkinter.ttk.Treeview):
         self.buttons()
         self.return_value = 0
 
-
-        # if kwargs["message_box"] == True:
-        #     self.buttons()
-
-        # if kwargs["multiframe"] == True:
-        #     if kwargs["frames"][0] == "Design Folders":
-        #         self.multiframe(data[0])
-        #     if kwargs["frames"][1] == "Config Files":
-        #         self.multiframe(data[1])
-        #     if kwargs["frames"][2] == "Machine Files":
-        #         self.multiframe(data[2])
-        # else:
-        #     self.one_frame()
     def frame(self):
         self.box = customtkinter.CTkToplevel()
         self.box.geometry("500x250")
@@ -128,57 +115,6 @@ class Treeview(tkinter.ttk.Treeview):
     def selection(self):
         selected_item = self.item(self.focus())["values"][0]
         return print(selected_item)
-        # try:
-        #     with open("Settings.json", "r") as file:
-        #         loaded_file =json.load(file)
-        #     loaded_file = {"Selected File": selected_item}
-        #     print(loaded_file)
-        #     with open("Settings.json", "w") as file:
-        #         json.dump(loaded_file, file, indent=4)
-        #
-        # except:
-        #     pass
-
-
-    # def multiframe(self, data, **kwargs):
-    #     if kwargs["frames"]:
-    #         for frame in range(0, kwargs["frames"]) :
-    #                 count = 0
-    #                 row_count = 1
-    #                 self.tree_scroll = customtkinter.CTkScrollbar(master=kwargs["frames"][frame], command=self.yview)
-    #                 self.tree_scroll.grid(row=0, column=1, sticky="ns")
-    #                 self.tag_configure("odd", background="#212121")
-    #                 self.tag_configure("even", background=ROW_EVEN)
-    #                 #         --------- Define Columns ______-------
-    #                 self["columns"] = ("Name", "Date")
-    #                 self.column("#0", anchor="w", width=55, minwidth=55, stretch=False)
-    #                 self.column("Name", anchor="w", width=350, minwidth=100)
-    #                 self.column("Date", anchor="w", width=40, minwidth=40)
-    #                 #      -    -------------- Create Headings --------------------------
-    #                 self.heading("#0", text="", anchor="w")
-    #                 self.heading("Name", text="Name", anchor="w")
-    #                 self.heading("Date", text="Date", anchor="w")
-    #                 self.grid(row=0, column=0, columnspan=4, sticky="news", )
-    #                 self.configure(yscrollcommand=self.tree_scroll.set)
-    #                 self.config(**kwargs)
-    #
-    #                 # ----------------insert in Treeveiw --------------------------------
-    #
-    #                 try:
-    #                     for record in data:
-    #                         if count % 2 == 0:
-    #                             self.insert(parent="", index="end", text=row_count, iid=count,
-    #                                                    values=(record[0], record[1]), tags=("odd",))
-    #                         else:
-    #                             self.insert(parent="", index="end", text=row_count, iid=count,
-    #                                                    values=(record[0], record[1]), tags=("even",))
-    #                         count += 1
-    #                         row_count += 1
-    #                 except TypeError:
-    #                     LIST_DESIGN = []
-
-
-
 
 
 

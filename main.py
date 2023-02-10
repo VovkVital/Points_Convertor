@@ -1,6 +1,5 @@
 from UI import Interface
-from PANDAS import CSV
-from Treeview import Treeview
+from Pandas import CSV
 import asyncio
 from USB import Usb_drive
 import re
@@ -18,7 +17,7 @@ if __name__ == "__main__":
 
 
 
-# box = Treeview(data=[["A",1], ["B",2]])
+# box = Message_box(data=[["A",1], ["B",2]])
 
 
 
