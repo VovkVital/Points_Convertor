@@ -7,8 +7,7 @@ import re
 async def main():
     screen = Interface()
     pd = CSV()
-    print(Usb_drive.USB_PATH)
-    if re.fullmatch(r".+?MachIne Control Data", str(Usb_drive.USB_PATH), flags=re.IGNORECASE):
+    if re.fullmatch(r".+?Machine Control Data", str(Usb_drive.USB_PATH), flags=re.IGNORECASE):
         await screen.multiple_files_usb()
     screen.mainloop()
 
@@ -17,7 +16,7 @@ if __name__ == "__main__":
 
 
 
-# box = Message_box(data=[["A",1], ["B",2]])
+
 
 
 

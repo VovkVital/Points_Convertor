@@ -72,10 +72,11 @@ FONT_SELECTED = "gray94"
 ROW_EVEN = customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][1]
 
 #  -------------------------------------------------------USB Data -------------------------------------
-USB_PATH = str(Usb_drive.USB_PATH)
+USB_PATH = Usb_drive.USB_PATH
 LIST_DESIGN = USB.list_designs()
 LIST_CFG = USB.list_cfg()
 LIST_MCG = USB.list_mch()
+
 
 
 
@@ -316,133 +317,6 @@ class Interface(customtkinter.CTk):
         self.tree_tab_D = MainTree(master=self.frame_tab_2.tab("Design Folders"), data=USB.list_designs())
         self.tree_tab_C = MainTree(master=self.frame_tab_2.tab("Config Files"), data=USB.list_cfg())
         self.tree_tab_M = MainTree(master=self.frame_tab_2.tab("Machine Files"), data=USB.list_mch())
-
-    #     global TAB_NAME
-    #     for name in TAB_NAME:
-    #         treestyle = ttk.Style()
-    #         treestyle.theme_use('default')
-    #         treestyle.configure("Treeview", background=customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][1],
-    #                             foreground=customtkinter.ThemeManager.theme["CTkLabel"]["text_color"][1],
-    #                             fieldbackground=customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][1],
-    #                             borderwidth=0, font=FONT, rowheight=50)
-    #         treestyle.configure("Treeview.Heading", font=("Roboto", 17),
-    #                             background=(customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][1]),
-    #                             foreground=FONT_NOT_SELECTED, borderwidth=0,
-    #                             selected=SELECTED_BLUE)
-    #         treestyle.map("Treeview.Heading", background=[('active', customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][1])])
-    #         treestyle.map('Treeview',
-    #                       background=[("selected", SELECTED_BLUE)],
-    #                       foreground=[('selected', FONT_SELECTED)])
-    #
-    #         if name == TAB_NAME[0]:
-    #             count = 0
-    #             row_count = 1
-    #             self.tree_tab_D = tkinter.ttk.Treeview(master=self.frame_tab_2.tab(name))
-    # #             ------------------------------------------Scroll Bar ________________________________
-    #             self.tree_scroll = customtkinter.CTkScrollbar(master=self.frame_tab_2.tab(name), command=self.tree_tab_D.yview)
-    #             self.tree_scroll.grid(row=0,  column=1, sticky="ns")
-    #             self.tree_tab_D.tag_configure("odd", background="#212121")
-    #             self.tree_tab_D.tag_configure("even", background= ROW_EVEN)
-    #             #         --------- Define Columns ______-------
-    #             self.tree_tab_D["columns"] = ("Name", "Date")
-    #             self.tree_tab_D.column("#0", anchor=W, width=55, minwidth=55,  stretch=False)
-    #             self.tree_tab_D.column("Name", anchor=W, width=350, minwidth=100)
-    #             self.tree_tab_D.column("Date", anchor=W, width=40, minwidth=40)
-    #             #      -    -------------- Create Headings --------------------------
-    #             self.tree_tab_D.heading("#0", text="", anchor=W)
-    #             self.tree_tab_D.heading("Name", text="Name", anchor=W)
-    #             self.tree_tab_D.heading("Date", text="Date", anchor=W)
-    #             self.tree_tab_D.grid(row=0,  column=0, columnspan=4, sticky="news",)
-    #             self.tree_tab_D.configure(yscrollcommand=self.tree_scroll.set)
-    #
-    #             # ----------------insert in Treeveiw --------------------------------
-    #
-    #             try:
-    #                 for record in USB.list_designs():
-    #                     if count % 2 == 0:
-    #                         self.tree_tab_D.insert(parent="", index="end", text=row_count, iid=count,
-    #                                                values=(record[0], record[1]), tags=("odd",))
-    #                     else:
-    #                         self.tree_tab_D.insert(parent="", index="end", text=row_count, iid=count,
-    #                                                values=(record[0], record[1]), tags=("even",))
-    #                     count += 1
-    #                     row_count += 1
-    #             except TypeError:
-    #                 LIST_DESIGN = []
-    #
-    #         if name == TAB_NAME[1]:
-    #             count = 0
-    #             row_count = 1
-    #             self.tree_tab_C = tkinter.ttk.Treeview(master=self.frame_tab_2.tab(name))
-    #             #             ------------------------------------------Scroll Bar ________________________________
-    #             self.tree_scroll = customtkinter.CTkScrollbar(master=self.frame_tab_2.tab(name),
-    #                                                           command=self.tree_tab_D.yview)
-    #             self.tree_scroll.grid(row=0, column=1, sticky="ns")
-    #
-    #             self.tree_tab_C.tag_configure("odd", background="#212121")
-    #             self.tree_tab_C.tag_configure("even", background=ROW_EVEN)
-    #             #         --------- Define Columns ______-------
-    #             self.tree_tab_C["columns"] = ("Name", "Date")
-    #             self.tree_tab_C.column("#0", anchor=W, width=55, minwidth=55,  stretch=False)
-    #             self.tree_tab_C.column("Name", anchor=W, width=350, minwidth=100)
-    #             self.tree_tab_C.column("Date", anchor=W, width=40, minwidth=40)
-    #             #      -    -------------- Create Headings --------------------------
-    #             self.tree_tab_C.heading("#0", text="", anchor=W)
-    #             self.tree_tab_C.heading("Name", text="Name", anchor=W)
-    #             self.tree_tab_C.heading("Date", text="Date", anchor=W)
-    #             self.tree_tab_C.grid(row=0, column=0, columnspan=4, sticky="news")
-    #             self.tree_tab_C.configure(yscrollcommand=self.tree_scroll.set)
-    #             # ----------------insert in Treeveiw --------------------------------
-    #
-    #             try:
-    #                 for record in USB.list_cfg():
-    #                     if count % 2 == 0:
-    #                         self.tree_tab_C.insert(parent="", index="end", text=row_count, iid=count,
-    #                                                values=(record[0], record[1]), tags=("odd",))
-    #                     else:
-    #                         self.tree_tab_C.insert(parent="", index="end", text=row_count, iid=count,
-    #                                                values=(record[0], record[1]), tags=("even",))
-    #                     count += 1
-    #                     row_count += 1
-    #             except TypeError:
-    #                 LIST_CFG = []
-    #
-    #
-    #         if name == TAB_NAME[2]:
-    #             count = 0
-    #             row_count = 1
-    #             self.tree_tab_M = tkinter.ttk.Treeview(master=self.frame_tab_2.tab(name))
-    #             #             ------------------------------------------Scroll Bar ________________________________
-    #             self.tree_scroll = customtkinter.CTkScrollbar(master=self.frame_tab_2.tab(name),
-    #                                                           command=self.tree_tab_M.yview)
-    #             self.tree_scroll.grid(row=0, column=1, sticky="ns")
-    #             self.tree_tab_M.tag_configure("odd", background="#212121")
-    #             self.tree_tab_M.tag_configure("even", background=ROW_EVEN)
-    #             self.tree_tab_M["columns"] = ("Name", "Date")
-    #             self.tree_tab_M.column("#0", anchor=W, width=55, minwidth=55,  stretch=False)
-    #             self.tree_tab_M.column("Name", anchor=W, width=350, minwidth=100)
-    #             self.tree_tab_M.column("Date", anchor=W, width=40, minwidth=40)
-    #             #      -    -------------- Create Headings --------------------------
-    #             self.tree_tab_M.heading("#0", text="", anchor=W)
-    #             self.tree_tab_M.heading("Name", text="Name", anchor=W)
-    #             self.tree_tab_M.heading("Date", text="Date", anchor=W)
-    #             self.tree_tab_M.grid(row=0, column=0, columnspan=4, sticky="news")
-    #             self.tree_tab_M.configure(yscrollcommand=self.tree_scroll.set)
-    #             # ----------------insert in Treeveiw --------------------------------
-    #
-    #             try:
-    #                 for record in USB.list_mch():
-    #                     if count % 2 == 0:
-    #                         self.tree_tab_M.insert(parent="", index="end", text=row_count, iid=count,
-    #                                                values=(record[0], record[1]), tags=("odd",))
-    #                     else:
-    #                         self.tree_tab_M.insert(parent="", index="end", text=row_count, iid=count,
-    #                                                values=(record[0], record[1]), tags=("even",))
-    #                     count += 1
-    #                     row_count += 1
-    #             except TypeError:
-    #                 LIST_CFG = []
-
 
     def click_design(self):
         global LIST_DESIGN
@@ -776,16 +650,13 @@ class Interface(customtkinter.CTk):
     def but_tr_delete (self):
         global TAB_NAME
         selected_tab = self.frame_tab_2.get()
-        print(selected_tab)
         trees = [self.tree_tab_D, self.tree_tab_C, self.tree_tab_M]
         for tab in range(0, len(TAB_NAME)):
             if TAB_NAME[tab] == selected_tab:
                 index = 0
-                print(trees[tab].item(trees[tab].selection()[0]))
                 selected_item = trees[tab].item(trees[tab].selection()[0])
-
-
-                src = pathlib.Path(USB_PATH).joinpath(selected_item["values"][0])
+                src = pathlib.Path(USB.current_path).joinpath(selected_item["values"][0])
+                src = pathlib.Path(src)
                 dst = pathlib.WindowsPath("~\\Desktop\\PC Deleted Files").expanduser()
                 if not dst.exists():
                     folders = ["Designs", "Machine Files", "Config Files"]
@@ -848,7 +719,7 @@ class Interface(customtkinter.CTk):
                 self.label_config_files_m2.configure(text=f"Config Files: -- {len(LIST_CFG)}")
                 for math_file in range(0, len(list_glob)):
                     if str(selected_file) == list_glob[math_file]:
-                        shutil.copy(selected_file, str(USB_PATH))
+                        shutil.copy(selected_file, str(USB.current_path))
                         file_to_append = [os.path.basename(selected_file), datetime.fromtimestamp(os.path.getmtime(selected_file)).strftime('%m/%d/%Y')]
                         list_pick[tab].append(file_to_append)
                         count = 0
@@ -939,9 +810,19 @@ class Interface(customtkinter.CTk):
                 path = pathlib.Path(USB_PATH).joinpath(file)
                 time = datetime.fromtimestamp(path.stat().st_ctime).strftime('%m/%d/%Y')
                 files_to_show.append([file, time])
-            Message_box(data=files_to_show)
+            self.message_tree = Message_box(data=files_to_show, ui_command=self.populate_treeveiw)
 
-
+    def populate_treeveiw(self):
+        global LIST_DESIGN
+        global LIST_CFG
+        global LIST_MCG
+        global USB_PATH
+        path = self.message_tree.file_selection()
+        USB.current_path = str(pathlib.Path(USB_PATH).joinpath(path))
+        LIST_DESIGN = USB.list_designs()
+        LIST_CFG = USB.list_cfg()
+        LIST_MCG = USB.list_mch()
+        self.TAB_NAME()
 
 
 

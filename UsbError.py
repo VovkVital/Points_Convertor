@@ -2,6 +2,7 @@ import tkinter
 from tkinter import ttk
 import customtkinter
 from Buttons import Button, Label
+from USB import Usb_drive
 import json
 # _______ Colors _________
 SELECTED_BLUE = "#008fd7"
@@ -14,19 +15,19 @@ FONT_HEADER = ("Robot", 18, "bold")
 FONT_TABLE = ("Roboto", 16)
 FONT_LABEL_ERROR = ("Roboto", 18, "bold")
 # _________ Tab Names _______
-TAB_NAME=["Design Folders", "Config Files", "Machine Files"]
+TAB_NAME = ["Design Folders", "Config Files", "Machine Files"]
 
 
 
 class Message_box(tkinter.ttk.Treeview):
-    def __init__(self, data, **kwargs):
+    def __init__(self, data, ui_command, **kwargs):
         self.frame()
         self.flash=Button.flash
         super(). __init__(master=self.tree_frame)
         self.data = data
         self.Treestyle()
         self.one_frame()
-        self.buttons()
+        self.buttons(ui_command=ui_command)
         self.return_value = 0
 
     def frame(self):
@@ -103,18 +104,22 @@ class Message_box(tkinter.ttk.Treeview):
         except TypeError:
                 pass
 
-    def buttons(self):
+    def buttons(self, ui_command):
 
-        Button(master=self.box, text="Select", sticky=None, row=3, column=0, command=self.selection)
-        Button(master=self.box, text="Cancel", sticky=None, row=3, column=1, command=None)
+        Button(master=self.box, text="Select", sticky=None, row=3, column=0, command=lambda: [self.file_selection(),
+                                                                                              ui_command(),
+                                                                                              self.close_frame()])
+        Button(master=self.box, text="Cancel", sticky=None, row=3, column=1, command=self.close_frame)
         label = Label(master=self.box, text="Two or more files are present on the USB. Select one!", row=0, column=0)
         label.grid(columnspan=2)
         label.configure(text_color=SELECTED_BLUE, font=FONT_LABEL_ERROR)
 
 
-    def selection(self):
+    def file_selection(self):
         selected_item = self.item(self.focus())["values"][0]
-        return print(selected_item)
+        return selected_item
+    def close_frame(self):
+        self.after(800, lambda: self.box.destroy())
 
 
 

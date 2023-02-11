@@ -20,6 +20,7 @@ class Usb_drive:
         self.path_switch = 0
 
 
+
     def detect_usb(self):
         self.correct_usb = []
         drive_list = []
@@ -90,6 +91,9 @@ class Usb_drive:
     def select_file(self, path):
         check = r"Backup.+|[aA][lL][lL]"
         return [i for i in path if re.fullmatch(check, i)]
+    def assign_path(self):
+        self.current_path = Usb_drive.USB_PATH
+
 
 
 

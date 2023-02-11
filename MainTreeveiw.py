@@ -1,6 +1,6 @@
 from tkinter import ttk
 import customtkinter
-import tkinter
+
 
 SELECTED_BLUE = "#008fd7"
 NOT_SELECTED = "#44657e"

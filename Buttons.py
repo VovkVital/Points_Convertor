@@ -16,11 +16,6 @@ class Button(customtkinter.CTkButton):
                          text_color=FONT_SELECTED, text_color_disabled=FONT_NOT_SELECTED, hover=False)
         self.configure(**kwargs)
         self.grid(row=row, column=column, sticky=sticky)
-        # try:
-        #     self.configure(command=lambda: [self.flash(), kwargs["command"]()])
-        # except:
-        #     print("Error")
-        #     self.configure(command=self.flash)
         if kwargs:
             try:
                 if kwargs["command"]:
