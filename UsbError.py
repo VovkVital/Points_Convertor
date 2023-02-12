@@ -1,3 +1,4 @@
+import asyncio
 import tkinter
 from tkinter import ttk
 import customtkinter
@@ -11,8 +12,8 @@ FONT_NOT_SELECTED = "gray60"
 FONT_SELECTED = "gray94"
 ROW_EVEN = customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][1]
 # ________ Font ___________
-FONT_HEADER = ("Robot", 18, "bold")
-FONT_TABLE = ("Roboto", 16)
+FONT_HEADER = ("Roboto", 17, "bold")
+FONT_TABLE = ("Roboto", 15, "bold")
 FONT_LABEL_ERROR = ("Roboto", 18, "bold")
 # _________ Tab Names _______
 TAB_NAME = ["Design Folders", "Config Files", "Machine Files"]
@@ -20,6 +21,7 @@ TAB_NAME = ["Design Folders", "Config Files", "Machine Files"]
 
 
 class Message_box(tkinter.ttk.Treeview):
+
     def __init__(self, data, ui_command, **kwargs):
         self.frame()
         self.flash=Button.flash
@@ -29,6 +31,7 @@ class Message_box(tkinter.ttk.Treeview):
         self.one_frame()
         self.buttons(ui_command=ui_command)
         self.return_value = 0
+
 
     def frame(self):
         self.box = customtkinter.CTkToplevel()
@@ -106,9 +109,9 @@ class Message_box(tkinter.ttk.Treeview):
 
     def buttons(self, ui_command):
 
-        Button(master=self.box, text="Select", sticky=None, row=3, column=0, command=lambda: [self.file_selection(),
-                                                                                              ui_command(),
-                                                                                              self.close_frame()])
+        self.button_select = Button(master=self.box, text="Select", sticky=None, row=3, column=0,
+                                    command=lambda: [ui_command()])
+
         Button(master=self.box, text="Cancel", sticky=None, row=3, column=1, command=self.close_frame)
         label = Label(master=self.box, text="Two or more files are present on the USB. Select one!", row=0, column=0)
         label.grid(columnspan=2)
@@ -116,10 +119,18 @@ class Message_box(tkinter.ttk.Treeview):
 
 
     def file_selection(self):
-        selected_item = self.item(self.focus())["values"][0]
-        return selected_item
+        try:
+            selected_item = self.item(self.focus())["values"][0]
+            self.after(800, lambda: self.box.destroy())
+            return selected_item
+        except IndexError:
+            pass
     def close_frame(self):
         self.after(800, lambda: self.box.destroy())
+
+
+
+
 
 
 

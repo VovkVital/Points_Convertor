@@ -579,10 +579,10 @@ class Interface(customtkinter.CTk):
                 for record in list_pick[tab]:
                     if count % 2 == 0:
                         trees[tab].insert(parent="", index="end", text=row_count, iid=count,
-                                               values=(record[0], record[1]), tags=("odd",))
+                                          values=(record[0], record[1]), tags=("odd",))
                     else:
                         trees[tab].insert(parent="", index="end", text=row_count, iid=count,
-                                               values=(record[0], record[1]), tags=("even",))
+                                          values=(record[0], record[1]), tags=("even",))
                     count += 1
                     row_count += 1
                 try:
@@ -602,57 +602,63 @@ class Interface(customtkinter.CTk):
         selected_tab = self.frame_tab_2.get()
         trees = [self.tree_tab_D, self.tree_tab_C, self.tree_tab_M]
         for tab in range(0, len(TAB_NAME)):
-            if TAB_NAME[tab] == selected_tab:
-                index = 0
-                selected_item = trees[tab].item(trees[tab].selection()[0])
-                src = pathlib.Path(USB.current_path).joinpath(selected_item["values"][0])
-                src = pathlib.Path(src)
-                dst = pathlib.WindowsPath("~\\Desktop\\PC Deleted Files").expanduser()
-                if not dst.exists():
-                    folders = ["Designs", "Machine Files", "Config Files"]
-                    for folder in range(0, len(folders)):
-                        dst.joinpath(folders[folder]).mkdir(parents=True, exist_ok=True)
+            try:
+                if TAB_NAME[tab] == selected_tab:
+                    index = 0
+                    selected_item = trees[tab].item(trees[tab].selection()[0])
+                    src = pathlib.Path(USB.current_path).joinpath(selected_item["values"][0])
+                    src = pathlib.Path(src)
+                    dst = pathlib.WindowsPath("~\\Desktop\\PC Deleted Files").expanduser()
+                    if not dst.exists():
+                        folders = ["Designs", "Machine Files", "Config Files"]
+                        for folder in range(0, len(folders)):
+                            dst.joinpath(folders[folder]).mkdir(parents=True, exist_ok=True)
 
-                if src.is_dir():
-                    if dst.joinpath("Designs").joinpath(pathlib.Path(src).name).exists():
-                        shutil.rmtree(dst.joinpath("Designs").joinpath(pathlib.Path(src).name))
-                        shutil.move(src, dst.joinpath("Designs"))
-                        self.click_design()
-                        self.label_design_files_m2.configure(text=f"Design Files: -- {len(LIST_DESIGN)}")
-                    else:
-                        shutil.move(src, dst.joinpath("Designs"))
-                        self.click_design()
-                        self.label_design_files_m2.configure(text=f"Design Files: -- {len(LIST_DESIGN)}")
+                    if src.is_dir():
+                        if dst.joinpath("Designs").joinpath(pathlib.Path(src).name).exists():
+                            shutil.rmtree(dst.joinpath("Designs").joinpath(pathlib.Path(src).name))
+                            shutil.move(src, dst.joinpath("Designs"))
+                            self.click_design()
+                            self.label_design_files_m2.configure(text=f"Design Files: -- {len(LIST_DESIGN)}")
+                        else:
+                            shutil.move(src, dst.joinpath("Designs"))
+                            self.click_design()
+                            self.label_design_files_m2.configure(text=f"Design Files: -- {len(LIST_DESIGN)}")
+
+                    if src.is_file():
+                        files = glob(os.path.join(str(src.parent), "*.cfg"))
+                        for match in range(0, len(files)):
+                            if str(src) == files[match]:
+                                if dst.joinpath("Config Files").joinpath(pathlib.Path(src).name).exists():
+                                    pathlib.Path(dst.joinpath("Config Files").joinpath(pathlib.Path(src).name)).unlink()
+                                    shutil.move(src, dst.joinpath("Config Files"))
+                                    self.click_cfg()
+                                    self.label_config_files_m2.configure(text=f"Config Files: -- {len(LIST_CFG)}")
+                                else:
+                                    shutil.move(src, dst.joinpath("Config Files"))
+                                    self.click_cfg()
+                                    self.label_config_files_m2.configure(text=f"Config Files: -- {len(LIST_CFG)}")
+
+                    if src.is_file():
+                        files = glob(os.path.join(str(src.parent), "*.MCH"))
+                        for match in range(0, len(files)):
+                            if str(src) == files[match]:
+                                if dst.joinpath("Machine Files").joinpath(pathlib.Path(src).name).exists():
+                                    pathlib.Path(dst.joinpath("Machine Files").joinpath(pathlib.Path(src).name)).unlink()
+                                    shutil.move(src, dst.joinpath("Machine Files"))
+                                    self.click_mch()
+                                    self.label_machine_files_m2.configure(text=f"Config Files: -- {len(LIST_MCG)}")
+                                else:
+                                    shutil.move(src, dst.joinpath("Machine Files"))
+                                    self.click_mch()
+                                    self.label_machine_files_m2.configure(text=f"Config Files: -- {len(LIST_MCG)}")
+            except IndexError:
+                pass
+                # trees[tab].focus_set()
+                # trees[tab].focus(0)
+                # trees[tab].selection_add(0)
 
 
-
-                if src.is_file():
-                    files = glob(os.path.join(str(src.parent), "*.cfg"))
-                    for match in range(0, len(files)):
-                        if str(src) == files[match]:
-                            if dst.joinpath("Config Files").joinpath(pathlib.Path(src).name).exists():
-                                pathlib.Path(dst.joinpath("Config Files").joinpath(pathlib.Path(src).name)).unlink()
-                                shutil.move(src, dst.joinpath("Config Files"))
-                                self.click_cfg()
-                                self.label_config_files_m2.configure(text=f"Config Files: -- {len(LIST_CFG)}")
-                            else:
-                                shutil.move(src, dst.joinpath("Config Files"))
-                                self.click_cfg()
-                                self.label_config_files_m2.configure(text=f"Config Files: -- {len(LIST_CFG)}")
-
-                if src.is_file():
-                    files = glob(os.path.join(str(src.parent), "*.MCH"))
-                    for match in range(0, len(files)):
-                        if str(src) == files[match]:
-                            if dst.joinpath("Machine Files").joinpath(pathlib.Path(src).name).exists():
-                                pathlib.Path(dst.joinpath("Machine Files").joinpath(pathlib.Path(src).name)).unlink()
-                                shutil.move(src, dst.joinpath("Machine Files"))
-                                self.click_mch()
-                                self.label_machine_files_m2.configure(text=f"Config Files: -- {len(LIST_MCG)}")
-                            else:
-                                shutil.move(src, dst.joinpath("Machine Files"))
-                                self.click_mch()
-                                self.label_machine_files_m2.configure(text=f"Config Files: -- {len(LIST_MCG)}")
 
     def but_tr_add(self):
         global TAB_NAME
@@ -768,7 +774,10 @@ class Interface(customtkinter.CTk):
         global LIST_MCG
         global USB_PATH
         path = self.message_tree.file_selection()
-        USB.current_path = str(pathlib.Path(USB_PATH).joinpath(path))
+        try:
+            USB.current_path = str(pathlib.Path(USB_PATH).joinpath(path))
+        except TypeError:
+            pass
         LIST_DESIGN = USB.list_designs()
         LIST_CFG = USB.list_cfg()
         LIST_MCG = USB.list_mch()
