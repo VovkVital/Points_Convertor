@@ -95,22 +95,3 @@ class Usb_drive:
         self.current_path = Usb_drive.USB_PATH
 
 
-
-
-
-
-        # try:
-        #     for design_f in os.listdir(self.current_path):
-        #         check_path_svd = glob(f"{self.current_path}\\{design_f}\\*.svd")
-        #         check_path_svl = glob(f"{self.current_path}\\{design_f}\\*.svl")
-        #         if check_path_svd or check_path_svl:
-        #             path_svd = check_path_svd[0]
-        #             # path_svl = check_path_svl[0]
-        #             time = datetime.fromtimestamp(os.path.getmtime(path_svd)).strftime('%m/%d/%Y')
-        #             list_designs.append([design_f, time])
-        #     return list_designs
-        # except AttributeError:
-        #     pass
-        #
-
-

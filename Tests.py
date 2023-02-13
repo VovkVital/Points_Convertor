@@ -1,13 +1,11 @@
-def cubes(number):
+import re
 
-   return number*number*number
+string = "Backup_MHG 6022_20221117_152506"
 
-def getCubes(range_of_nums):
+string_2 = "D:\Machine Control Data\Backup_MHG 6022_20221117_152506"
 
-   for i in range(range_of_nums):
+s = r"(?i)Backup_(.+?)_.+"
+s_2 = r"(?i).+Backup_MHG.+"
 
-       yield cubes(i)
-
-cube_object = getCubes(5)
-
-print(list(cube_object))
+find =re.fullmatch(string=string_2, pattern=s_2)
+print(bool(find))

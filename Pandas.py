@@ -57,5 +57,5 @@ class CSV:
             with open("TempFile.json", "w") as file:
                 place_holder = {}
                 json.dump(place_holder, file)
-                print("Link is removed from Settings")
+
 

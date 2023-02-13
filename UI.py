@@ -530,8 +530,11 @@ class Interface(customtkinter.CTk):
     def event_button_create(self):
         self.button_tab_2_create_ds.configure(state="disabled")
 
-    def save_machine_name(self):
-        machine_name = self.entry_machine_name.get()
+    def save_machine_name(self, **kwargs):
+        if kwargs:
+            machine_name = kwargs["machine_name"]
+        else:
+            machine_name = self.entry_machine_name.get()
         try:
             with open("Settings.json", "w") as file:
                 upload_date = {"Machine Name": machine_name}
@@ -637,7 +640,7 @@ class Interface(customtkinter.CTk):
                                 else:
                                     shutil.move(src, dst.joinpath("Config Files"))
                                     self.click_cfg()
-                                    self.label_config_files_m2.configure(text=f"Config Files: -- {len(LIST_CFG)}")
+                                    self.label_config_files_m2.configure(text=f"Machine Files: -- {len(LIST_CFG)}")
 
                     if src.is_file():
                         files = glob(os.path.join(str(src.parent), "*.MCH"))
@@ -758,7 +761,7 @@ class Interface(customtkinter.CTk):
                     self.button_tab_2_create_ds.configure(state="disabled")
     async def multiple_files_usb(self):
         path = os.listdir(USB_PATH)
-        check = r"Backup.+|[aA][lL][lL]"
+        check = r"(?i)Backup.+|All"
         matches = [i for i in path if re.fullmatch(check, i)]
         if len(matches) > 1:
             files_to_show = []
@@ -776,12 +779,14 @@ class Interface(customtkinter.CTk):
         path = self.message_tree.file_selection()
         try:
             USB.current_path = str(pathlib.Path(USB_PATH).joinpath(path))
+            print(USB.current_path)
         except TypeError:
             pass
         LIST_DESIGN = USB.list_designs()
         LIST_CFG = USB.list_cfg()
         LIST_MCG = USB.list_mch()
         self.TAB_NAME()
+        self.message_box_m2()
 
 
 
