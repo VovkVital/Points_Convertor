@@ -229,7 +229,8 @@ class Interface(customtkinter.CTk):
                                            width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
 
             self.button_tab_2_create_ds = Button(master=self.frame_3_1.tab("Restore box Conversion"), text="Create",
-                                                 sticky="e", row=1, column=3, command=self.but_tr_cr, state="disabled",
+                                                 sticky="e", row=1, column=3, state="disabled",
+                                                 command=lambda: [self.but_tr_cr(), self.event_button_create()],
                                                  width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
 
 
@@ -451,15 +452,6 @@ class Interface(customtkinter.CTk):
                                     command=lambda: [panda.create_file(), self.message_created(),
                                     self.event_button_create()])
 
-        # self.button_create = customtkinter.CTkButton(master=self.frame_3_1.tab("Simple Point Conversion"), text="Create  ",
-        #                                              image=image_create_file, compound="right", corner_radius=15,
-        #                                              fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED,
-        #                                              command=lambda:[panda.create_file(), self.message_created(),
-        #                                                              self.event_button_create()],
-        #                                              width=SECONDARY_WIDTH, height=SECONDARY_HEIGHT, font=FONT_BUTTON,
-        #                                              state="disabled")
-        # self.button_create.grid(row=3, column=4)
-
         self.label_create_file = customtkinter.CTkLabel(master=self.frame_3_1.tab("Simple Point Conversion"),
                                                         text= """  Creates file in the folder "Points GCS 900" """,
                                                         width=ENTRY_WIDTH, anchor="sw", font=FONT_LABEL)
@@ -504,8 +496,11 @@ class Interface(customtkinter.CTk):
     def message_selected(self):
         with open("TempFile.json", "r") as file:
             loaded_file = json.load(file)
-        selected = pathlib.Path(str(loaded_file["Selected File"])).name
-        self.button_tab_2_create_ds.configure(state="normal")
+        try:
+            selected = pathlib.Path(str(loaded_file["Selected File"])).name
+            self.button_tab_2_create_ds.configure(state="normal")
+        except KeyError:
+            selected = ""
         if selected == "":
             new_text_m1 = f"Selected File:         - File not selected "
             new_text_m2 = f"Selected File:  None"
@@ -518,7 +513,6 @@ class Interface(customtkinter.CTk):
             self.label_selected_file_m2.configure(text=new_text_m2)
 
     def message_created(self):
-        machine_name = panda.get_machine_name()
         new_text ="File Created:          - Desktop/Points GCS 900/"
 
         self.label_created.configure(text=new_text)
@@ -529,10 +523,15 @@ class Interface(customtkinter.CTk):
 
     def event_button_create(self):
         self.button_tab_2_create_ds.configure(state="disabled")
+        self.button_create.configure(state="disabled")
 
     def save_machine_name(self, **kwargs):
         if kwargs:
             machine_name = kwargs["machine_name"]
+            self.entry_machine_name.delete(0, END)
+            self.entry_machine_name.insert(0, machine_name)
+            self.label_machine_name.configure(text=f"Machine name:     - {machine_name}")
+            self.label_machine_name_m2.configure(text=f"Machine name :  {machine_name}")
         else:
             machine_name = self.entry_machine_name.get()
         try:
@@ -542,20 +541,24 @@ class Interface(customtkinter.CTk):
         except:
             pass
 
+
+
     def event_button_select(self):
-        self.button_tab_2_create_ds.configure(state="normal")
-        self.button_create.configure(state="normal")
         select = filedialog.askopenfilename(initialdir=SELECT_FILE_PATH)
-        # self.button_create.configure(fg_color=NOT_SELECTED, text_color=FONT_NOT_SELECTED)
-        try:
-            with open ("TempFile.json", "w") as file:
-                upload_file = {"Selected File":select}
-                json.dump(upload_file, file, indent =4)
+        if select != "":
+            self.button_tab_2_create_ds.configure(state="normal")
+            self.button_create.configure(state="normal")
+            try:
+                with open ("TempFile.json", "w") as file:
+                    upload_file = {"Selected File":select}
+                    json.dump(upload_file, file, indent=4)
 
-        except:
-            print("Except  file explorer Error  ")
+            except:
+                print("Except  file explorer Error  ")
 
-        return select
+            return select
+        else:
+            pass
 
     def but_tr_keep (self):
         global TAB_NAME
@@ -657,9 +660,6 @@ class Interface(customtkinter.CTk):
                                     self.label_machine_files_m2.configure(text=f"Config Files: -- {len(LIST_MCG)}")
             except IndexError:
                 pass
-                # trees[tab].focus_set()
-                # trees[tab].focus(0)
-                # trees[tab].selection_add(0)
 
 
 
@@ -727,38 +727,41 @@ class Interface(customtkinter.CTk):
     def but_tr_cr(self):
         selected = self.tree_tab_D.item(self.tree_tab_D.focus())
         selected_file = selected["values"]
-        design_name = selected_file[0]
-        path = pathlib.Path(os.path.join(USB.detect_usb(), ".Field-Data"))
-        self.label_selelected.configure(text="Selected File:         - File not selected")
-        self.label_selected_file_m2.configure(text="File Created: File not selected")
-        self.button_tab_2_create_ds.configure(state="disabled")
-        if path.exists():
-            design_path = path.joinpath(design_name)
-            if path.exists():
-                if not design_path.exists():
-                    pathlib.Path(design_path).mkdir()
-                    panda.create_file(str(design_path))
-                else:
-                    panda.create_file(str(design_path))
+        if selected_file == "":
+            try:
+                design_name = selected_file[0]
+                path = pathlib.Path(os.path.join(USB.detect_usb(), ".Field-Data"))
+                self.label_selelected.configure(text="Selected File:         - File not selected")
+                self.label_selected_file_m2.configure(text="File Created: File not selected")
+                self.button_tab_2_create_ds.configure(state="disabled")
+                if path.exists():
+                    design_path = path.joinpath(design_name)
+                    if path.exists():
+                        if not design_path.exists():
+                            pathlib.Path(design_path).mkdir()
+                            panda.create_file(str(design_path))
+                        else:
+                            panda.create_file(str(design_path))
 
-            else:
+                    else:
+                        pass
+            except IndexError:
                 pass
     def click_segmented_3_but(self):
         global TAB_NAME
         with open("TempFile.json", "r") as file:
             loaded_file = json.load(file)
-        for active_tab in TAB_NAME:
-            selected_tab =self.frame_tab_2.get()
-            if selected_tab != "Design Folders":
-                self.button_tab_2_create_ds.configure(state="disabled")
-            else:
+            if self.frame_tab_2.get() == TAB_NAME[0] and self.button_create.cget("state") == "normal":
                 try:
-                    if bool(loaded_file["Selected File"]):
+                    if re.fullmatch(string=loaded_file["Selected File"], pattern=r".+\.csv"):
                         self.button_tab_2_create_ds.configure(state="normal")
                     else:
-                        pass
+                        self.button_tab_2_create_ds.configure(state="disabled")
                 except KeyError:
                     self.button_tab_2_create_ds.configure(state="disabled")
+            else:
+                self.button_tab_2_create_ds.configure(state="disabled")
+
     async def multiple_files_usb(self):
         path = os.listdir(USB_PATH)
         check = r"(?i)Backup.+|All"
@@ -782,11 +785,24 @@ class Interface(customtkinter.CTk):
             print(USB.current_path)
         except TypeError:
             pass
+        check = r"(?i).+MachIne Control Data.+Backup_MHG.+"
         LIST_DESIGN = USB.list_designs()
         LIST_CFG = USB.list_cfg()
         LIST_MCG = USB.list_mch()
         self.TAB_NAME()
         self.message_box_m2()
+        self.catch_m_name(path=USB.current_path)
+
+    def catch_m_name(self, path):
+        main_check = r"(?i).+MachIne Control Data.+Backup_MHG.+"
+        name_check = s = r"(?i)Backup_(.+?)_.+"
+        if re.fullmatch(string=path, pattern=main_check):
+            machine_name = re.findall(string=path, pattern=name_check)[0]
+            self.save_machine_name(machine_name=machine_name)
+
+
+
+
 
 
 
