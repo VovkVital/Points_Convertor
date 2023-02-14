@@ -1,21 +1,22 @@
-import re
+def main():
+    des = convert(time=input("What time is it:"))
+    if 7 <= des <= 8:
+        print("breakfast time")
+    elif 12 <= des <= 13:
+        print("lunch time")
+    elif 18 <= des <= 19:
+        print("dinner time")
+    else:
+        pass
 
-string = "Backup_MHG 6022_20221117_152506"
 
-string_2 = "D:\Machine Control Data\Backup_MHG 6022_20221117_152506"
-
-s = r"(?i)Backup_(.+?)_.+"
-s_2 = r"(?i).+MachIne Control Data.+Backup_MHG.+"
-
-# find =re.fullmatch(string=string_2, pattern=s_2)
-# print(bool(find))
+def convert(time):
+    hours, minutes = time.split(":")
+    converted_minutes = int(minutes)/60
+    result = int(hours) + converted_minutes
+    print(result)
+    return result
 
 
-def catch_mname(path):
-    main_check = r"(?i).+MachIne Control Data.+Backup_MHG.+"
-    name_check = s = r"(?i)Backup_(.+?)_.+"
-    if re.fullmatch(string=path, pattern=main_check):
-        machine_name = re.findall(string=path, pattern=name_check)[0]
-        print(type(machine_name))
-
-catch_mname(path=string_2)
+if __name__ == "__main__":
+    main()

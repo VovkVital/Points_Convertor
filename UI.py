@@ -668,62 +668,172 @@ class Interface(customtkinter.CTk):
         global LIST_DESIGN
         global LIST_CFG
         global LIST_MCG
-        list_pick = [LIST_DESIGN, LIST_CFG, LIST_MCG]
-        selected_file = pathlib.Path(filedialog.askopenfilename(initialdir=pathlib.Path("~\\Desktop").expanduser()))
-        selected_tab = self.frame_tab_2.get()
-        trees = [self.tree_tab_D, self.tree_tab_C, self.tree_tab_M]
-        for tab in range(0, len(TAB_NAME)):
-            if TAB_NAME[1] == selected_tab:
-                list_glob = glob(os.path.join(str(selected_file.parent), "*.cfg"))
-                self.label_config_files_m2.configure(text=f"Config Files: -- {len(LIST_CFG)}")
-                for math_file in range(0, len(list_glob)):
-                    if str(selected_file) == list_glob[math_file]:
-                        shutil.copy(selected_file, str(USB.current_path))
-                        file_to_append = [os.path.basename(selected_file), datetime.fromtimestamp(os.path.getmtime(selected_file)).strftime('%m/%d/%Y')]
-                        list_pick[tab].append(file_to_append)
+        try:
+            if self.frame_tab_2.get() == TAB_NAME[0]:
+                selected_folder = filedialog.askdirectory(initialdir=pathlib.Path("~\\Desktop").expanduser())
+                if selected_folder:
+                    folder_name = pathlib.Path(selected_folder).name
+                    dst = pathlib.Path(USB.current_path).joinpath(folder_name)
+                    match = r"(?i).+?\.(svd|svl)"
+                    dst_1 = os.listdir(selected_folder)
+                    switch = 0
+                    for check_file in dst_1:
+                        if re.fullmatch(string=check_file, pattern=match):
+                            switch += 1
+                    if switch > 0:
+                        if dst.exists():
+                            shutil.rmtree(dst)
+                            shutil.copytree(src=selected_folder, dst=dst)
+                        else:
+                            shutil.copytree(src=selected_folder, dst=dst)
                         count = 0
                         row_count = 1
-                        for item in range(len(trees[tab].get_children())):
-                            item = trees[tab].get_children()[0]
-                            trees[tab].delete(item)
-                        for item in range(len(trees[tab].get_children())):
-                            selected_item = trees[tab].get_children()[0]
-                            trees[tab].delete(selected_item)
-                        for record in list_pick[tab]:
+                        file_to_append = [os.path.basename(str(dst)),
+                                          datetime.fromtimestamp(os.path.getmtime(str(dst))).strftime('%m/%d/%Y')]
+                        for i in self.tree_tab_D.get_children():
+                            self.tree_tab_D.delete(i)
+                        LIST_DESIGN.insert(0, file_to_append)
+                        for record in LIST_DESIGN:
                             if count % 2 == 0:
-                                trees[tab].insert(parent="", index="end", text=row_count, iid=count,
-                                                  values=(record[0], record[1]), tags=("odd",))
+                                self.tree_tab_D.insert(parent="", index="end", text=row_count, iid=count,
+                                                       values=(record[0], record[1]), tags=("odd",))
                             else:
-                                trees[tab].insert(parent="", index="end", text=row_count, iid=count,
-                                                  values=(record[0], record[1]), tags=("even",))
+                                self.tree_tab_D.insert(parent="", index="end", text=row_count, iid=count,
+                                                       values=(record[0], record[1]), tags=("even",))
                             count += 1
                             row_count += 1
-            if TAB_NAME[2] == selected_tab:
-                list_glob = glob(os.path.join(str(selected_file.parent), "*.MCH"))
-                self.label_machine_files_m2.configure(text=f"Config Files: -- {len(LIST_MCG)}")
-                for math_file in range(0, len(list_glob)):
-                    if str(selected_file) == list_glob[math_file]:
-                        shutil.copy(selected_file, str(USB_PATH))
-                        file_to_append = [os.path.basename(selected_file),
-                                          datetime.fromtimestamp(os.path.getmtime(selected_file)).strftime('%m/%d/%Y')]
-                        list_pick[tab].append(file_to_append)
+                            self.tree_tab_D.focus_set()
+                            self.tree_tab_D.focus(0)
+                            self.tree_tab_D.selection_add(0)
+                    else:
+                        print("No SVD or SVL in the folder")
+                        pass
+            elif self.frame_tab_2.get() == TAB_NAME[1] or self.frame_tab_2.get() == TAB_NAME[2] :
+                selected_file = filedialog.askopenfilename(initialdir=pathlib.Path("~\\Desktop").expanduser())
+                if selected_file:
+                    file_name = pathlib.Path(selected_file).name
+                    dst = pathlib.Path(USB.current_path).joinpath(file_name)
+                    match = r"(?i).+?\.(cfg|mch)"
+                    switch = 0
+                    if re.fullmatch(string=selected_file, pattern=match):
+                        switch += 1
+                    if switch > 0:
+                        if dst.exists():
+                            dst.unlink()
+                            shutil.copy(src=selected_file, dst=dst)
+                        else:
+                            shutil.copy(src=selected_file, dst=dst)
                         count = 0
                         row_count = 1
-                        for item in range(len(trees[tab].get_children())):
-                            item = trees[tab].get_children()[0]
-                            trees[tab].delete(item)
-                        for item in range(len(trees[tab].get_children())):
-                            selected_item = trees[tab].get_children()[0]
-                            trees[tab].delete(selected_item)
-                        for record in list_pick[tab]:
-                            if count % 2 == 0:
-                                trees[tab].insert(parent="", index="end", text=row_count, iid=count,
-                                                  values=(record[0], record[1]), tags=("odd",))
-                            else:
-                                trees[tab].insert(parent="", index="end", text=row_count, iid=count,
-                                                  values=(record[0], record[1]), tags=("even",))
-                            count += 1
-                            row_count += 1
+                        file_to_append = [os.path.basename(str(dst)),
+                                          datetime.fromtimestamp(os.path.getmtime(str(dst))).strftime('%m/%d/%Y')]
+                        if re.fullmatch(string=selected_file, pattern=r"(?i).+?\.(cfg)"):
+                            for i in self.tree_tab_C.get_children():
+                                self.tree_tab_C.delete(i)
+                            LIST_CFG.insert(0, file_to_append)
+                            for record in LIST_CFG:
+                                if count % 2 == 0:
+                                    self.tree_tab_C.insert(parent="", index="end", text=row_count, iid=count,
+                                                           values=(record[0], record[1]), tags=("odd",))
+                                else:
+                                    self.tree_tab_C.insert(parent="", index="end", text=row_count, iid=count,
+                                                           values=(record[0], record[1]), tags=("even",))
+                                count += 1
+                                row_count += 1
+                                self.tree_tab_C.focus_set()
+                                self.tree_tab_C.focus(0)
+                                self.tree_tab_C.selection_add(0)
+                                if self.frame_tab_2.get() != TAB_NAME[1]:
+                                    self.frame_tab_2.set(TAB_NAME[1])
+                        else:
+                            for i in self.tree_tab_M.get_children():
+                                self.tree_tab_M.delete(i)
+                            LIST_MCG.insert(0, file_to_append)
+                            for record in LIST_MCG:
+                                if count % 2 == 0:
+                                    self.tree_tab_M.insert(parent="", index="end", text=row_count, iid=count,
+                                                           values=(record[0], record[1]), tags=("odd",))
+                                else:
+                                    self.tree_tab_M.insert(parent="", index="end", text=row_count, iid=count,
+                                                           values=(record[0], record[1]), tags=("even",))
+                                count += 1
+                                row_count += 1
+                                self.tree_tab_M.focus_set()
+                                self.tree_tab_M.focus(0)
+                                self.tree_tab_M.selection_add(0)
+                                if self.frame_tab_2.get() != TAB_NAME[2]:
+                                    self.frame_tab_2.set(TAB_NAME[2])
+
+                    else:
+                        print("File failed at #748")
+
+
+        except BaseException as e:
+            print(e)
+
+
+
+            # selected_file = pathlib.Path(filedialog.askopenfilename(initialdir=pathlib.Path("~\\Desktop").expanduser()))
+
+
+
+
+        #
+        # selected_file = pathlib.Path(filedialog.askopenfilename(initialdir=pathlib.Path("~\\Desktop").expanduser()))
+        # selected_tab = self.frame_tab_2.get()
+        # trees = [self.tree_tab_D, self.tree_tab_C, self.tree_tab_M]
+        # for tab in range(0, len(TAB_NAME)):
+        #     if TAB_NAME[1] == selected_tab:
+        #         list_glob = glob(os.path.join(str(selected_file.parent), "*.cfg"))
+        #         self.label_config_files_m2.configure(text=f"Config Files: -- {len(LIST_CFG)}")
+        #         for math_file in range(0, len(list_glob)):
+        #             if str(selected_file) == list_glob[math_file]:
+        #                 shutil.copy(selected_file, str(USB.current_path))
+        #                 file_to_append = [os.path.basename(selected_file), datetime.fromtimestamp(os.path.getmtime(selected_file)).strftime('%m/%d/%Y')]
+        #                 list_pick[tab].append(file_to_append)
+        #                 count = 0
+        #                 row_count = 1
+        #                 for item in range(len(trees[tab].get_children())):
+        #                     item = trees[tab].get_children()[0]
+        #                     trees[tab].delete(item)
+        #                 for item in range(len(trees[tab].get_children())):
+        #                     selected_item = trees[tab].get_children()[0]
+        #                     trees[tab].delete(selected_item)
+        #                 for record in list_pick[tab]:
+        #                     if count % 2 == 0:
+        #                         trees[tab].insert(parent="", index="end", text=row_count, iid=count,
+        #                                           values=(record[0], record[1]), tags=("odd",))
+        #                     else:
+        #                         trees[tab].insert(parent="", index="end", text=row_count, iid=count,
+        #                                           values=(record[0], record[1]), tags=("even",))
+        #                     count += 1
+        #                     row_count += 1
+        #     if TAB_NAME[2] == selected_tab:
+        #         list_glob = glob(os.path.join(str(selected_file.parent), "*.MCH"))
+        #         self.label_machine_files_m2.configure(text=f"Config Files: -- {len(LIST_MCG)}")
+        #         for math_file in range(0, len(list_glob)):
+        #             if str(selected_file) == list_glob[math_file]:
+        #                 shutil.copy(selected_file, str(USB_PATH))
+        #                 file_to_append = [os.path.basename(selected_file),
+        #                                   datetime.fromtimestamp(os.path.getmtime(selected_file)).strftime('%m/%d/%Y')]
+        #                 list_pick[tab].append(file_to_append)
+        #                 count = 0
+        #                 row_count = 1
+        #                 for item in range(len(trees[tab].get_children())):
+        #                     item = trees[tab].get_children()[0]
+        #                     trees[tab].delete(item)
+        #                 for item in range(len(trees[tab].get_children())):
+        #                     selected_item = trees[tab].get_children()[0]
+        #                     trees[tab].delete(selected_item)
+        #                 for record in list_pick[tab]:
+        #                     if count % 2 == 0:
+        #                         trees[tab].insert(parent="", index="end", text=row_count, iid=count,
+        #                                           values=(record[0], record[1]), tags=("odd",))
+        #                     else:
+        #                         trees[tab].insert(parent="", index="end", text=row_count, iid=count,
+        #                                           values=(record[0], record[1]), tags=("even",))
+        #                     count += 1
+        #                     row_count += 1
     def but_tr_cr(self):
         selected = self.tree_tab_D.item(self.tree_tab_D.focus())
         selected_file = selected["values"]
