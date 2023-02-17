@@ -771,69 +771,6 @@ class Interface(customtkinter.CTk):
         except BaseException as e:
             print(e)
 
-
-
-            # selected_file = pathlib.Path(filedialog.askopenfilename(initialdir=pathlib.Path("~\\Desktop").expanduser()))
-
-
-
-
-        #
-        # selected_file = pathlib.Path(filedialog.askopenfilename(initialdir=pathlib.Path("~\\Desktop").expanduser()))
-        # selected_tab = self.frame_tab_2.get()
-        # trees = [self.tree_tab_D, self.tree_tab_C, self.tree_tab_M]
-        # for tab in range(0, len(TAB_NAME)):
-        #     if TAB_NAME[1] == selected_tab:
-        #         list_glob = glob(os.path.join(str(selected_file.parent), "*.cfg"))
-        #         self.label_config_files_m2.configure(text=f"Config Files: -- {len(LIST_CFG)}")
-        #         for math_file in range(0, len(list_glob)):
-        #             if str(selected_file) == list_glob[math_file]:
-        #                 shutil.copy(selected_file, str(USB.current_path))
-        #                 file_to_append = [os.path.basename(selected_file), datetime.fromtimestamp(os.path.getmtime(selected_file)).strftime('%m/%d/%Y')]
-        #                 list_pick[tab].append(file_to_append)
-        #                 count = 0
-        #                 row_count = 1
-        #                 for item in range(len(trees[tab].get_children())):
-        #                     item = trees[tab].get_children()[0]
-        #                     trees[tab].delete(item)
-        #                 for item in range(len(trees[tab].get_children())):
-        #                     selected_item = trees[tab].get_children()[0]
-        #                     trees[tab].delete(selected_item)
-        #                 for record in list_pick[tab]:
-        #                     if count % 2 == 0:
-        #                         trees[tab].insert(parent="", index="end", text=row_count, iid=count,
-        #                                           values=(record[0], record[1]), tags=("odd",))
-        #                     else:
-        #                         trees[tab].insert(parent="", index="end", text=row_count, iid=count,
-        #                                           values=(record[0], record[1]), tags=("even",))
-        #                     count += 1
-        #                     row_count += 1
-        #     if TAB_NAME[2] == selected_tab:
-        #         list_glob = glob(os.path.join(str(selected_file.parent), "*.MCH"))
-        #         self.label_machine_files_m2.configure(text=f"Config Files: -- {len(LIST_MCG)}")
-        #         for math_file in range(0, len(list_glob)):
-        #             if str(selected_file) == list_glob[math_file]:
-        #                 shutil.copy(selected_file, str(USB_PATH))
-        #                 file_to_append = [os.path.basename(selected_file),
-        #                                   datetime.fromtimestamp(os.path.getmtime(selected_file)).strftime('%m/%d/%Y')]
-        #                 list_pick[tab].append(file_to_append)
-        #                 count = 0
-        #                 row_count = 1
-        #                 for item in range(len(trees[tab].get_children())):
-        #                     item = trees[tab].get_children()[0]
-        #                     trees[tab].delete(item)
-        #                 for item in range(len(trees[tab].get_children())):
-        #                     selected_item = trees[tab].get_children()[0]
-        #                     trees[tab].delete(selected_item)
-        #                 for record in list_pick[tab]:
-        #                     if count % 2 == 0:
-        #                         trees[tab].insert(parent="", index="end", text=row_count, iid=count,
-        #                                           values=(record[0], record[1]), tags=("odd",))
-        #                     else:
-        #                         trees[tab].insert(parent="", index="end", text=row_count, iid=count,
-        #                                           values=(record[0], record[1]), tags=("even",))
-        #                     count += 1
-        #                     row_count += 1
     def but_tr_cr(self):
         selected = self.tree_tab_D.item(self.tree_tab_D.focus())
         selected_file = selected["values"]
@@ -876,6 +813,7 @@ class Interface(customtkinter.CTk):
         path = os.listdir(USB_PATH)
         check = r"(?i)Backup.+|All"
         matches = [i for i in path if re.fullmatch(check, i)]
+        # print(f"This is match: {matches}")
         if len(matches) > 1:
             files_to_show = []
             for file in matches:
@@ -892,7 +830,7 @@ class Interface(customtkinter.CTk):
         path = self.message_tree.file_selection()
         try:
             USB.current_path = str(pathlib.Path(USB_PATH).joinpath(path))
-            print(USB.current_path)
+            print(f" This is current path: {USB.current_path}")
         except TypeError:
             pass
         check = r"(?i).+MachIne Control Data.+Backup_MHG.+"

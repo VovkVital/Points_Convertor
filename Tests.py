@@ -1,22 +1,9 @@
-def main():
-    des = convert(time=input("What time is it:"))
-    if 7 <= des <= 8:
-        print("breakfast time")
-    elif 12 <= des <= 13:
-        print("lunch time")
-    elif 18 <= des <= 19:
-        print("dinner time")
-    else:
-        pass
+import re
+
+folder_1 = "Work q"
+folder_2 = ".Work-related"
 
 
-def convert(time):
-    hours, minutes = time.split(":")
-    converted_minutes = int(minutes)/60
-    result = int(hours) + converted_minutes
-    print(result)
-    return result
+pattern = r"(?i)\..+"
 
-
-if __name__ == "__main__":
-    main()
+print(bool(re.fullmatch(pattern=pattern, string=folder_2)))

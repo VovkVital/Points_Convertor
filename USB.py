@@ -48,13 +48,15 @@ class Usb_drive:
         list_designs = []
         try:
             for design_f in os.listdir(self.current_path):
-                check_path_svd = glob(f"{self.current_path}\\{design_f}\\*.svd")
-                check_path_svl = glob(f"{self.current_path}\\{design_f}\\*.svl")
-                if check_path_svd or check_path_svl:
-                    path_svd = check_path_svd[0]
-                    # path_svl = check_path_svl[0]
-                    time = datetime.fromtimestamp(os.path.getmtime(path_svd)).strftime('%m/%d/%Y')
-                    list_designs.append([design_f, time])
+                folder_path = pathlib.Path(self.current_path).joinpath(design_f)
+                if folder_path.is_dir():
+                    pattern = r"(?i)\..+|GeoData"
+                    match = re.fullmatch(pattern=pattern, string=design_f)
+                    if not bool(match):
+                        folder_path = pathlib.Path(self.current_path).joinpath(design_f)
+                        print(str(folder_path))
+                        time = datetime.fromtimestamp(os.path.getmtime(folder_path)).strftime('%m/%d/%Y')
+                        list_designs.append([design_f, time])
             return list_designs
         except AttributeError:
             pass
