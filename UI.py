@@ -876,7 +876,6 @@ class Interface(customtkinter.CTk):
                 USB_PATH =Usb_drive.USB_PATH
                 self.multiple_files_usb()
                 self.after(2000, self.usb_search)
-
             else:
                 self.after(5000, self.usb_search)
         else:
