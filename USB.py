@@ -54,7 +54,6 @@ class Usb_drive:
                     match = re.fullmatch(pattern=pattern, string=design_f)
                     if not bool(match):
                         folder_path = pathlib.Path(self.current_path).joinpath(design_f)
-                        print(str(folder_path))
                         time = datetime.fromtimestamp(os.path.getmtime(folder_path)).strftime('%m/%d/%Y')
                         list_designs.append([design_f, time])
             return list_designs
@@ -91,7 +90,7 @@ class Usb_drive:
             return None
 
     def select_file(self, path):
-        check = r"Backup.+|[aA][lL][lL]"
+        check = r"(?i)Backup.+|All"
         return [i for i in path if re.fullmatch(check, i)]
     def assign_path(self):
         self.current_path = Usb_drive.USB_PATH

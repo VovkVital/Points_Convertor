@@ -47,13 +47,13 @@ FRAME_PICK_YOUR_SYSTEM = "Choose your system"
 TAB_NAME=["Design Folders", "Config Files", "Machine Files"]
 
 # ---------------Buttons Size------------------------
-MAIN_WIDTH = 210
-MAIN_HEIGHT = 70
+MAIN_WIDTH = 150
+MAIN_HEIGHT = 50
 SECONDARY_WIDTH = 120
 SECONDARY_HEIGHT = 40
 TAB_BUTTON_WIDTH = 120
 TAB_BUTTON_HEIGHT = 40
-ENTRY_WIDTH = 343
+ENTRY_WIDTH = 350
 ENTRY_HEIGHT = 40
 ENTRY_2_WIDTH = 170
 ENTRY_2_HEIGHT = 40
@@ -77,6 +77,7 @@ USB_PATH = Usb_drive.USB_PATH
 LIST_DESIGN = USB.list_designs()
 LIST_CFG = USB.list_cfg()
 LIST_MCG = USB.list_mch()
+print(f"This is Usb path {USB_PATH}")
 
 
 
@@ -86,9 +87,7 @@ LIST_MCG = USB.list_mch()
 image_add_folder = customtkinter.CTkImage(light_image=Image.open("./Images/add_folder_light.png"), size=(30, 30))
 image_create_file = customtkinter.CTkImage(light_image=Image.open("./Images/create_fileV2.png"), size=(30, 30))
 image_save_name = customtkinter.CTkImage(light_image=Image.open(("./Images/saveV2.png")), size=(30, 30))
-
-image_teichert_logo = customtkinter.CTkImage(light_image=Image.open("./Images/teichert-logo.png"), size=(300, 300))
-image_teichert_logo_blue = customtkinter.CTkImage(light_image=Image.open("./Images/teichert-Logo_blue_2.png"),size=(300, 300))
+image_teichert_logo_blue = customtkinter.CTkImage(light_image=Image.open("./Images/teichert-Logo_blue_2.png"), size=(200, 200))
 
 
 
@@ -102,7 +101,7 @@ class Interface(customtkinter.CTk):
         self.title(PROGRAM_NAME)
         self.geometry(f"{Interface.WIDTH}x{Interface.HEIGHT}")
         self.grid_columnconfigure(0, minsize=20)
-        self.grid_columnconfigure(1, weight=1)
+        self.grid_columnconfigure(1, minsize=350)
         self.grid_columnconfigure(2, minsize=45)
         self.grid_columnconfigure(3, weight=2)
         self.grid_columnconfigure(4, minsize=20)
@@ -112,6 +111,7 @@ class Interface(customtkinter.CTk):
         self.grid_rowconfigure(2, minsize=10)
         self.grid_rowconfigure(3, weight=3)
         self.grid_rowconfigure(4, minsize=20)
+        self.after(4000, self.usb_search)
 
     #------------------------ Frames ---------------------------
         self.frame_col_1_1()
@@ -125,10 +125,11 @@ class Interface(customtkinter.CTk):
         self.TAB_NAME()
         self.message_box_m2()
 
+
     # ------------- Lable Frames -----------------
     def frame_col_1_1 (self):
-        self.frame_1_1 = customtkinter.CTkFrame(master=self, corner_radius=25, height=350)
-        self.frame_1_1.grid(row=3, column=1, sticky="swe", pady=0)
+        self.frame_1_1 = customtkinter.CTkFrame(master=self, corner_radius=25, height=215)
+        self.frame_1_1.grid(row=3, column=1, sticky="swe")
         self.frame_1_1.columnconfigure(0, minsize=10)
         self.frame_1_1.columnconfigure(1, weight=1)
         self.frame_1_1.columnconfigure(2, minsize=10)
@@ -179,7 +180,7 @@ class Interface(customtkinter.CTk):
 
 
     def frame_message_box(self):
-        self.frame_3_3 = customtkinter.CTkFrame(master=self.frame_3_1.tab("Simple Point Conversion"), corner_radius=25)
+        self.frame_3_3 = customtkinter.CTkFrame(master=self.frame_3_1.tab("Simple Point Conversion"), corner_radius=25,)
         self.frame_3_3.grid(row=5, column=0, columnspan=5, rowspan=3, sticky="news")
         self.frame_3_3.grid_rowconfigure(0, minsize=5)
         self.frame_3_3.grid_rowconfigure(1, weight=1)
@@ -189,7 +190,7 @@ class Interface(customtkinter.CTk):
         self.frame_3_3.grid_rowconfigure(5, minsize=5)
 
         self.frame_3_3.grid_columnconfigure(0, minsize=5)
-        self.frame_3_3.grid_columnconfigure(1, weight=1)
+        self.frame_3_3.grid_columnconfigure(1, weight=2)
         self.frame_3_3.grid_columnconfigure(2, minsize=5)
 
 
@@ -251,15 +252,15 @@ class Interface(customtkinter.CTk):
             self.label_info_m2.grid(row=0, column=0, columnspan=2)
 
             self.label_machine_name_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all, text=f"Machine name :  {self.entry_machine_name.get()}")
-            self.label_machine_name_m2.grid(row=1, column=0, sticky="w", padx=15)
+            self.label_machine_name_m2.grid(row=1, column=0, sticky="w", padx=35)
 
             self.label_selected_file_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all,
                                                                 text="Selected File:  None")
-            self.label_selected_file_m2.grid(row=2, column=0, sticky="w", padx=15)
+            self.label_selected_file_m2.grid(row=2, column=0, sticky="w", padx=35)
 
             self.label_created_file_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all,
                                                                  text="File Created:  File not created")
-            self.label_created_file_m2.grid(row=3, column=0, sticky="w", padx=15)
+            self.label_created_file_m2.grid(row=3, column=0, sticky="w", padx=35)
 
 
             try:
@@ -422,7 +423,10 @@ class Interface(customtkinter.CTk):
 
         #     ------------------------------------ Teichert-Logo -----------------------------------------
         self.image_teichert_logo = customtkinter.CTkLabel(master=self, text="", image=image_teichert_logo_blue)
-        self.image_teichert_logo.grid(row=1, column=1)
+        self.image_teichert_logo.grid(row=1, column=1, rowspan=2, pady=30)
+
+
+
 
     def tab_1(self):
 
@@ -432,8 +436,8 @@ class Interface(customtkinter.CTk):
                                           )
 
         self.entry_machine_name = customtkinter.CTkEntry(master=self.frame_3_1.tab("Simple Point Conversion"),
-                                                         corner_radius=15, width=ENTRY_WIDTH, height=ENTRY_HEIGHT )
-        self.entry_machine_name.grid(column=1, row=1)
+                                                         corner_radius=15, width=ENTRY_WIDTH, height=ENTRY_HEIGHT)
+        self.entry_machine_name.grid(column=1, row=1, sticky="w")
         self.entry_machine_name.insert(0, panda.get_machine_name())
 
     # ------------------------------------------Select Button and Label --------------------------------
@@ -466,15 +470,15 @@ class Interface(customtkinter.CTk):
 
 
         self.label_machine_name = customtkinter.CTkLabel(master=self.frame_3_3,
-                                                         text=f"Machine name:     - {self.entry_machine_name.get()}",
+                                                         text=f"Machine name:{' '*17}- {self.entry_machine_name.get()}",
                                                          font=FONT_MESSAGE, width=400, anchor="sw")
-        self.label_machine_name.grid(row=2, column=1)
+        self.label_machine_name.grid(row=2, column=1, columnspan=2, padx=20)
 
-        self.label_selelected = customtkinter.CTkLabel(master=self.frame_3_3, text="Selected File:         - File not selected",
+        self.label_selelected = customtkinter.CTkLabel(master=self.frame_3_3, text=f"Selected File:{' '*20}- File not selected",
                                                        font=FONT_MESSAGE, width=400, anchor="sw")
         self.label_selelected.grid(row=3, column=1)
 
-        self.label_created = customtkinter.CTkLabel(master=self.frame_3_3, text="File Created:          - File not created",
+        self.label_created = customtkinter.CTkLabel(master=self.frame_3_3, text=f"File Created:{' '*21}- File not created",
                                                     font=FONT_MESSAGE,
                                                     width=400, anchor="sw")
         self.label_created.grid(row=4, column=1)
@@ -488,7 +492,7 @@ class Interface(customtkinter.CTk):
 
 
     def message_save (self):
-        new_text_m1 = f"Machine name:     - {self.entry_machine_name.get()}"
+        new_text_m1 = f"Machine name:{' '*17}- {self.entry_machine_name.get()}"
         new_text_m2 = f"Machine name:  {self.entry_machine_name.get()}"
         self.label_machine_name.configure(text=new_text_m1)
         self.label_machine_name_m2.configure(text=new_text_m2)
@@ -530,7 +534,7 @@ class Interface(customtkinter.CTk):
             machine_name = kwargs["machine_name"]
             self.entry_machine_name.delete(0, END)
             self.entry_machine_name.insert(0, machine_name)
-            self.label_machine_name.configure(text=f"Machine name:     - {machine_name}")
+            self.label_machine_name.configure(f"Machine name:{' '*17}- {machine_name}")
             self.label_machine_name_m2.configure(text=f"Machine name :  {machine_name}")
         else:
             machine_name = self.entry_machine_name.get()
@@ -544,10 +548,12 @@ class Interface(customtkinter.CTk):
 
 
     def event_button_select(self):
+        global TAB_NAME
         select = filedialog.askopenfilename(initialdir=SELECT_FILE_PATH)
         if select != "":
             self.button_tab_2_create_ds.configure(state="normal")
             self.button_create.configure(state="normal")
+            self.frame_tab_2.set(TAB_NAME[0])
             try:
                 with open ("TempFile.json", "w") as file:
                     upload_file = {"Selected File":select}
@@ -626,10 +632,16 @@ class Interface(customtkinter.CTk):
                             shutil.move(src, dst.joinpath("Designs"))
                             self.click_design()
                             self.label_design_files_m2.configure(text=f"Design Files: -- {len(LIST_DESIGN)}")
+                            if pathlib.Path(USB_PATH).joinpath(".Field-Data").joinpath(src.name).exists():
+                                field_data = pathlib.Path(USB_PATH).joinpath(".Field-Data").joinpath(src.name)
+                                shutil.rmtree(str(field_data))
                         else:
                             shutil.move(src, dst.joinpath("Designs"))
                             self.click_design()
                             self.label_design_files_m2.configure(text=f"Design Files: -- {len(LIST_DESIGN)}")
+                            if pathlib.Path(USB_PATH).joinpath(".Field-Data").joinpath(src.name).exists():
+                                field_data = pathlib.Path(USB_PATH).joinpath(".Field-Data").joinpath(src.name)
+                                shutil.rmtree(str(field_data))
 
                     if src.is_file():
                         files = glob(os.path.join(str(src.parent), "*.cfg"))
@@ -772,28 +784,30 @@ class Interface(customtkinter.CTk):
             print(e)
 
     def but_tr_cr(self):
-        selected = self.tree_tab_D.item(self.tree_tab_D.focus())
-        selected_file = selected["values"]
-        if selected_file == "":
-            try:
-                design_name = selected_file[0]
-                path = pathlib.Path(os.path.join(USB.detect_usb(), ".Field-Data"))
-                self.label_selelected.configure(text="Selected File:         - File not selected")
-                self.label_selected_file_m2.configure(text="File Created: File not selected")
-                self.button_tab_2_create_ds.configure(state="disabled")
+        try:
+            selected = self.tree_tab_D.item(self.tree_tab_D.focus())
+            selected_file = selected["values"]
+            design_name = selected_file[0]
+            path = pathlib.Path(os.path.join(USB.detect_usb(), ".Field-Data"))
+            self.label_selelected.configure(text="Selected File:         - File not selected")
+            self.label_created_file_m2.configure(text="File Created: Desktop/Points GCS 900")
+            self.label_created.configure(text="File Created:         - Desktop/Points GCS 900")
+            self.button_tab_2_create_ds.configure(state="disabled")
+            if path.exists():
+                design_path = path.joinpath(design_name)
                 if path.exists():
-                    design_path = path.joinpath(design_name)
-                    if path.exists():
-                        if not design_path.exists():
-                            pathlib.Path(design_path).mkdir()
-                            panda.create_file(str(design_path))
-                        else:
-                            panda.create_file(str(design_path))
-
+                    if not design_path.exists():
+                        pathlib.Path(design_path).mkdir()
+                        panda.create_file(str(design_path))
                     else:
-                        pass
-            except IndexError:
-                pass
+                        panda.create_file(str(design_path))
+                else:
+                    pass
+            else:
+                print("Your Box Version is below 13.15")
+        except IndexError:
+            print("Select Design Folder")
+
     def click_segmented_3_but(self):
         global TAB_NAME
         with open("TempFile.json", "r") as file:
@@ -809,11 +823,11 @@ class Interface(customtkinter.CTk):
             else:
                 self.button_tab_2_create_ds.configure(state="disabled")
 
-    async def multiple_files_usb(self):
+    def multiple_files_usb(self):
+        # if re.fullmatch(r".+?Machine Control Data", str(Usb_drive.USB_PATH), flags=re.IGNORECASE):
         path = os.listdir(USB_PATH)
         check = r"(?i)Backup.+|All"
-        matches = [i for i in path if re.fullmatch(check, i)]
-        # print(f"This is match: {matches}")
+        matches = [i for i in path if re.fullmatch(check, i) and pathlib.Path(USB_PATH).joinpath(i).is_dir()]
         if len(matches) > 1:
             files_to_show = []
             for file in matches:
@@ -821,16 +835,21 @@ class Interface(customtkinter.CTk):
                 time = datetime.fromtimestamp(path.stat().st_ctime).strftime('%m/%d/%Y')
                 files_to_show.append([file, time])
             self.message_tree = Message_box(data=files_to_show, ui_command=self.populate_treeveiw)
+        else:
+            self.populate_treeveiw()
 
     def populate_treeveiw(self):
         global LIST_DESIGN
         global LIST_CFG
         global LIST_MCG
         global USB_PATH
-        path = self.message_tree.file_selection()
+        try:
+            path = self.message_tree.file_selection()
+        except AttributeError:
+            path = Usb_drive.USB_PATH
+
         try:
             USB.current_path = str(pathlib.Path(USB_PATH).joinpath(path))
-            print(f" This is current path: {USB.current_path}")
         except TypeError:
             pass
         check = r"(?i).+MachIne Control Data.+Backup_MHG.+"
@@ -838,15 +857,43 @@ class Interface(customtkinter.CTk):
         LIST_CFG = USB.list_cfg()
         LIST_MCG = USB.list_mch()
         self.TAB_NAME()
-        self.message_box_m2()
+        # self.message_box_m2()
         self.catch_m_name(path=USB.current_path)
 
     def catch_m_name(self, path):
+
         main_check = r"(?i).+MachIne Control Data.+Backup_MHG.+"
         name_check = s = r"(?i)Backup_(.+?)_.+"
         if re.fullmatch(string=path, pattern=main_check):
             machine_name = re.findall(string=path, pattern=name_check)[0]
             self.save_machine_name(machine_name=machine_name)
+
+    def usb_search(self):
+        global USB_PATH
+        if Usb_drive.USB_PATH == "":
+            Usb_drive().detect_usb()
+            if Usb_drive.USB_PATH != "":
+                USB_PATH =Usb_drive.USB_PATH
+                self.multiple_files_usb()
+                self.after(2000, self.usb_search)
+
+            else:
+                self.after(5000, self.usb_search)
+        else:
+            if not pathlib.Path(USB_PATH).exists():
+                Usb_drive().detect_usb()
+                if pathlib.Path(USB_PATH).exists():
+                    USB_PATH = Usb_drive.USB_PATH
+                    self.multiple_files_usb()
+                    self.after(5000, self.usb_search)
+                else:
+                    Usb_drive.USB_PATH = ""
+                    self.after(2000, self.usb_search)
+            else:
+                self.after(2000, self.usb_search)
+
+
+
 
 
 

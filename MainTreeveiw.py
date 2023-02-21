@@ -48,8 +48,8 @@ class MainTree(ttk.Treeview):
         #         --------- Define Columns ______-------
         self["columns"] = ("Name", "Date")
         self.column("#0", anchor="w", width=55, minwidth=55, stretch=False)
-        self.column("Name", anchor="w", width=350, minwidth=100)
-        self.column("Date", anchor="w", width=40, minwidth=40)
+        self.column("Name", anchor="w", width=400, minwidth=100)
+        self.column("Date", anchor="w", width=60, minwidth=60)
         #      -    -------------- Create Headings --------------------------
         self.heading("#0", text="", anchor="w")
         self.heading("Name", text="Name", anchor="w")
