@@ -22,12 +22,23 @@ TAB_NAME = ["Design Folders", "Config Files", "Machine Files"]
 
 class Error_message(tkinter.ttk.Treeview):
 
-    def __init__(self, message, time, **kwargs):
+    def __init__(self, message, **kwargs):
+
         self.frame()
         self.flash=Button.flash
         super(). __init__(master=self.box)
         self.buttons(message=message)
-        self.close_frame()
+        if kwargs:
+            try:
+                if kwargs["time"]:
+                    self.close_frame(time=kwargs["time"])
+                else:
+                    self.close_frame()
+            except BaseException:
+                self.close_frame()
+        else:
+            self.close_frame()
+
 
 
     def frame(self):
@@ -48,18 +59,27 @@ class Error_message(tkinter.ttk.Treeview):
         label = Label(master=self.box, text=f"{message}", row=0, column=0)
         label.configure(text_color=SELECTED_BLUE, font=FONT_LABEL_ERROR)
 
-    def close_frame(self, time=8000):
+    def close_frame(self, time=6000):
         self.after(time, lambda: self.box.destroy())
 
 
 class Exception_message(tkinter.ttk.Treeview):
-    def __init__(self, message, time, **kwargs):
+    def __init__(self, message, **kwargs):
         self.frame()
         self.flash = Button.flash
         super().__init__(master=self.box)
         self.buttons()
         self.text_box(message=message)
-        self.close_frame()
+        if kwargs:
+            try:
+                if kwargs["time"]:
+                    self.close_frame(time=kwargs["time"])
+                else:
+                    self.close_frame()
+            except BaseException:
+                self.close_frame()
+        else:
+            self.close_frame()
     def frame(self):
         self.box = customtkinter.CTkToplevel()
         self.box.geometry("500x250")
@@ -73,7 +93,7 @@ class Exception_message(tkinter.ttk.Treeview):
     def buttons(self):
         self.button_accept = Button(master=self.box, text="Accept", sticky=None, row=1, column=0,
                                     command=self.box.destroy)
-    def close_frame(self, time=8000):
+    def close_frame(self, time=6000):
         self.after(time, lambda: self.box.destroy())
     def text_box(self, message):
         self.text_frame = customtkinter.CTkTextbox(master=self.box, wrap="word", state="normal", font=FONT_LABEL_ERROR,

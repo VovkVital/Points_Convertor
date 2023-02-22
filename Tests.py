@@ -1,10 +1,10 @@
-from Warnings import Exception_message
+from Warnings import Error_message
 from UsbError import Message_box
 
 import tkinter
 
 screen = tkinter.Tk()
-error = Exception_message(message="Select Design", time=2)
+error = Error_message(message="Select Design")
 
 
 screen.mainloop()

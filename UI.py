@@ -2,16 +2,11 @@ import glob
 import json
 import os.path
 import pathlib
-import time
-import tkinter.ttk
 from tkinter import *
 from Pandas import CSV
 from tkinter import filedialog, ttk
 import customtkinter
-import tkinter
 from PIL import Image, ImageTk
-import pandas as pd
-# import os
 from USB import Usb_drive
 import shutil
 from glob import glob
@@ -20,7 +15,7 @@ from UsbError import Message_box
 import re
 from MainTreeveiw import MainTree
 from Buttons import Button
-import asyncio
+from Warnings import Exception_message, Error_message
 
 USB = Usb_drive()
 customtkinter.set_appearance_mode("dark")
@@ -506,12 +501,12 @@ class Interface(customtkinter.CTk):
         except KeyError:
             selected = ""
         if selected == "":
-            new_text_m1 = f"Selected File:         - File not selected "
+            new_text_m1 = f"Selected File:{' '*20}- File not selected "
             new_text_m2 = f"Selected File:  None"
             self.label_selelected.configure(text=new_text_m1)
             self.label_selected_file_m2.configure(text=new_text_m2)
         else:
-            new_text_m1 =f"Selected File:         - {selected}"
+            new_text_m1 = f"Selected File:{' '*20}- {selected}"
             new_text_m2 = f"Selected File:  {selected}"
             self.label_selelected.configure(text=new_text_m1)
             self.label_selected_file_m2.configure(text=new_text_m2)
@@ -542,15 +537,15 @@ class Interface(customtkinter.CTk):
             with open("Settings.json", "w") as file:
                 upload_date = {"Machine Name": machine_name}
                 json.dump(upload_date, file, indent=4)
-        except:
-            pass
+        except BaseException as e:
+            Exception_message(message=e)
 
 
 
     def event_button_select(self):
         global TAB_NAME
         select = filedialog.askopenfilename(initialdir=SELECT_FILE_PATH)
-        if select != "":
+        if select.lower().endswith(".csv"):
             self.button_tab_2_create_ds.configure(state="normal")
             self.button_create.configure(state="normal")
             self.frame_tab_2.set(TAB_NAME[0])
@@ -559,12 +554,11 @@ class Interface(customtkinter.CTk):
                     upload_file = {"Selected File":select}
                     json.dump(upload_file, file, indent=4)
 
-            except:
-                print("Except  file explorer Error  ")
-
+            except BaseException as e:
+                Exception_message(message=e)
             return select
         else:
-            pass
+            Error_message(message="File was NOT selected")
 
     def but_tr_keep (self):
         global TAB_NAME
@@ -574,40 +568,43 @@ class Interface(customtkinter.CTk):
         list_pick = [LIST_DESIGN, LIST_CFG, LIST_MCG]
         selected_tab = self.frame_tab_2.get()
         trees = [self.tree_tab_D, self.tree_tab_C, self.tree_tab_M]
-        for tab in range(0, len(TAB_NAME)):
-            index = 0
-            if TAB_NAME[tab] == selected_tab:
-                count = 0
-                row_count = 1
-                for find_index in list_pick[tab]:
-                    selected_item = trees[tab].item(trees[tab].focus())
+        try:
+            for tab in range(0, len(TAB_NAME)):
+                index = 0
+                if TAB_NAME[tab] == selected_tab:
+                    count = 0
+                    row_count = 1
+                    for find_index in list_pick[tab]:
+                        selected_item = trees[tab].item(trees[tab].focus())
 
-                    if find_index == selected_item["values"]:
-                        index = list_pick[tab].index(find_index)
-                        list_pick[tab].pop(index)
-                for item in range(len(trees[tab].get_children())):
-                    selected_item = trees[tab].get_children()[0]
-                    trees[tab].delete(selected_item)
-                for record in list_pick[tab]:
-                    if count % 2 == 0:
-                        trees[tab].insert(parent="", index="end", text=row_count, iid=count,
-                                          values=(record[0], record[1]), tags=("odd",))
-                    else:
-                        trees[tab].insert(parent="", index="end", text=row_count, iid=count,
-                                          values=(record[0], record[1]), tags=("even",))
-                    count += 1
-                    row_count += 1
-                try:
-                    trees[tab].focus_set()
-                    trees[tab].focus(index)
-                    trees[tab].selection_add(index)
-                except TclError:
-                    if index > 0:
+                        if find_index == selected_item["values"]:
+                            index = list_pick[tab].index(find_index)
+                            list_pick[tab].pop(index)
+                    for item in range(len(trees[tab].get_children())):
+                        selected_item = trees[tab].get_children()[0]
+                        trees[tab].delete(selected_item)
+                    for record in list_pick[tab]:
+                        if count % 2 == 0:
+                            trees[tab].insert(parent="", index="end", text=row_count, iid=count,
+                                              values=(record[0], record[1]), tags=("odd",))
+                        else:
+                            trees[tab].insert(parent="", index="end", text=row_count, iid=count,
+                                              values=(record[0], record[1]), tags=("even",))
+                        count += 1
+                        row_count += 1
+                    try:
                         trees[tab].focus_set()
-                        trees[tab].focus(index-1)
-                        trees[tab].selection_add(index-1)
-                    else:
-                        pass
+                        trees[tab].focus(index)
+                        trees[tab].selection_add(index)
+                    except TclError:
+                        if index > 0:
+                            trees[tab].focus_set()
+                            trees[tab].focus(index-1)
+                            trees[tab].selection_add(index-1)
+                        else:
+                            pass
+        except TypeError:
+            pass
 
     def but_tr_delete (self):
         global TAB_NAME
@@ -671,7 +668,7 @@ class Interface(customtkinter.CTk):
                                     self.click_mch()
                                     self.label_machine_files_m2.configure(text=f"Config Files: -- {len(LIST_MCG)}")
             except IndexError:
-                pass
+                Error_message(message="File was not selected", time=3000)
 
 
 
@@ -718,7 +715,7 @@ class Interface(customtkinter.CTk):
                             self.tree_tab_D.focus(0)
                             self.tree_tab_D.selection_add(0)
                     else:
-                        print("No SVD or SVL in the folder")
+                        Error_message(message="Folder Does Not Contain\n  Needed Files")
                         pass
             elif self.frame_tab_2.get() == TAB_NAME[1] or self.frame_tab_2.get() == TAB_NAME[2] :
                 selected_file = filedialog.askopenfilename(initialdir=pathlib.Path("~\\Desktop").expanduser())
@@ -777,11 +774,9 @@ class Interface(customtkinter.CTk):
                                     self.frame_tab_2.set(TAB_NAME[2])
 
                     else:
-                        print("File failed at #748")
-
-
+                        pass
         except BaseException as e:
-            print(e)
+            Exception_message(message=e)
 
     def but_tr_cr(self):
         try:
@@ -804,9 +799,12 @@ class Interface(customtkinter.CTk):
                 else:
                     pass
             else:
-                print("Your Box Version is below 13.15")
+                message = "Can Not Create Point File\n ALL folder is the destination\n" \
+                "or \n"\
+                "BOX version is below 13.15"
+                Error_message(message=message)
         except IndexError:
-            print("Select Design Folder")
+            Error_message(message="Select Design Folder First")
 
     def click_segmented_3_but(self):
         global TAB_NAME
