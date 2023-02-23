@@ -69,8 +69,9 @@ class MainTree(ttk.Treeview):
                                            values=(record[0], record[1]), tags=("even",))
                 count += 1
                 row_count += 1
-        except TypeError:
+        except TypeError as error:
             LIST_DESIGN = []
+            pass
 
 
 

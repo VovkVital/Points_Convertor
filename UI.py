@@ -72,7 +72,7 @@ USB_PATH = Usb_drive.USB_PATH
 LIST_DESIGN = USB.list_designs()
 LIST_CFG = USB.list_cfg()
 LIST_MCG = USB.list_mch()
-print(f"This is Usb path {USB_PATH}")
+
 
 
 
@@ -226,7 +226,7 @@ class Interface(customtkinter.CTk):
 
             self.button_tab_2_create_ds = Button(master=self.frame_3_1.tab("Restore box Conversion"), text="Create",
                                                  sticky="e", row=1, column=3, state="disabled",
-                                                 command=lambda: [self.but_tr_cr(), self.event_button_create()],
+                                                 command=lambda: [self.but_tr_cr()],
                                                  width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
 
 
@@ -519,6 +519,7 @@ class Interface(customtkinter.CTk):
         new_text_m2 = "File Created:  Desktop/Points GCS 900/"
         self.label_created.configure(text=new_text_m1)
         self.label_created_file_m2.configure(text=new_text_m2)
+        Error_message(message="File is created", time=2000)
 
     def event_button_create(self):
         self.button_tab_2_create_ds.configure(state="disabled")
@@ -558,7 +559,7 @@ class Interface(customtkinter.CTk):
                 Exception_message(message=e)
             return select
         else:
-            Error_message(message="File was NOT selected")
+            Error_message(message="File was NOT selected", time=3000)
 
     def but_tr_keep (self):
         global TAB_NAME
@@ -668,7 +669,7 @@ class Interface(customtkinter.CTk):
                                     self.click_mch()
                                     self.label_machine_files_m2.configure(text=f"Config Files: -- {len(LIST_MCG)}")
             except IndexError:
-                Error_message(message="File was not selected", time=3000)
+                Error_message(message="Select file to delete", time=3000)
 
 
 
@@ -715,7 +716,7 @@ class Interface(customtkinter.CTk):
                             self.tree_tab_D.focus(0)
                             self.tree_tab_D.selection_add(0)
                     else:
-                        Error_message(message="Folder Does Not Contain\n  Needed Files")
+                        Error_message(message="Folder can not be added\n")
                         pass
             elif self.frame_tab_2.get() == TAB_NAME[1] or self.frame_tab_2.get() == TAB_NAME[2] :
                 selected_file = filedialog.askopenfilename(initialdir=pathlib.Path("~\\Desktop").expanduser())
@@ -774,6 +775,7 @@ class Interface(customtkinter.CTk):
                                     self.frame_tab_2.set(TAB_NAME[2])
 
                     else:
+                        Error_message(message="Could not add selected file")
                         pass
         except BaseException as e:
             Exception_message(message=e)
@@ -783,28 +785,34 @@ class Interface(customtkinter.CTk):
             selected = self.tree_tab_D.item(self.tree_tab_D.focus())
             selected_file = selected["values"]
             design_name = selected_file[0]
-            path = pathlib.Path(os.path.join(USB.detect_usb(), ".Field-Data"))
-            self.label_selelected.configure(text="Selected File:         - File not selected")
-            self.label_created_file_m2.configure(text="File Created: Desktop/Points GCS 900")
-            self.label_created.configure(text="File Created:         - Desktop/Points GCS 900")
-            self.button_tab_2_create_ds.configure(state="disabled")
+            path = pathlib.Path(os.path.join(USB_PATH, ".Field-Data"))
             if path.exists():
                 design_path = path.joinpath(design_name)
                 if path.exists():
+                    self.label_selelected.configure(text="Selected File:         - File not selected")
+                    self.label_created_file_m2.configure(text="File Created: Desktop/Points GCS 900")
+                    self.label_created.configure(text="File Created:         - Desktop/Points GCS 900")
+                    # self.button_tab_2_create_ds.configure(state="disabled")
+                    self.event_button_create()
                     if not design_path.exists():
                         pathlib.Path(design_path).mkdir()
                         panda.create_file(str(design_path))
+                        Error_message(message="Point file is created")
                     else:
                         panda.create_file(str(design_path))
+                        Error_message(message="Point file is created")
                 else:
                     pass
             else:
-                message = "Can Not Create Point File\n ALL folder is the destination\n" \
-                "or \n"\
-                "BOX version is below 13.15"
+                message = "Can not create point file  \n" \
+                          "BOX version is below 13.15\n" \
+                          "or\n" \
+                          "not a GSC900 Backup file"
+
                 Error_message(message=message)
         except IndexError:
             Error_message(message="Select Design Folder First")
+
 
     def click_segmented_3_but(self):
         global TAB_NAME
@@ -848,6 +856,7 @@ class Interface(customtkinter.CTk):
 
         try:
             USB.current_path = str(pathlib.Path(USB_PATH).joinpath(path))
+            USB_PATH = USB.current_path
         except TypeError:
             pass
         check = r"(?i).+MachIne Control Data.+Backup_MHG.+"
@@ -855,7 +864,7 @@ class Interface(customtkinter.CTk):
         LIST_CFG = USB.list_cfg()
         LIST_MCG = USB.list_mch()
         self.TAB_NAME()
-        # self.message_box_m2()
+        self.message_box_m2()
         self.catch_m_name(path=USB.current_path)
 
     def catch_m_name(self, path):

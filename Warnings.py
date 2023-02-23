@@ -3,7 +3,6 @@ import tkinter
 from tkinter import ttk
 import customtkinter
 from Buttons import Button, Label
-from USB import Usb_drive
 import json
 # _______ Colors _________
 SELECTED_BLUE = "#008fd7"
@@ -59,7 +58,7 @@ class Error_message(tkinter.ttk.Treeview):
         label = Label(master=self.box, text=f"{message}", row=0, column=0)
         label.configure(text_color=SELECTED_BLUE, font=FONT_LABEL_ERROR)
 
-    def close_frame(self, time=6000):
+    def close_frame(self, time=4000):
         self.after(time, lambda: self.box.destroy())
 
 
@@ -93,7 +92,7 @@ class Exception_message(tkinter.ttk.Treeview):
     def buttons(self):
         self.button_accept = Button(master=self.box, text="Accept", sticky=None, row=1, column=0,
                                     command=self.box.destroy)
-    def close_frame(self, time=6000):
+    def close_frame(self, time=4000):
         self.after(time, lambda: self.box.destroy())
     def text_box(self, message):
         self.text_frame = customtkinter.CTkTextbox(master=self.box, wrap="word", state="normal", font=FONT_LABEL_ERROR,

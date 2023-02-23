@@ -2,7 +2,7 @@ import json
 import pandas as pd
 import os
 import pathlib
-
+from Warnings import Exception_message
 
 
 SELECT_FILE_PATH = "C:\Trimble Synchronizer Data\PC\Trimble SCS900 Data"
@@ -20,7 +20,7 @@ class CSV:
                 machine_name = json.load(file)
                 return machine_name["Machine Name"]
         except BaseException as error:
-            print("An error is ocured: {}" .format(error))
+            Exception_message(message=error)
 
 
 
@@ -46,12 +46,12 @@ class CSV:
                     os.makedirs(home_dir)
                 machine_name = self.get_machine_name()
                 csv = final_rover.to_csv(fr"{SAVE_FILE_PATH}\Points_{machine_name}_001.csv", index=False)
-        except KeyError:
-            print("Select .CSV File Please")
-        except json.decoder.JSONDecodeError:
-            print("Cant read .json file")
-        except FileNotFoundError:
-            print("File was not found, please selected  it again")
+        except KeyError as error:
+            Exception_message(message=error)
+        except json.decoder.JSONDecodeError as error:
+            Exception_message(message=error)
+        except FileNotFoundError as error:
+            Exception_message(message=error)
 
         finally:
             with open("TempFile.json", "w") as file:

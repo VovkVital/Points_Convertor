@@ -4,6 +4,7 @@ import win32file
 import os
 from glob import glob
 from datetime import datetime
+from Warnings import Exception_message
 
 class Usb_drive:
     usb_folders_design = []
@@ -41,6 +42,7 @@ class Usb_drive:
                                 self.correct_usb.append(right_usb)
                                 Usb_drive.USB_PATH = self.current_path = pathlib.Path(self.directory_check).joinpath(check_path)
                                 self.path_switch = 1
+
                                 return self.current_path
 
 
@@ -57,7 +59,8 @@ class Usb_drive:
                         time = datetime.fromtimestamp(os.path.getmtime(folder_path)).strftime('%m/%d/%Y')
                         list_designs.append([design_f, time])
             return list_designs
-        except AttributeError:
+        except AttributeError as error:
+            # Exception_message(message=error)
             pass
     def list_cfg(self):
         try:
@@ -68,7 +71,8 @@ class Usb_drive:
                 file = os.path.basename(check_path_cfg[cfg])
                 list_cfg.append([file, time])
             return list_cfg
-        except AttributeError:
+        except AttributeError as error:
+            # Exception_message(message=error)
             pass
 
     def list_mch(self):
@@ -80,7 +84,8 @@ class Usb_drive:
                 file = os.path.basename(check_path_mch[mch])
                 list_mch.append([file, time])
             return list_mch
-        except:
+        except BaseException as error:
+            # Exception_message(message=error)
             pass
     def multiple_files(self, path):
         file_list = self.select_file(path)
