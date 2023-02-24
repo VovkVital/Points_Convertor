@@ -28,6 +28,7 @@ FONT = ("Robot", 15, "bold")
 FONT_CONVERSION = ("Roboto", 16)
 FONT_BUTTON = ("Roboto", 16)
 FONT_LABEL = ("Roboto", 16)
+FONT_BIGGER_LABEL = ("Roboto", 24)
 FONT_COPY_RIGHTS = ("Roboto", 6)
 FONT_MESSAGE = ("Roboto", 14)
 
@@ -117,6 +118,7 @@ class Interface(customtkinter.CTk):
         # self.tab_2()
         self.frame_tab_2()
         self.create_buttons_tabs()
+        self.create_buttons_add_design()
         self.TAB_NAME()
         self.message_box_m2()
 
@@ -143,6 +145,7 @@ class Interface(customtkinter.CTk):
                                                   segmented_button_selected_color=SELECTED_BLUE)
         self.frame_3_1.add("Simple Point Conversion")
         self.frame_3_1.add("Restore box Conversion")
+        self.frame_3_1.add("Add Design")
         self.frame_3_1.grid(row=1, column=3, rowspan=3, sticky="sewn")
         self.frame_3_1.tab("Simple Point Conversion").grid_columnconfigure(0, minsize=10)
         self.frame_3_1.tab("Simple Point Conversion").grid_columnconfigure(1, weight=1)
@@ -172,6 +175,28 @@ class Interface(customtkinter.CTk):
         self.frame_3_1.tab("Restore box Conversion").grid_rowconfigure(3, weight=5)
         self.frame_3_1.tab("Restore box Conversion").grid_rowconfigure(4, minsize=10)
         self.frame_3_1.tab("Restore box Conversion").grid_rowconfigure(5, weight=1)
+
+        self.frame_3_1.tab("Add Design").grid_columnconfigure(0, minsize=10)
+        self.frame_3_1.tab("Add Design").grid_columnconfigure(1, weight=2)
+        self.frame_3_1.tab("Add Design").grid_columnconfigure(2, minsize=10)
+        self.frame_3_1.tab("Add Design").grid_columnconfigure(3, weight=1)
+        self.frame_3_1.tab("Add Design").grid_columnconfigure(4, minsize=10)
+
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(0, minsize=5)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(1, weight=1)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(2, minsize=5)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(3, weight=1)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(4, minsize=5)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(5, weight=1)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(6, minsize=5)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(7, weight=1)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(8, minsize=5)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(9, weight=1)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(10, minsize=5)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(11, weight=1)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(12, minsize=5)
+
+
 
 
     def frame_message_box(self):
@@ -228,6 +253,46 @@ class Interface(customtkinter.CTk):
                                                  sticky="e", row=1, column=3, state="disabled",
                                                  command=lambda: [self.but_tr_cr()],
                                                  width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
+
+    def create_buttons_add_design(self):
+        self.button_tab_3_save_ds = Button(master=self.frame_3_1.tab("Add Design"), text="Save", sticky="e",
+                                           row=1, column=3, width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
+                                           command=self.event_button_add_design)
+
+        self.button_tab_3_svd_ds = Button(master=self.frame_3_1.tab("Add Design"), text="Add .svd", sticky="e",
+                                          row=5, column=3, width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
+
+        self.button_tab_3_svl_ds = Button(master=self.frame_3_1.tab("Add Design"), text="Add .svl", sticky="e",
+                                          row=7, column=3, width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
+
+        self.button_tab_3_cfg_ds = Button(master=self.frame_3_1.tab("Add Design"), text="cfg", sticky="e",
+                                          row=9, column=3, width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
+
+        self.button_tab_3_create_ds = Button(master=self.frame_3_1.tab("Add Design"), text="Create", sticky="e",
+                                             row=11, column=3, width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
+
+
+        self.entry_design_name = customtkinter.CTkEntry(master=self.frame_3_1.tab("Add Design"), placeholder_text="Type Design Name",
+                                                         corner_radius=15, width=ENTRY_WIDTH, height=ENTRY_HEIGHT)
+        self.entry_design_name.grid(column=1, row=1, sticky="w",)
+
+
+        self.label_tab_3_m = customtkinter.CTkLabel(master=self.frame_3_1.tab("Add Design"),
+                                                    font=FONT_BIGGER_LABEL, text="Design Files", width=200)
+        self.label_tab_3_m.grid(row=3, column=1, sticky="e")
+
+        self.label_tab_3_svd = customtkinter.CTkLabel(master=self.frame_3_1.tab("Add Design"), font=FONT_LABEL,
+                                                      text="Surface file '.svd'")
+        self.label_tab_3_svd.grid(row=5, column=1, sticky="w")
+
+        self.label_tab_3_svl = customtkinter.CTkLabel(master=self.frame_3_1.tab("Add Design"), font=FONT_LABEL,
+                                                      text="Line-work file '.svl'")
+        self.label_tab_3_svl.grid(row=7, column=1, sticky="w")
+
+        self.label_tab_3_cfg = customtkinter.CTkLabel(master=self.frame_3_1.tab("Add Design"), font=FONT_LABEL,
+                                                      text="Calibration file '.cfg'")
+        self.label_tab_3_cfg.grid(row=9, column=1, sticky="w")
+
 
 
     def message_box_m2(self):
@@ -897,6 +962,28 @@ class Interface(customtkinter.CTk):
                     self.after(2000, self.usb_search)
             else:
                 self.after(2000, self.usb_search)
+
+
+#     --------------------------------      Add Design Tab ------------------------------------------------
+
+    def event_button_add_design(self):
+        design_name = self.entry_design_name.get()
+        if design_name != "":
+            path = pathlib.Path(USB_PATH).joinpath(design_name)
+            if bool(path.exists()):
+                Error_message(message="Design name is already\n "
+                                      "exists on the USB-drive")
+            else:
+                try:
+                    with open ("Add_design.json", "w") as file:
+                        design_path = path
+                        upload_file = {"Design Path": str(design_path), "SVD_Path": None, "SVL_Path": None, "CFG_Path": None}
+                        json.dump(upload_file, file, indent=4)
+                except BaseException as e:
+                    Exception_message(message=e)
+        else:
+            Error_message(message="Enter and save design name first", time=2000)
+
 
 
 
