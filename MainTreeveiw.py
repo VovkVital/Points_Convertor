@@ -1,5 +1,7 @@
 from tkinter import ttk
 import customtkinter
+import os.path
+from datetime import datetime
 
 
 SELECTED_BLUE = "#008fd7"
@@ -72,6 +74,31 @@ class MainTree(ttk.Treeview):
         except TypeError as error:
             LIST_DESIGN = []
             pass
+
+    def add_design(self, dst, list_design):
+        count = 0
+        row_count = 1
+        dst = dst
+        LIST_DESIGN = list_design
+        file_to_append = [os.path.basename(str(dst)),
+                          datetime.fromtimestamp(os.path.getmtime(str(dst))).strftime('%m/%d/%Y')]
+        for i in self.get_children():
+            self.delete(i)
+        LIST_DESIGN.insert(0, file_to_append)
+        for record in LIST_DESIGN:
+            if count % 2 == 0:
+                self.insert(parent="", index="end", text=row_count, iid=count,
+                                       values=(record[0], record[1]), tags=("odd",))
+            else:
+                self.insert(parent="", index="end", text=row_count, iid=count,
+                                       values=(record[0], record[1]), tags=("even",))
+            count += 1
+            row_count += 1
+            self.focus_set()
+            self.focus(0)
+            self.selection_add(0)
+        return LIST_DESIGN
+
 
 
 

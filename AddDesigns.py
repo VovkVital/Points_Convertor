@@ -137,18 +137,33 @@ class Add_design():
                             svd_count += 1
                         else:
                             Error_message("Two or more .svd files\n were selected\n select only one")
+                            data["SVD_Path"] = "None"
+                            data["SVL_Path"] = "None"
+                            svd_count = 0
+                            svl_count = 0
+                            cfg_count = 0
+                            break
                     elif file.endswith(".svl"):
                         if svl_count == 0:
                             data["SVL_Path"] = Add_design.SVL_PATH = file
                             svl_count += 1
                         else:
                             Error_message("Two or more .svl files\n were selected\n select only one")
+                            data["SVD_Path"] = "None"
+                            data["SVL_Path"] = "None"
+                            svd_count = 0
+                            svl_count = 0
+                            cfg_count = 0
+                            break
                     if file.endswith(".cfg"):
                         if cfg_count == 0:
                             data["CFG_Path"] = Add_design.CFG_PATH = file
                             cfg_count += 1
                         else:
                             Error_message("Two or more .cfg files\n were selected\n select only one")
+                            data["CFG_Path"] = "None"
+                            cfg_count = 0
+                            break
                 else:
                     Error_message(message="File was not selected")
 
@@ -158,10 +173,9 @@ class Add_design():
                         json.dump(data, file, indent=4)
                     if event_btn is not None:
                         event_btn()
-                except Exception as e:
-                    print(e)
-                    # Error_message(message="Something went wrong\n Design name does not exist")
-                    # return
+                except Exception:
+                    Error_message(message="Something went wrong\n Design name does not exist")
+                    return
         except FileNotFoundError:
             Error_message(message="Something went wrong\n Design name does not exist")
             return

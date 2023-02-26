@@ -43,8 +43,8 @@ class Error_message(tkinter.ttk.Treeview):
     def frame(self):
         self.box = customtkinter.CTkToplevel()
         self.box.geometry("500x250")
-        self.box.minsize(width=500, height=250)
-        self.box.maxsize(width=500, height=250)
+        self.box.minsize(width=400, height=200)
+        self.box.maxsize(width=400, height=200)
         self.box.title("Error")
         self.box.rowconfigure(0, weight=1)
         self.box.rowconfigure(1, minsize=60)
@@ -82,8 +82,8 @@ class Exception_message(tkinter.ttk.Treeview):
     def frame(self):
         self.box = customtkinter.CTkToplevel()
         self.box.geometry("500x250")
-        self.box.minsize(width=500, height=250)
-        self.box.maxsize(width=500, height=250)
+        self.box.minsize(width=400, height=200)
+        self.box.maxsize(width=400, height=200)
         self.box.title("Error")
         self.box.rowconfigure(0, weight=1)
         self.box.rowconfigure(1, minsize=60)
@@ -122,8 +122,8 @@ class Design_exists(tkinter.ttk.Treeview):
     def frame(self):
         self.box = customtkinter.CTkToplevel()
         self.box.geometry("500x250")
-        self.box.minsize(width=500, height=250)
-        self.box.maxsize(width=500, height=250)
+        self.box.minsize(width=400, height=200)
+        self.box.maxsize(width=400, height=200)
         self.box.title("Error")
         self.box.rowconfigure(0, weight=1)
         self.box.rowconfigure(1, minsize=60)

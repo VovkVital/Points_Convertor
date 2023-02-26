@@ -18,6 +18,9 @@ FONT_LABEL_ERROR = ("Roboto", 18, "bold")
 # _________ Tab Names _______
 TAB_NAME = ["Design Folders", "Config Files", "Machine Files"]
 
+TAB_BUTTON_WIDTH = 120
+TAB_BUTTON_HEIGHT = 40
+
 
 
 class Message_box(tkinter.ttk.Treeview):
@@ -41,7 +44,7 @@ class Message_box(tkinter.ttk.Treeview):
         self.box.rowconfigure(0, weight=1, minsize=60)
         self.box.rowconfigure(1, weight=2)
         self.box.rowconfigure(2, minsize=10)
-        self.box.rowconfigure(3, weight=1, minsize=40)
+        self.box.rowconfigure(3, weight=1, minsize=80)
         self.box.rowconfigure(4, minsize=15)
         self.box.columnconfigure(0, weight=1)
         self.box.columnconfigure(1, weight=1)
@@ -111,8 +114,9 @@ class Message_box(tkinter.ttk.Treeview):
 
         self.button_select = Button(master=self.box, text="Select", sticky=None, row=3, column=0,
                                     command=lambda: [ui_command()])
+        self.button_select.configure(width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
 
-        Button(master=self.box, text="Cancel", sticky=None, row=3, column=1, command=self.close_frame)
+        self.button_close = Button(master=self.box, text="Close", sticky=None, row=3, column=1, command=self.close_frame)
         label = Label(master=self.box, text="Two or more files are present on the USB. Select one!", row=0, column=0)
         label.grid(columnspan=2)
         label.configure(text_color=SELECTED_BLUE, font=FONT_LABEL_ERROR)
