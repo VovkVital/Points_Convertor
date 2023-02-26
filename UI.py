@@ -262,17 +262,19 @@ class Interface(customtkinter.CTk):
 
         self.button_tab_3_svd_ds = Button(master=self.frame_3_1.tab("Add Design"), text="Add .svd", sticky="e",
                                           row=5, column=3, width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
-                                          command=self.event_button_add_file)
+                                          command=self.event_button_add_file, state="disabled")
 
         self.button_tab_3_svl_ds = Button(master=self.frame_3_1.tab("Add Design"), text="Add .svl", sticky="e",
-                                          row=7, column=3, width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
+                                          row=7, column=3, width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
+                                          state="disabled")
 
         self.button_tab_3_cfg_ds = Button(master=self.frame_3_1.tab("Add Design"), text="Add .cfg", sticky="e",
-                                          row=9, column=3, width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
+                                          row=9, column=3, width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
+                                          state="disabled", command=self.event_button_cfg)
 
         self.button_tab_3_create_ds = Button(master=self.frame_3_1.tab("Add Design"), text="Create", sticky="e",
                                              row=11, column=3, width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
-                                             command=self.event_button_create_design)
+                                             command=self.event_button_create_design, state="disabled")
 
 
         self.entry_design_name = customtkinter.CTkEntry(master=self.frame_3_1.tab("Add Design"), placeholder_text="Type Design Name",
@@ -970,13 +972,30 @@ class Interface(customtkinter.CTk):
 #     --------------------------------      Add Design Tab ------------------------------------------------
 
     def event_button_add_design(self):
-        Add_design().save_btn_event(design=self.entry_design_name.get(), usb_path=USB_PATH)
+        Add_design().save_btn_event(design=self.entry_design_name.get(), usb_path=USB_PATH, event_save=self.event_button_save_name)
 
     def event_button_add_file(self):
-        Add_design().add_file()
+        Add_design().add_file(event_svd=self.even_tab3_svd)
+
+    def event_button_cfg(self):
+        Add_design().add_cfg(usb_path=USB_PATH, event_btn=None)
 
     def event_button_create_design(self):
         Add_design().create_design()
+        self.button_tab_3_svd_ds.configure(state="disabled")
+        self.button_tab_3_svl_ds.configure(state="disabled")
+        self.button_tab_3_cfg_ds.configure(state="disabled")
+        self.button_tab_3_create_ds.configure(state="disabled")
+
+    def event_button_save_name(self):
+        self.button_tab_3_svd_ds.configure(state="normal")
+        self.button_tab_3_svl_ds.configure(state="normal")
+
+
+    def even_tab3_svd(self):
+        self.button_tab_3_create_ds.configure(state="normal")
+        self.button_tab_3_cfg_ds.configure(state="normal")
+
 
 
 
