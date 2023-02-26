@@ -102,5 +102,49 @@ class Exception_message(tkinter.ttk.Treeview):
         self.text_frame.configure(state="disabled")
 
 
+class Design_exists(tkinter.ttk.Treeview):
+    def __init__(self, message, command, **kwargs):
+        self.frame()
+        self.flash = Button.flash
+        super().__init__(master=self.box)
+        self.buttons(command=command, message=message)
+
+        if kwargs:
+            try:
+                if kwargs["time"]:
+                    self.close_frame(time=kwargs["time"])
+                else:
+                    self.close_frame()
+            except BaseException:
+                self.close_frame()
+        else:
+            self.close_frame()
+    def frame(self):
+        self.box = customtkinter.CTkToplevel()
+        self.box.geometry("500x250")
+        self.box.minsize(width=500, height=250)
+        self.box.maxsize(width=500, height=250)
+        self.box.title("Error")
+        self.box.rowconfigure(0, weight=1)
+        self.box.rowconfigure(1, minsize=60)
+        self.box.rowconfigure(2, minsize=20)
+        self.box.columnconfigure(0, weight=1)
+        self.box.columnconfigure(1, weight=1)
+
+    def buttons(self, command, message):
+        self.button_delete = Button(master=self.box, text="Remove", sticky=None, row=1, column=0,
+                                    command=lambda: [self.box.destroy(), command()])
+        self.button_cansel = Button(master=self.box, text="Cancel", sticky=None, row=1, column=1,
+                                    command=self.box.destroy)
+        label = Label(master=self.box, text=f"{message}", row=0, column=0)
+        label.grid(columnspan=2)
+        label.configure(text_color=SELECTED_BLUE, font=FONT_LABEL_ERROR)
+
+    def close_frame(self, time=10000):
+        self.after(time, lambda: self.box.destroy())
+
+
+
+
 
 

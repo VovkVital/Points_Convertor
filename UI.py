@@ -16,6 +16,7 @@ import re
 from MainTreeveiw import MainTree
 from Buttons import Button
 from Warnings import Exception_message, Error_message
+from AddDesigns import Add_design
 
 USB = Usb_drive()
 customtkinter.set_appearance_mode("dark")
@@ -260,16 +261,18 @@ class Interface(customtkinter.CTk):
                                            command=self.event_button_add_design)
 
         self.button_tab_3_svd_ds = Button(master=self.frame_3_1.tab("Add Design"), text="Add .svd", sticky="e",
-                                          row=5, column=3, width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
+                                          row=5, column=3, width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
+                                          command=self.event_button_add_file)
 
         self.button_tab_3_svl_ds = Button(master=self.frame_3_1.tab("Add Design"), text="Add .svl", sticky="e",
                                           row=7, column=3, width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
 
-        self.button_tab_3_cfg_ds = Button(master=self.frame_3_1.tab("Add Design"), text="cfg", sticky="e",
+        self.button_tab_3_cfg_ds = Button(master=self.frame_3_1.tab("Add Design"), text="Add .cfg", sticky="e",
                                           row=9, column=3, width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
 
         self.button_tab_3_create_ds = Button(master=self.frame_3_1.tab("Add Design"), text="Create", sticky="e",
-                                             row=11, column=3, width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
+                                             row=11, column=3, width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
+                                             command=self.event_button_create_design)
 
 
         self.entry_design_name = customtkinter.CTkEntry(master=self.frame_3_1.tab("Add Design"), placeholder_text="Type Design Name",
@@ -282,15 +285,15 @@ class Interface(customtkinter.CTk):
         self.label_tab_3_m.grid(row=3, column=1, sticky="e")
 
         self.label_tab_3_svd = customtkinter.CTkLabel(master=self.frame_3_1.tab("Add Design"), font=FONT_LABEL,
-                                                      text="Surface file '.svd'")
+                                                      text="Surface file  '.svd'")
         self.label_tab_3_svd.grid(row=5, column=1, sticky="w")
 
         self.label_tab_3_svl = customtkinter.CTkLabel(master=self.frame_3_1.tab("Add Design"), font=FONT_LABEL,
-                                                      text="Line-work file '.svl'")
+                                                      text="Line-work file  '.svl'")
         self.label_tab_3_svl.grid(row=7, column=1, sticky="w")
 
         self.label_tab_3_cfg = customtkinter.CTkLabel(master=self.frame_3_1.tab("Add Design"), font=FONT_LABEL,
-                                                      text="Calibration file '.cfg'")
+                                                      text="Calibration file  '.cfg'")
         self.label_tab_3_cfg.grid(row=9, column=1, sticky="w")
 
 
@@ -616,7 +619,7 @@ class Interface(customtkinter.CTk):
             self.button_create.configure(state="normal")
             self.frame_tab_2.set(TAB_NAME[0])
             try:
-                with open ("TempFile.json", "w") as file:
+                with open("TempFile.json", "w") as file:
                     upload_file = {"Selected File":select}
                     json.dump(upload_file, file, indent=4)
 
@@ -967,22 +970,13 @@ class Interface(customtkinter.CTk):
 #     --------------------------------      Add Design Tab ------------------------------------------------
 
     def event_button_add_design(self):
-        design_name = self.entry_design_name.get()
-        if design_name != "":
-            path = pathlib.Path(USB_PATH).joinpath(design_name)
-            if bool(path.exists()):
-                Error_message(message="Design name is already\n "
-                                      "exists on the USB-drive")
-            else:
-                try:
-                    with open ("Add_design.json", "w") as file:
-                        design_path = path
-                        upload_file = {"Design Path": str(design_path), "SVD_Path": None, "SVL_Path": None, "CFG_Path": None}
-                        json.dump(upload_file, file, indent=4)
-                except BaseException as e:
-                    Exception_message(message=e)
-        else:
-            Error_message(message="Enter and save design name first", time=2000)
+        Add_design().save_btn_event(design=self.entry_design_name.get(), usb_path=USB_PATH)
+
+    def event_button_add_file(self):
+        Add_design().add_file()
+
+    def event_button_create_design(self):
+        Add_design().create_design()
 
 
 
