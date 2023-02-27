@@ -17,6 +17,7 @@ from MainTreeveiw import MainTree
 from Buttons import Button
 from Warnings import Exception_message, Error_message
 from AddDesigns import Add_design
+import threading
 
 USB = Usb_drive()
 customtkinter.set_appearance_mode("dark")
@@ -26,6 +27,7 @@ customtkinter.set_default_color_theme("dark-blue")
 
 # -------------- Fonts -----------------------------
 FONT = ("Robot", 15, "bold")
+FONT_SMALL = ("Roboto", 14, "bold")
 FONT_CONVERSION = ("Roboto", 16)
 FONT_BUTTON = ("Roboto", 16)
 FONT_LABEL = ("Roboto", 16)
@@ -149,64 +151,66 @@ class Interface(customtkinter.CTk):
                                                   segmented_button_selected_color=SELECTED_BLUE,
                                                   segmented_button_unselected_color=NOT_SELECTED,
                                                   segmented_button_selected_hover_color=SELECTED_BLUE)
-        self.frame_3_1.add("--Create Point File (.csv)--")
-        self.frame_3_1.add("--------USB Files---------")
-        self.frame_3_1.add("--------Add Design--------")
+        self.frame_3_1.add("Create Point File (.csv)")
+        self.frame_3_1.add("USB Files")
+        self.frame_3_1.add("Add Design")
         self.frame_3_1.grid(row=1, column=3, rowspan=3, sticky="sewn")
-        self.frame_3_1.tab("--Create Point File (.csv)--").grid_columnconfigure(0, minsize=10)
-        self.frame_3_1.tab("--Create Point File (.csv)--").grid_columnconfigure(1, weight=1)
-        self.frame_3_1.tab("--Create Point File (.csv)--").grid_columnconfigure(2, minsize=10)
-        self.frame_3_1.tab("--Create Point File (.csv)--").grid_columnconfigure(3, weight=1)
-        self.frame_3_1.tab("--Create Point File (.csv)--").grid_columnconfigure(4, minsize=10)
+        for button in self.frame_3_1._segmented_button._buttons_dict.values():
+            button.configure(width=180,  font=FONT)
+        self.frame_3_1.tab("Create Point File (.csv)").grid_columnconfigure(0, minsize=10)
+        self.frame_3_1.tab("Create Point File (.csv)").grid_columnconfigure(1, weight=1)
+        self.frame_3_1.tab("Create Point File (.csv)").grid_columnconfigure(2, minsize=10)
+        self.frame_3_1.tab("Create Point File (.csv)").grid_columnconfigure(3, weight=1)
+        self.frame_3_1.tab("Create Point File (.csv)").grid_columnconfigure(4, minsize=10)
 
-        self.frame_3_1.tab("--Create Point File (.csv)--").grid_rowconfigure(0, minsize=10)
-        self.frame_3_1.tab("--Create Point File (.csv)--").grid_rowconfigure(1, weight=1)
-        self.frame_3_1.tab("--Create Point File (.csv)--").grid_rowconfigure(2, weight=1)
-        self.frame_3_1.tab("--Create Point File (.csv)--").grid_rowconfigure(3, weight=1)
-        self.frame_3_1.tab("--Create Point File (.csv)--").grid_rowconfigure(4, minsize=15)
-        self.frame_3_1.tab("--Create Point File (.csv)--").grid_rowconfigure(5, minsize=260)
-        self.frame_3_1.tab("--Create Point File (.csv)--").grid_rowconfigure(6, minsize=5)
+        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(0, minsize=10)
+        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(1, weight=1)
+        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(2, weight=1)
+        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(3, weight=1)
+        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(4, minsize=15)
+        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(5, minsize=260)
+        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(6, minsize=5)
 
 
         #----------------------------Columns----------------------
-        self.frame_3_1.tab("--------USB Files---------").grid_columnconfigure(0, minsize=5)
-        self.frame_3_1.tab("--------USB Files---------").grid_columnconfigure(1, weight=1)
-        self.frame_3_1.tab("--------USB Files---------").grid_columnconfigure(2, weight=1)
-        self.frame_3_1.tab("--------USB Files---------").grid_columnconfigure(3, weight=1)
-        self.frame_3_1.tab("--------USB Files---------").grid_columnconfigure(4, minsize=5)
+        self.frame_3_1.tab("USB Files").grid_columnconfigure(0, minsize=5)
+        self.frame_3_1.tab("USB Files").grid_columnconfigure(1, weight=1)
+        self.frame_3_1.tab("USB Files").grid_columnconfigure(2, weight=1)
+        self.frame_3_1.tab("USB Files").grid_columnconfigure(3, weight=1)
+        self.frame_3_1.tab("USB Files").grid_columnconfigure(4, minsize=5)
 
-        self.frame_3_1.tab("--------USB Files---------").grid_rowconfigure(0, minsize=5)
-        self.frame_3_1.tab("--------USB Files---------").grid_rowconfigure(1, minsize=60)
-        self.frame_3_1.tab("--------USB Files---------").grid_rowconfigure(2, minsize=5)
-        self.frame_3_1.tab("--------USB Files---------").grid_rowconfigure(3, weight=5)
-        self.frame_3_1.tab("--------USB Files---------").grid_rowconfigure(4, minsize=10)
-        self.frame_3_1.tab("--------USB Files---------").grid_rowconfigure(5, weight=1)
+        self.frame_3_1.tab("USB Files").grid_rowconfigure(0, minsize=5)
+        self.frame_3_1.tab("USB Files").grid_rowconfigure(1, minsize=60)
+        self.frame_3_1.tab("USB Files").grid_rowconfigure(2, minsize=5)
+        self.frame_3_1.tab("USB Files").grid_rowconfigure(3, weight=5)
+        self.frame_3_1.tab("USB Files").grid_rowconfigure(4, minsize=10)
+        self.frame_3_1.tab("USB Files").grid_rowconfigure(5, weight=1)
 
-        self.frame_3_1.tab("--------Add Design--------").grid_columnconfigure(0, minsize=10)
-        self.frame_3_1.tab("--------Add Design--------").grid_columnconfigure(1, weight=2)
-        self.frame_3_1.tab("--------Add Design--------").grid_columnconfigure(2, minsize=10)
-        self.frame_3_1.tab("--------Add Design--------").grid_columnconfigure(3, weight=1)
-        self.frame_3_1.tab("--------Add Design--------").grid_columnconfigure(4, minsize=10)
+        self.frame_3_1.tab("Add Design").grid_columnconfigure(0, minsize=10)
+        self.frame_3_1.tab("Add Design").grid_columnconfigure(1, weight=2)
+        self.frame_3_1.tab("Add Design").grid_columnconfigure(2, minsize=10)
+        self.frame_3_1.tab("Add Design").grid_columnconfigure(3, weight=1)
+        self.frame_3_1.tab("Add Design").grid_columnconfigure(4, minsize=10)
 
-        self.frame_3_1.tab("--------Add Design--------").grid_rowconfigure(0, minsize=5)
-        self.frame_3_1.tab("--------Add Design--------").grid_rowconfigure(1, weight=1)
-        self.frame_3_1.tab("--------Add Design--------").grid_rowconfigure(2, minsize=5)
-        self.frame_3_1.tab("--------Add Design--------").grid_rowconfigure(3, weight=1)
-        self.frame_3_1.tab("--------Add Design--------").grid_rowconfigure(4, minsize=5)
-        self.frame_3_1.tab("--------Add Design--------").grid_rowconfigure(5, weight=1)
-        self.frame_3_1.tab("--------Add Design--------").grid_rowconfigure(6, minsize=5)
-        self.frame_3_1.tab("--------Add Design--------").grid_rowconfigure(7, weight=1)
-        self.frame_3_1.tab("--------Add Design--------").grid_rowconfigure(8, minsize=5)
-        self.frame_3_1.tab("--------Add Design--------").grid_rowconfigure(9, weight=1)
-        self.frame_3_1.tab("--------Add Design--------").grid_rowconfigure(10, minsize=5)
-        self.frame_3_1.tab("--------Add Design--------").grid_rowconfigure(11, weight=1)
-        self.frame_3_1.tab("--------Add Design--------").grid_rowconfigure(12, minsize=5)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(0, minsize=5)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(1, weight=1)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(2, minsize=5)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(3, weight=1)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(4, minsize=5)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(5, weight=1)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(6, minsize=5)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(7, weight=1)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(8, minsize=5)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(9, weight=1)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(10, minsize=5)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(11, weight=1)
+        self.frame_3_1.tab("Add Design").grid_rowconfigure(12, minsize=5)
 
 
 
 
     def frame_message_box(self):
-        self.frame_3_3 = customtkinter.CTkFrame(master=self.frame_3_1.tab("--Create Point File (.csv)--"), corner_radius=25,)
+        self.frame_3_3 = customtkinter.CTkFrame(master=self.frame_3_1.tab("Create Point File (.csv)"), corner_radius=25,)
         self.frame_3_3.grid(row=5, column=0, columnspan=5, rowspan=3, sticky="news")
         self.frame_3_3.grid_rowconfigure(0, minsize=5)
         self.frame_3_3.grid_rowconfigure(1, weight=1)
@@ -221,7 +225,7 @@ class Interface(customtkinter.CTk):
 
 
     def frame_tab_2 (self):
-        self.frame_tab_2 = customtkinter.CTkTabview(master=self.frame_3_1.tab("--------USB Files---------"),
+        self.frame_tab_2 = customtkinter.CTkTabview(master=self.frame_3_1.tab("USB Files"),
                                                     corner_radius=25,
                                                     segmented_button_selected_color=SELECTED_BLUE,
                                                     segmented_button_unselected_color=NOT_SELECTED,
@@ -231,6 +235,9 @@ class Interface(customtkinter.CTk):
         self.frame_tab_2.add("Config Files")
         self.frame_tab_2.add("Machine Files")
         self.frame_tab_2.grid(row=3, column=0, sticky="news", columnspan=5, rowspan=1)
+
+        for button in self.frame_tab_2._segmented_button._buttons_dict.values():
+            button.configure(width=150, font=FONT_SMALL)
 
         self.frame_tab_2.tab("Design Folders").grid_columnconfigure(0, weight=1)
         self.frame_tab_2.tab("Design Folders").grid_columnconfigure(1, minsize=15)
@@ -246,90 +253,90 @@ class Interface(customtkinter.CTk):
 
 
     def create_buttons_tabs (self):
-            self.button_tab_2_keep = Button(master=self.frame_3_1.tab("--------USB Files---------"), text="Keep", sticky="e",
+            self.button_tab_2_keep = Button(master=self.frame_3_1.tab("USB Files"), text="Keep", sticky="e",
                                             row=1, column=0, command=self.but_tr_keep,
                                             width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
 
-            self.button_tab_2_delete = Button(master=self.frame_3_1.tab("--------USB Files---------"), text="Delete", sticky="e",
+            self.button_tab_2_delete = Button(master=self.frame_3_1.tab("USB Files"), text="Delete", sticky="e",
                                               row=1, column=1, command=self.but_tr_delete,
                                               width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
 
-            self.button_tab_2_add = Button(master=self.frame_3_1.tab("--------USB Files---------"), text="ADD", sticky="e",
+            self.button_tab_2_add = Button(master=self.frame_3_1.tab("USB Files"), text="ADD", sticky="e",
                                            row=1, column=2, command=self.but_tr_add,
                                            width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
 
-            self.button_tab_2_create_ds = Button(master=self.frame_3_1.tab("--------USB Files---------"), text="Create",
+            self.button_tab_2_create_ds = Button(master=self.frame_3_1.tab("USB Files"), text="Create",
                                                  sticky="e", row=1, column=3, state="disabled",
                                                  command=lambda: [self.but_tr_cr()],
                                                  width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
 
     def create_buttons_add_design(self):
-        self.button_tab_3_save_ds = Button(master=self.frame_3_1.tab("--------Add Design--------"), text="Save", sticky="e",
+        self.button_tab_3_save_ds = Button(master=self.frame_3_1.tab("Add Design"), text="Save", sticky="e",
                                            row=1, column=3, width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
                                            command=self.event_button_add_design)
 
-        self.button_tab_3_svd_ds = Button(master=self.frame_3_1.tab("--------Add Design--------"), text="Add-svd/.svl", sticky="e",
+        self.button_tab_3_svd_ds = Button(master=self.frame_3_1.tab("Add Design"), text="Add-svd/.svl", sticky="e",
                                           row=5, column=3, width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
                                           command=self.event_button_add_file, state="disabled")
 
-        self.button_tab_3_cfg_ds = Button(master=self.frame_3_1.tab("--------Add Design--------"), text="Add-.cfg", sticky="e",
+        self.button_tab_3_cfg_ds = Button(master=self.frame_3_1.tab("Add Design"), text="Add-.cfg", sticky="e",
                                           row=9, column=3, width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT,
                                           state="disabled", command=self.event_button_cfg)
 
-        self.button_tab_3_create_ds = Button(master=self.frame_3_1.tab("--------Add Design--------"), text="Create", sticky="e",
+        self.button_tab_3_create_ds = Button(master=self.frame_3_1.tab("Add Design"), text="Create", sticky="e",
                                              row=11, column=1, width=MAIN_WIDTH, height=TAB_BUTTON_HEIGHT,
                                              command=self.event_button_create_design, state="disabled")
 
 
-        self.entry_design_name = customtkinter.CTkEntry(master=self.frame_3_1.tab("--------Add Design--------"), placeholder_text="Type Design Name",
+        self.entry_design_name = customtkinter.CTkEntry(master=self.frame_3_1.tab("Add Design"), placeholder_text="Type Design Name",
                                                          corner_radius=15, width=ENTRY_WIDTH, height=ENTRY_HEIGHT)
         self.entry_design_name.grid(column=1, row=1, sticky="w",)
 
 
-        self.label_tab_3_m = customtkinter.CTkLabel(master=self.frame_3_1.tab("--------Add Design--------"), text_color=SELECTED_BLUE,
+        self.label_tab_3_m = customtkinter.CTkLabel(master=self.frame_3_1.tab("Add Design"), text_color=SELECTED_BLUE,
                                                     font=FONT_BIGGER_LABEL, text="Design Files", width=200)
         self.label_tab_3_m.grid(row=3, column=1, sticky="e")
 
-        self.label_tab_3_svd = customtkinter.CTkLabel(master=self.frame_3_1.tab("--------Add Design--------"), font=FONT_LABEL_BLUE,
+        self.label_tab_3_svd = customtkinter.CTkLabel(master=self.frame_3_1.tab("Add Design"), font=FONT_LABEL_BLUE,
                                                       text="Surface file  .svd", text_color=SELECTED_BLUE)
         self.label_tab_3_svd.grid(row=5, column=1, sticky="w")
 
-        self.label_tab_3_svd_name = customtkinter.CTkLabel(master=self.frame_3_1.tab("--------Add Design--------"), font=FONT_LABEL_BOLD,
+        self.label_tab_3_svd_name = customtkinter.CTkLabel(master=self.frame_3_1.tab("Add Design"), font=FONT_LABEL_BOLD,
                                                            text="Selected  '.svd'", height=5)
         self.label_tab_3_svd_name.grid(row=4, column=1, sticky="e")
 
-        self.label_tab_3_svd_name_selected = customtkinter.CTkLabel(master=self.frame_3_1.tab("--------Add Design--------"),
+        self.label_tab_3_svd_name_selected = customtkinter.CTkLabel(master=self.frame_3_1.tab("Add Design"),
                                                                     font=FONT_LABEL_SMALL, text="None")
         self.label_tab_3_svd_name_selected.grid(row=5, column=1, sticky="e")
 
-        self.label_tab_3_svl = customtkinter.CTkLabel(master=self.frame_3_1.tab("--------Add Design--------"), font=FONT_LABEL_BLUE,
+        self.label_tab_3_svl = customtkinter.CTkLabel(master=self.frame_3_1.tab("Add Design"), font=FONT_LABEL_BLUE,
                                                       text="Line-work file  .svl", text_color=SELECTED_BLUE)
         self.label_tab_3_svl.grid(row=7, column=1, sticky="w")
 
-        self.label_tab_3_svl_name = customtkinter.CTkLabel(master=self.frame_3_1.tab("--------Add Design--------"), font=FONT_LABEL_BOLD,
+        self.label_tab_3_svl_name = customtkinter.CTkLabel(master=self.frame_3_1.tab("Add Design"), font=FONT_LABEL_BOLD,
                                                            text="Selected  '.svl'", height=5)
         self.label_tab_3_svl_name.grid(row=6, column=1, sticky="e")
 
-        self.label_tab_3_svl_name_selected = customtkinter.CTkLabel(master=self.frame_3_1.tab("--------Add Design--------"),
+        self.label_tab_3_svl_name_selected = customtkinter.CTkLabel(master=self.frame_3_1.tab("Add Design"),
                                                                     font=FONT_LABEL_SMALL, text="None")
         self.label_tab_3_svl_name_selected.grid(row=7, column=1, sticky="e")
 
-        self.label_tab_3_cfg = customtkinter.CTkLabel(master=self.frame_3_1.tab("--------Add Design--------"), text_color=SELECTED_BLUE,
+        self.label_tab_3_cfg = customtkinter.CTkLabel(master=self.frame_3_1.tab("Add Design"), text_color=SELECTED_BLUE,
                                                       font=FONT_LABEL_BLUE, text="Calibration file  .cfg")
         self.label_tab_3_cfg.grid(row=9, column=1, sticky="w")
 
-        self.label_tab_3_cfg_name = customtkinter.CTkLabel(master=self.frame_3_1.tab("--------Add Design--------"), height=5,
+        self.label_tab_3_cfg_name = customtkinter.CTkLabel(master=self.frame_3_1.tab("Add Design"), height=5,
                                                            font=FONT_LABEL_BOLD, text="Selected '.cfg'")
         self.label_tab_3_cfg_name.grid(row=8, column=1, sticky="e")
 
-        self.label_tab_3_cfg_name_selected = customtkinter.CTkLabel(master=self.frame_3_1.tab("--------Add Design--------"),
+        self.label_tab_3_cfg_name_selected = customtkinter.CTkLabel(master=self.frame_3_1.tab("Add Design"),
                                                                     font=FONT_LABEL_SMALL, text="None")
         self.label_tab_3_cfg_name_selected.grid(row=9, column=1, sticky="e")
 
 
 
     def message_box_m2(self):
-            self.message_box_tab_2_all = customtkinter.CTkFrame(master=self.frame_3_1.tab("--------USB Files---------"),
+            self.message_box_tab_2_all = customtkinter.CTkFrame(master=self.frame_3_1.tab("USB Files"),
                                                                 corner_radius=25)
             self.message_box_tab_2_all.grid(row=5, column=0, columnspan=4, sticky="news")
             self.message_box_tab_2_all.rowconfigure(0, weight=1)
@@ -528,12 +535,12 @@ class Interface(customtkinter.CTk):
 
     def tab_1(self):
 
-        self.button_machine_save = Button(master=self.frame_3_1.tab("--Create Point File (.csv)--"), text="Save  ",
+        self.button_machine_save = Button(master=self.frame_3_1.tab("Create Point File (.csv)"), text="Save  ",
                                           row=1, column=4, image=image_save_name, compound=RIGHT, sticky=None,
                                           command=lambda: [self.save_machine_name(), self.message_save()],
                                           )
 
-        self.entry_machine_name = customtkinter.CTkEntry(master=self.frame_3_1.tab("--Create Point File (.csv)--"),
+        self.entry_machine_name = customtkinter.CTkEntry(master=self.frame_3_1.tab("Create Point File (.csv)"),
                                                          corner_radius=15, width=ENTRY_WIDTH, height=ENTRY_HEIGHT,
                                                          placeholder_text="Enter Machine Name")
         self.entry_machine_name.grid(column=1, row=1, sticky="w")
@@ -543,22 +550,22 @@ class Interface(customtkinter.CTk):
             pass
 
     # ------------------------------------------Select Button and Label --------------------------------
-        self.button_rover_file = Button(master=self.frame_3_1.tab("--Create Point File (.csv)--"), text="Select  ",
+        self.button_rover_file = Button(master=self.frame_3_1.tab("Create Point File (.csv)"), text="Select  ",
                                         row=2, column=4, image=image_add_folder, compound=RIGHT, sticky=None,
                                         command=lambda: [self.event_button_select(), self.message_selected()])
 
-        self.label_select_file = customtkinter.CTkLabel(master=self.frame_3_1.tab("--Create Point File (.csv)--"),
+        self.label_select_file = customtkinter.CTkLabel(master=self.frame_3_1.tab("Create Point File (.csv)"),
                                                         text="""  Select a Points-File ".csv" """,
                                                         font=FONT_LABEL, width=ENTRY_WIDTH, anchor="sw")
         self.label_select_file.grid(row=2, column=1)
 
         # -------------------------------------- Create Button and Label -----------------------------------------------
-        self.button_create = Button(master=self.frame_3_1.tab("--Create Point File (.csv)--"), text="Create  ", state="disabled",
+        self.button_create = Button(master=self.frame_3_1.tab("Create Point File (.csv)"), text="Create  ", state="disabled",
                                     row=3, column=4, image=image_create_file, compound=RIGHT, sticky=None,
                                     command=lambda: [panda.create_file(), self.message_created(),
                                     self.event_button_create()])
 
-        self.label_create_file = customtkinter.CTkLabel(master=self.frame_3_1.tab("--Create Point File (.csv)--"),
+        self.label_create_file = customtkinter.CTkLabel(master=self.frame_3_1.tab("Create Point File (.csv)"),
                                                         text= """  File in the folder "Points GCS 900" """,
                                                         width=ENTRY_WIDTH, anchor="sw", font=FONT_LABEL)
         self.label_create_file.grid(column=1, row=3)
@@ -648,8 +655,9 @@ class Interface(customtkinter.CTk):
             with open("Settings.json", "w") as file:
                 upload_date = {"Machine Name": machine_name}
                 json.dump(upload_date, file, indent=4)
-        except BaseException as e:
+        except Exception as e:
             Exception_message(message=e)
+            return
 
 
 
@@ -671,6 +679,7 @@ class Interface(customtkinter.CTk):
             return select
         else:
             Error_message(message="File was NOT selected", time=3000)
+            return
 
     def but_tr_keep (self):
         global TAB_NAME
@@ -1018,7 +1027,9 @@ class Interface(customtkinter.CTk):
 #     --------------------------------      Add Design Tab ------------------------------------------------
 
     def event_button_add_design(self):
-        Add_design().save_btn_event(design=self.entry_design_name.get(), usb_path=USB_PATH, event_save=self.event_button_save_name)
+        task = threading.Thread(Add_design().save_btn_event(design=self.entry_design_name.get(), usb_path=USB_PATH,
+                                                            event_save=self.event_button_save_name))
+        task.start()
 
     def event_button_add_file(self):
         Add_design().add_file(event_svd=self.even_tab3_svd)
@@ -1035,32 +1046,39 @@ class Interface(customtkinter.CTk):
         self.button_tab_3_cfg_ds.configure(state="disabled")
         self.button_tab_3_create_ds.configure(state="disabled")
         # --------------- Add Design to the list -----------
-        count = 0
-        row_count = 1
-        dst = Add_design.DESIGN_PATH
-        file_to_append = [os.path.basename(str(dst)),
-                          datetime.fromtimestamp(os.path.getmtime(str(dst))).strftime('%m/%d/%Y')]
-        for i in self.tree_tab_D.get_children():
-            self.tree_tab_D.delete(i)
-        LIST_DESIGN.insert(0, file_to_append)
-        for record in LIST_DESIGN:
-            if count % 2 == 0:
-                self.tree_tab_D.insert(parent="", index="end", text=row_count, iid=count,
-                                       values=(record[0], record[1]), tags=("odd",))
-            else:
-                self.tree_tab_D.insert(parent="", index="end", text=row_count, iid=count,
-                                       values=(record[0], record[1]), tags=("even",))
-            count += 1
-            row_count += 1
-            self.tree_tab_D.focus_set()
-            self.tree_tab_D.focus(0)
-            self.tree_tab_D.selection_add(0)
-        self.after(1000, lambda: self.change_label_none())
+        try:
+            count = 0
+            row_count = 1
+            dst = Add_design.DESIGN_PATH
+            file_to_append = [os.path.basename(str(dst)),
+                              datetime.fromtimestamp(os.path.getmtime(str(dst))).strftime('%m/%d/%Y')]
+            for i in self.tree_tab_D.get_children():
+                self.tree_tab_D.delete(i)
+            LIST_DESIGN.insert(0, file_to_append)
+            for record in LIST_DESIGN:
+                if count % 2 == 0:
+                    self.tree_tab_D.insert(parent="", index="end", text=row_count, iid=count,
+                                           values=(record[0], record[1]), tags=("odd",))
+                else:
+                    self.tree_tab_D.insert(parent="", index="end", text=row_count, iid=count,
+                                           values=(record[0], record[1]), tags=("even",))
+                count += 1
+                row_count += 1
+                self.tree_tab_D.focus_set()
+                self.tree_tab_D.focus(0)
+                self.tree_tab_D.selection_add(0)
+            self.after(1000, lambda: self.change_label_none())
+        except (AttributeError, FileNotFoundError):
+            Error_message(message="USB is not connected")
+            return
 
 
 
     def event_button_save_name(self):
         self.button_tab_3_svd_ds.configure(state="normal")
+        self.button_tab_3_cfg_ds.configure(state="disabled")
+        self.button_tab_3_create_ds.configure(state="disabled")
+        self.change_label_none()
 
 
 

@@ -27,41 +27,55 @@ class Add_design():
         if re.fullmatch(pattern=pattern, string=str(design)):
             design_name = design
             USB_PATH = usb_path
-            if design_name != "":
-                path = pathlib.Path(USB_PATH).joinpath(design_name)
-                self.design_name = design_name
-                self.usb_path = str(usb_path)
-                if path.exists() and path.is_dir():
-                    message = "The design name is already exist\n\n on the connected USB\n\n " \
-                              "Do you want to remove it, first ?"
-                    Design_exists(message=message, command=lambda: [self.remove_file(usb_path=path),
-                                                                    self.call_back_save_btn_event(path=path,
-                                                                    event_save=event_save)])
-                else:
-                    try:
-                        with open("Add_design.json", "r") as file:
-                            data = json.load(file)
-                        Add_design.DESIGN_PATH = design_path = path
-                        data["Design Path"] = str(design_path)
+            if USB_PATH != "":
+                pass
 
-                        with open("Add_design.json", "w") as file:
-                            json.dump(data, file, indent=4)
-                        event_save()
-
-                    except FileNotFoundError:
+                if design_name != "" :
+                    path = pathlib.Path(USB_PATH).joinpath(design_name)
+                    self.design_name = design_name
+                    self.usb_path = str(usb_path)
+                    if path.exists() and path.is_dir():
+                        message = "The design name is already exist\n\n on the connected USB\n\n " \
+                                  "Do you want to remove it, first ?"
+                        Design_exists(message=message, command=lambda: [self.remove_file(usb_path=path),
+                                                                        self.call_back_save_btn_event(path=path,
+                                                                        event_save=event_save)])
+                    else:
                         try:
+                            with open("Add_design.json", "r") as file:
+                                data = json.load(file)
+                            Add_design.DESIGN_PATH = design_path = path
+                            data["Design Path"] = str(design_path)
+                            data["SVD_Path"] = "None"
+                            data["SVL_Path"] = "None"
+                            data["CFG_Path"] = "None"
+
                             with open("Add_design.json", "w") as file:
-                                Add_design.DESIGN_PATH = design_path = path
-                                upload_file = {"Design Path": str(design_path), "SVD_Path": "None", "SVL_Path": "None",
-                                               "CFG_Path": "None"}
-                                json.dump(upload_file, file, indent=4)
-                                event_save()
-                        except Exception:
-                            Error_message(message="Something went wrong ):\n please try it again")
+                                json.dump(data, file, indent=4)
+                            event_save()
+
+                        except FileNotFoundError:
+                            try:
+                                with open("Add_design.json", "w") as file:
+                                    Add_design.DESIGN_PATH = design_path = path
+                                    upload_file = {"Design Path": str(design_path), "SVD_Path": "None", "SVL_Path": "None",
+                                                   "CFG_Path": "None"}
+                                    json.dump(upload_file, file, indent=4)
+                                    event_save()
+                            except Exception:
+                                Error_message(message="Something went wrong ):\n please try it again")
+                                return
+                else:
+                    Error_message(message="Enter and save design name first", time=2000)
+                    return
+
             else:
-                Error_message(message="Enter and save design name first", time=2000)
+                Error_message(message="USB is not connected")
+                return
+
         else:
             Error_message(message="Incorrect name !!!")
+            return
 
     def add_file(self, event_svd):
         file_type = [("Machine Files", (".svd", ".svl", ".cfg")), ("All Files", "*.*")]
@@ -98,25 +112,32 @@ class Add_design():
         with open("Add_design.json", "r") as file:
             data = json.load(file)
         directory = pathlib.Path(data["Design Path"])
-        directory.mkdir()
-        if data["SVD_Path"] != "None":
-            shutil.copy(src=data["SVD_Path"], dst=str(directory))
-        if data["SVL_Path"] != "None":
-            shutil.copy(src=data["SVL_Path"], dst=str(directory))
-        if data["CFG_Path"] != "None":
-            shutil.copy(src=data["CFG_Path"], dst=str(directory))
-
         try:
-            with open("Add_design.json", "r") as file:
-                data = json.load(file)
-            data["SVD_Path"] = "None"
-            data["SVL_Path"] = "None"
-            data["CFG_Path"] = "None"
+            directory.mkdir()
+            if data["SVD_Path"] != "None":
+                shutil.copy(src=data["SVD_Path"], dst=str(directory))
+            if data["SVL_Path"] != "None":
+                shutil.copy(src=data["SVL_Path"], dst=str(directory))
+            if data["CFG_Path"] != "None":
+                shutil.copy(src=data["CFG_Path"], dst=str(directory))
 
-            with open("Add_design.json", "w") as file:
-                json.dump(data, file, indent=4)
-        except Exception:
-            Error_message(message="Something went wrong ):\n please try it again")
+            try:
+                with open("Add_design.json", "r") as file:
+                    data = json.load(file)
+                data["SVD_Path"] = "None"
+                data["SVL_Path"] = "None"
+                data["CFG_Path"] = "None"
+
+                with open("Add_design.json", "w") as file:
+                    json.dump(data, file, indent=4)
+
+                Error_message(message="Design created successfully", time=3000)
+            except Exception:
+                Error_message(message="Something went wrong ):\n please try it again")
+                return
+        except FileNotFoundError:
+            pass
+
 
 
 
