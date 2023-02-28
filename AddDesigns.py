@@ -5,8 +5,7 @@ import threading
 from tkinter import filedialog
 import re
 import shutil
-from glob import glob
-import os.path
+
 
 SELECT_FILE_PATH = r"C:\Trimble Synchronizer Data\PC\Trimble SCS900 Data"
 

@@ -8,7 +8,7 @@ import re
 def main():
     screen = Interface()
     # Expands to the full screen
-    # screen.state("zoomed")
+    screen.state("zoomed")
     pd = CSV()
     if re.fullmatch(r".+?Machine Control Data", str(Usb_drive.USB_PATH), flags=re.IGNORECASE):
         screen.multiple_files_usb()

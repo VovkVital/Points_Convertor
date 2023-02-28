@@ -4,9 +4,9 @@ import os.path
 import pathlib
 from tkinter import *
 from Pandas import CSV
-from tkinter import filedialog, ttk
+from tkinter import filedialog
 import customtkinter
-from PIL import Image, ImageTk
+from PIL import Image
 from USB import Usb_drive
 import shutil
 from glob import glob
@@ -988,15 +988,15 @@ class Interface(customtkinter.CTk):
         self.message_box_m2()
         try:
             self.catch_m_name(path=USB.current_path)
+            print(USB.current_path)
             self.label_machine_name.configure(text=f"Machine name:{' ' * 17}- {self.entry_machine_name.get()}")
         except AttributeError:
             pass
 
     def catch_m_name(self, path):
-
-        main_check = r"(?i).+MachIne Control Data.+Backup_MHG.+"
-        name_check = s = r"(?i)Backup_(.+?)_.+"
-        if re.fullmatch(string=path, pattern=main_check):
+        name_check = r"(?i).+Backup_(.+?)_.+"
+        if re.fullmatch(string=path, pattern=name_check):
+            print("Yes")
             machine_name = re.findall(string=path, pattern=name_check)[0]
             self.save_machine_name(machine_name=machine_name)
 

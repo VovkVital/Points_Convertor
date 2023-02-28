@@ -4,7 +4,7 @@ import win32file
 import os
 from glob import glob
 from datetime import datetime
-from Warnings import Exception_message
+
 
 class Usb_drive:
     usb_folders_design = []

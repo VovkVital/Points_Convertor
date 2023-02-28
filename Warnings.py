@@ -1,9 +1,8 @@
-import asyncio
 import tkinter
 from tkinter import ttk
 import customtkinter
 from Buttons import Button, Label
-import json
+
 # _______ Colors _________
 SELECTED_BLUE = "#008fd7"
 NOT_SELECTED = "#44657e"

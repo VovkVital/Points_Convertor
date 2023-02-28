@@ -1,5 +1,5 @@
 import customtkinter
-import tkinter
+
 #  _________ Font _________
 FONT_BUTTON = ("Roboto", 16)
 FONT_LABEL = ("Roboto", 16)
