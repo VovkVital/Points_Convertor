@@ -29,7 +29,7 @@ class Add_design():
             if USB_PATH != "":
                 pass
 
-                if design_name != "" :
+                if design_name != "":
                     path = pathlib.Path(USB_PATH).joinpath(design_name)
                     self.design_name = design_name
                     self.usb_path = str(usb_path)

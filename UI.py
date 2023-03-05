@@ -18,6 +18,9 @@ from Buttons import Button
 from Warnings import Exception_message, Error_message
 from AddDesigns import Add_design
 import threading
+from UsbManagment import File_mangment
+from multiprocessing.pool import ThreadPool
+FILES = File_mangment()
 
 USB = Usb_drive()
 customtkinter.set_appearance_mode("dark")
@@ -42,15 +45,15 @@ FONT_LABEL_BLUE = ("Roboto", 18, "bold")
 panda = CSV ()
 SELECT_FILE_PATH = r"C:\Trimble Synchronizer Data\PC\Trimble SCS900 Data"
 # - ----- Program's Titles, Names ----------
-PROGRAM_NAME = "Points Convertor"
+PROGRAM_NAME = "File Manager"
 FRAME_PICK_YOUR_SYSTEM = "Choose your system"
 
 #--------------------- Tabs Name ------------------
 TAB_NAME=["Design Folders", "Config Files", "Machine Files"]
 
 # ---------------Buttons Size------------------------
-MAIN_WIDTH = 150
-MAIN_HEIGHT = 50
+MAIN_WIDTH = 120
+MAIN_HEIGHT = 45
 SECONDARY_WIDTH = 120
 SECONDARY_HEIGHT = 40
 TAB_BUTTON_WIDTH = 120
@@ -89,7 +92,7 @@ LIST_MCG = USB.list_mch()
 image_add_folder = customtkinter.CTkImage(light_image=Image.open("./Images/add_folder_light.png"), size=(30, 30))
 image_create_file = customtkinter.CTkImage(light_image=Image.open("./Images/create_fileV2.png"), size=(30, 30))
 image_save_name = customtkinter.CTkImage(light_image=Image.open(("./Images/saveV2.png")), size=(30, 30))
-image_teichert_logo_blue = customtkinter.CTkImage(light_image=Image.open("./Images/teichert-Logo_blue_2.png"), size=(200, 200))
+image_teichert_logo_blue = customtkinter.CTkImage(light_image=Image.open("./Images/teichert-Logo_blue_2.png"), size=(180, 180))
 
 
 
@@ -102,8 +105,9 @@ class Interface(customtkinter.CTk):
     # ------- Main Screen SetUP --- - --
         self.title(PROGRAM_NAME)
         self.geometry(f"{Interface.WIDTH}x{Interface.HEIGHT}")
+        self.wm_iconbitmap("./Images/teichert-ico.ico")
         self.grid_columnconfigure(0, minsize=20)
-        self.grid_columnconfigure(1, minsize=350)
+        self.grid_columnconfigure(1, minsize=300)
         self.grid_columnconfigure(2, minsize=45)
         self.grid_columnconfigure(3, weight=2)
         self.grid_columnconfigure(4, minsize=20)
@@ -151,36 +155,24 @@ class Interface(customtkinter.CTk):
                                                   segmented_button_selected_color=SELECTED_BLUE,
                                                   segmented_button_unselected_color=NOT_SELECTED,
                                                   segmented_button_selected_hover_color=SELECTED_BLUE)
-        self.frame_3_1.add("Create Point File (.csv)")
         self.frame_3_1.add("USB Files")
         self.frame_3_1.add("Add Design")
+        self.frame_3_1.add("Create Point File (.csv)")
+
         self.frame_3_1.grid(row=1, column=3, rowspan=3, sticky="sewn")
         for button in self.frame_3_1._segmented_button._buttons_dict.values():
             button.configure(width=180,  font=FONT)
-        self.frame_3_1.tab("Create Point File (.csv)").grid_columnconfigure(0, minsize=10)
-        self.frame_3_1.tab("Create Point File (.csv)").grid_columnconfigure(1, weight=1)
-        self.frame_3_1.tab("Create Point File (.csv)").grid_columnconfigure(2, minsize=10)
-        self.frame_3_1.tab("Create Point File (.csv)").grid_columnconfigure(3, weight=1)
-        self.frame_3_1.tab("Create Point File (.csv)").grid_columnconfigure(4, minsize=10)
-
-        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(0, minsize=10)
-        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(1, weight=1)
-        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(2, weight=1)
-        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(3, weight=1)
-        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(4, minsize=15)
-        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(5, minsize=260)
-        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(6, minsize=5)
-
 
         #----------------------------Columns----------------------
         self.frame_3_1.tab("USB Files").grid_columnconfigure(0, minsize=5)
-        self.frame_3_1.tab("USB Files").grid_columnconfigure(1, weight=1)
+        #  Something is wron with button it is moving from side to side if minsize is not 200
+        self.frame_3_1.tab("USB Files").grid_columnconfigure(1, weight=1, minsize=200)
         self.frame_3_1.tab("USB Files").grid_columnconfigure(2, weight=1)
         self.frame_3_1.tab("USB Files").grid_columnconfigure(3, weight=1)
         self.frame_3_1.tab("USB Files").grid_columnconfigure(4, minsize=5)
 
         self.frame_3_1.tab("USB Files").grid_rowconfigure(0, minsize=5)
-        self.frame_3_1.tab("USB Files").grid_rowconfigure(1, minsize=60)
+        self.frame_3_1.tab("USB Files").grid_rowconfigure(1, minsize=40)
         self.frame_3_1.tab("USB Files").grid_rowconfigure(2, minsize=5)
         self.frame_3_1.tab("USB Files").grid_rowconfigure(3, weight=5)
         self.frame_3_1.tab("USB Files").grid_rowconfigure(4, minsize=10)
@@ -206,11 +198,25 @@ class Interface(customtkinter.CTk):
         self.frame_3_1.tab("Add Design").grid_rowconfigure(11, weight=1)
         self.frame_3_1.tab("Add Design").grid_rowconfigure(12, minsize=5)
 
+        self.frame_3_1.tab("Create Point File (.csv)").grid_columnconfigure(0, minsize=10)
+        self.frame_3_1.tab("Create Point File (.csv)").grid_columnconfigure(1, weight=1)
+        self.frame_3_1.tab("Create Point File (.csv)").grid_columnconfigure(2, minsize=10)
+        self.frame_3_1.tab("Create Point File (.csv)").grid_columnconfigure(3, weight=1)
+        self.frame_3_1.tab("Create Point File (.csv)").grid_columnconfigure(4, minsize=10)
+
+        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(0, minsize=10)
+        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(1, weight=1)
+        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(2, weight=1)
+        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(3, weight=1)
+        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(4, minsize=15)
+        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(5, minsize=260)
+        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(6, minsize=5)
+
 
 
 
     def frame_message_box(self):
-        self.frame_3_3 = customtkinter.CTkFrame(master=self.frame_3_1.tab("Create Point File (.csv)"), corner_radius=25,)
+        self.frame_3_3 = customtkinter.CTkFrame(master=self.frame_3_1.tab("Create Point File (.csv)"), corner_radius=25)
         self.frame_3_3.grid(row=5, column=0, columnspan=5, rowspan=3, sticky="news")
         self.frame_3_3.grid_rowconfigure(0, minsize=5)
         self.frame_3_3.grid_rowconfigure(1, weight=1)
@@ -734,60 +740,48 @@ class Interface(customtkinter.CTk):
         for tab in range(0, len(TAB_NAME)):
             try:
                 if TAB_NAME[tab] == selected_tab:
-                    index = 0
                     selected_item = trees[tab].item(trees[tab].selection()[0])
                     src = pathlib.Path(USB.current_path).joinpath(selected_item["values"][0])
                     src = pathlib.Path(src)
-                    dst = pathlib.WindowsPath("~\\Desktop\\PC Deleted Files").expanduser()
+                    dst = pathlib.WindowsPath("~\\Desktop\\USB Deleted Files").expanduser()
                     if not dst.exists():
                         folders = ["Designs", "Machine Files", "Config Files"]
                         for folder in range(0, len(folders)):
                             dst.joinpath(folders[folder]).mkdir(parents=True, exist_ok=True)
 
                     if src.is_dir():
-                        if dst.joinpath("Designs").joinpath(pathlib.Path(src).name).exists():
-                            shutil.rmtree(dst.joinpath("Designs").joinpath(pathlib.Path(src).name))
-                            shutil.move(src, dst.joinpath("Designs"))
-                            self.click_design()
-                            self.label_design_files_m2.configure(text=f"Design Files: -- {len(LIST_DESIGN)}")
-                            if pathlib.Path(USB_PATH).joinpath(".Field-Data").joinpath(src.name).exists():
-                                field_data = pathlib.Path(USB_PATH).joinpath(".Field-Data").joinpath(src.name)
-                                shutil.rmtree(str(field_data))
+                        dst_file = dst.joinpath("Designs").joinpath(pathlib.Path(src).name)
+                        src_file = src
+                        dst_to_pr_folder = dst.joinpath("Designs")
+                        self.click_design()
+                        self.label_design_files_m2.configure(text=f"Design Files: -- {len(LIST_DESIGN)}")
+                        task = threading.Thread(target=FILES.delete_dsn, kwargs={"src": src_file, "dst": dst_file,
+                                                      "usb_path": USB_PATH, "dst_parent_folder": dst_to_pr_folder})
+                        task.daemon = True
+                        task.start()
+
+                    elif src.is_file():
+                        source = str(src)
+                        if source.lower().endswith(".cfg"):
+                            self.click_cfg()
+                            self.label_config_files_m2.configure(text=f"Config Files: -- {len(LIST_CFG)}")
+                            task = threading.Thread(target=FILES.delete_file, kwargs={"src": src, "dst": dst,
+                                                                                     "dst_parent_folder": "Config Files"})
+                            task.daemon = True
+                            task.start()
+
+                        elif source.lower().endswith(".mch"):
+                            self.click_mch()
+                            self.label_machine_files_m2.configure(text=f"Config Files: -- {len(LIST_MCG)}")
+                            task = threading.Thread(target=FILES.delete_file, kwargs={"src": src, "dst": dst,
+                                                                                      "dst_parent_folder": "Machine Files"})
+                            task.daemon = True
+                            task.start()
                         else:
-                            shutil.move(src, dst.joinpath("Designs"))
-                            self.click_design()
-                            self.label_design_files_m2.configure(text=f"Design Files: -- {len(LIST_DESIGN)}")
-                            if pathlib.Path(USB_PATH).joinpath(".Field-Data").joinpath(src.name).exists():
-                                field_data = pathlib.Path(USB_PATH).joinpath(".Field-Data").joinpath(src.name)
-                                shutil.rmtree(str(field_data))
+                            Error_message(message="File was not deleted")
+                    else:
+                        Error_message(message="Something went wrong")
 
-                    if src.is_file():
-                        files = glob(os.path.join(str(src.parent), "*.cfg"))
-                        for match in range(0, len(files)):
-                            if str(src) == files[match]:
-                                if dst.joinpath("Config Files").joinpath(pathlib.Path(src).name).exists():
-                                    pathlib.Path(dst.joinpath("Config Files").joinpath(pathlib.Path(src).name)).unlink()
-                                    shutil.move(src, dst.joinpath("Config Files"))
-                                    self.click_cfg()
-                                    self.label_config_files_m2.configure(text=f"Config Files: -- {len(LIST_CFG)}")
-                                else:
-                                    shutil.move(src, dst.joinpath("Config Files"))
-                                    self.click_cfg()
-                                    self.label_config_files_m2.configure(text=f"Machine Files: -- {len(LIST_CFG)}")
-
-                    if src.is_file():
-                        files = glob(os.path.join(str(src.parent), "*.MCH"))
-                        for match in range(0, len(files)):
-                            if str(src) == files[match]:
-                                if dst.joinpath("Machine Files").joinpath(pathlib.Path(src).name).exists():
-                                    pathlib.Path(dst.joinpath("Machine Files").joinpath(pathlib.Path(src).name)).unlink()
-                                    shutil.move(src, dst.joinpath("Machine Files"))
-                                    self.click_mch()
-                                    self.label_machine_files_m2.configure(text=f"Config Files: -- {len(LIST_MCG)}")
-                                else:
-                                    shutil.move(src, dst.joinpath("Machine Files"))
-                                    self.click_mch()
-                                    self.label_machine_files_m2.configure(text=f"Config Files: -- {len(LIST_MCG)}")
             except IndexError:
                 Error_message(message="Select file to delete", time=3000)
 
@@ -988,7 +982,6 @@ class Interface(customtkinter.CTk):
         self.message_box_m2()
         try:
             self.catch_m_name(path=USB.current_path)
-            print(USB.current_path)
             self.label_machine_name.configure(text=f"Machine name:{' ' * 17}- {self.entry_machine_name.get()}")
         except AttributeError:
             pass
@@ -996,7 +989,6 @@ class Interface(customtkinter.CTk):
     def catch_m_name(self, path):
         name_check = r"(?i).+Backup_(.+?)_.+"
         if re.fullmatch(string=path, pattern=name_check):
-            print("Yes")
             machine_name = re.findall(string=path, pattern=name_check)[0]
             self.save_machine_name(machine_name=machine_name)
 

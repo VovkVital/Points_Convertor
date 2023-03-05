@@ -36,8 +36,11 @@ class Message_box(tkinter.ttk.Treeview):
 
     def frame(self):
         self.box = customtkinter.CTkToplevel()
-        self.box.geometry("500x250")
+        width = self.box.winfo_screenwidth()
+        height = self.box.winfo_screenheight()
+        self.box.geometry("+%d+%d" % (width / 2 + 200, height / 2 + 100))
         self.box.minsize(width=500, height=250)
+        self.box.maxsize(width=500, height=250)
         self.box.title("Data Error")
         self.box.rowconfigure(0, weight=1, minsize=60)
         self.box.rowconfigure(1, weight=2)

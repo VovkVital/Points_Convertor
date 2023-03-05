@@ -1,4 +1,5 @@
 import customtkinter
+import threading
 
 #  _________ Font _________
 FONT_BUTTON = ("Roboto", 16)
@@ -33,6 +34,12 @@ class Button(customtkinter.CTkButton):
     def flash(self):
         self.change_color(NOT_SELECTED)
         self.after(300, lambda: self.change_color(SELECTED_BLUE))
+
+    def command_flash(self, args):
+        self.flash()
+        self.after(400, args)
+
+
 
     def change_color(self, color):
         self.configure(fg_color=color)

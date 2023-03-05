@@ -10,8 +10,8 @@ FONT_NOT_SELECTED = "gray60"
 FONT_SELECTED = "gray94"
 ROW_EVEN = customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][1]
 # ________ Font ___________
-FONT_HEADER = ("Roboto", 17, "bold")
-FONT_TABLE = ("Roboto", 15, "bold")
+FONT_HEADER = ("Roboto", 16, "bold")
+FONT_TABLE = ("Roboto", 14, "bold")
 FONT_LABEL_ERROR = ("Roboto", 18, "bold")
 FONT = ("Roboto", 15, "bold")
 # _________ Tab Names _______
