@@ -30,7 +30,7 @@ class MainTree(ttk.Treeview):
         self.treestyle.configure("Treeview", background=customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][1],
                                 foreground=customtkinter.ThemeManager.theme["CTkLabel"]["text_color"][1],
                                 fieldbackground=customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][1],
-                                borderwidth=0, font=FONT_TABLE, rowheight=50)
+                                borderwidth=0, font=FONT_TABLE, rowheight=40)
         self.treestyle.configure("Treeview.Heading", font=FONT_HEADER,
                                 background=(customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][1]),
                                 foreground=FONT_NOT_SELECTED, borderwidth=0,
