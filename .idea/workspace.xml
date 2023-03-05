@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="371eae62-7493-4739-88b6-e95122b70036" name="Changes" comment="Treeview was updated with scrollbar,&#10;added styling options to treeview widget&#10;added striped rows to the treeview widget">
-      <change afterPath="$PROJECT_DIR$/Add_design.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Images/teichert-ico.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UsbManagment.py" afterDir="false" />
+    <list default="true" id="371eae62-7493-4739-88b6-e95122b70036" name="Changes" comment="Delete btn optimized, threading added to delete functionality, warning messages centered on the screen, icon added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AddDesigns.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddDesigns.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Buttons.py" beforeDir="false" afterPath="$PROJECT_DIR$/Buttons.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainTreeveiw.py" beforeDir="false" afterPath="$PROJECT_DIR$/MainTreeveiw.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TempFile.json" beforeDir="false" afterPath="$PROJECT_DIR$/TempFile.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tests.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UsbError.py" beforeDir="false" afterPath="$PROJECT_DIR$/UsbError.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Warnings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Warnings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,13 +31,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/vovkv/Desktop/Repository/GSC 900 Points",
-    "two.files.diff.last.used.file": "C:/Users/vovkv/PycharmProjects/GSC 900 Points/file.csv"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/vovkv/Desktop/Repository/GSC 900 Points&quot;,
+    &quot;two.files.diff.last.used.file&quot;: &quot;C:/Users/vovkv/PycharmProjects/GSC 900 Points/file.csv&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\vovkv\AppData\Local\Programs\Python\Python310\Scripts" />
@@ -120,7 +111,9 @@
       <workItem from="1670643582910" duration="7091000" />
       <workItem from="1670857877286" duration="633000" />
       <workItem from="1670887005133" duration="14896000" />
-      <workItem from="1677958530354" duration="22489000" />
+      <workItem from="1677958530354" duration="23451000" />
+      <workItem from="1677993905566" duration="67000" />
+      <workItem from="1678032267228" duration="3808000" />
     </task>
     <task id="LOCAL-00001" summary="Added 4 buttons to the tabs and treeveiw did some minor changes to layout">
       <created>1670473646033</created>
@@ -136,7 +129,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670650028201</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Delete btn optimized, threading added to delete functionality, warning messages centered on the screen, icon added">
+      <created>1677985752123</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1677985752123</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -156,17 +156,18 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added 4 buttons to the tabs and treeveiw did some minor changes to layout" />
     <MESSAGE value="Treeview was updated with scrollbar,&#10;added styling options to treeview widget&#10;added striped rows to the treeview widget" />
-    <option name="LAST_COMMIT_MESSAGE" value="Treeview was updated with scrollbar,&#10;added styling options to treeview widget&#10;added striped rows to the treeview widget" />
+    <MESSAGE value="Delete btn optimized, threading added to delete functionality, warning messages centered on the screen, icon added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Delete btn optimized, threading added to delete functionality, warning messages centered on the screen, icon added" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/GSC_900_Points$Custom_Tkinter.coverage" NAME="Custom Tkinter Coverage Results" MODIFIED="1669942119646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Flight Check  to USA/Help" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$USB.coverage" NAME="USB Coverage Results" MODIFIED="1670907576534" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$GU.coverage" NAME="GU Coverage Results" MODIFIED="1669866100275" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$ReadUSB.coverage" NAME="ReadUSB Coverage Results" MODIFIED="1670901764699" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/GSC_900_Points$main.coverage" NAME="main Coverage Results" MODIFIED="1677985517961" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/GSC_900_Points$main.coverage" NAME="main Coverage Results" MODIFIED="1678040449045" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$test.coverage" NAME="test Coverage Results" MODIFIED="1669866009651" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Flight Check  to USA" />
-    <SUITE FILE_PATH="coverage/GSC_900_Points$UI.coverage" NAME="UI Coverage Results" MODIFIED="1670386482853" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/GSC_900_Points$Tests.coverage" NAME="Tests Coverage Results" MODIFIED="1670902125627" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/GSC_900_Points$Tests.coverage" NAME="Tests Coverage Results" MODIFIED="1678035436908" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/GSC_900_Points$UI.coverage" NAME="UI Coverage Results" MODIFIED="1678035489576" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$PANDAS.coverage" NAME="PANDAS Coverage Results" MODIFIED="1668908636925" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$_01_Shrinking_Frame_to_it_is_content.coverage" NAME="_01_Shrinking Frame to it is content Coverage Results" MODIFIED="1669504419145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Flight Check  to USA/Help" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$credit.coverage" NAME="credit Coverage Results" MODIFIED="1670038730570" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Flight Check  to USA/Help" />

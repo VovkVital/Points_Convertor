@@ -133,6 +133,9 @@ class Interface(customtkinter.CTk):
         self.message_box_m2()
 
 
+
+
+
     # ------------- Lable Frames -----------------
     def frame_col_1_1 (self):
         self.frame_1_1 = customtkinter.CTkFrame(master=self, corner_radius=25, height=215)

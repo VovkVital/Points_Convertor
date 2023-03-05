@@ -10,8 +10,8 @@ FONT_NOT_SELECTED = "gray60"
 FONT_SELECTED = "gray94"
 ROW_EVEN = customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][1]
 # ________ Font ___________
-FONT_HEADER = ("Roboto", 17, "bold")
-FONT_TABLE = ("Roboto", 15, "bold")
+FONT_HEADER = ("Roboto", 16, "bold")
+FONT_TABLE = ("Roboto", 14, "bold")
 FONT_LABEL_ERROR = ("Roboto", 18, "bold")
 # _________ Tab Names _______
 TAB_NAME = ["Design Folders", "Config Files", "Machine Files"]
@@ -34,11 +34,12 @@ class Message_box(tkinter.ttk.Treeview):
         self.return_value = 0
 
 
+
     def frame(self):
         self.box = customtkinter.CTkToplevel()
         width = self.box.winfo_screenwidth()
         height = self.box.winfo_screenheight()
-        self.box.geometry("+%d+%d" % (width / 2 + 200, height / 2 + 100))
+        self.box.geometry("+%d+%d" % ((width / 2) + 200, (height / 2) + 100))
         self.box.minsize(width=500, height=250)
         self.box.maxsize(width=500, height=250)
         self.box.title("Data Error")
