@@ -1,4 +1,3 @@
-import glob
 import json
 import os.path
 import pathlib
@@ -9,7 +8,6 @@ import customtkinter
 from PIL import Image
 from USB import Usb_drive
 import shutil
-from glob import glob
 from datetime import datetime
 from UsbError import Message_box
 import re
@@ -19,7 +17,7 @@ from Warnings import Exception_message, Error_message
 from AddDesigns import Add_design
 import threading
 from UsbManagment import File_mangment
-from multiprocessing.pool import ThreadPool
+
 FILES = File_mangment()
 
 USB = Usb_drive()
@@ -169,7 +167,7 @@ class Interface(customtkinter.CTk):
         #----------------------------Columns----------------------
         self.frame_3_1.tab("USB Files").grid_columnconfigure(0, minsize=5)
         #  Something is wron with button it is moving from side to side if minsize is not 200
-        self.frame_3_1.tab("USB Files").grid_columnconfigure(1, weight=1, minsize=200)
+        self.frame_3_1.tab("USB Files").grid_columnconfigure(1, weight=1)
         self.frame_3_1.tab("USB Files").grid_columnconfigure(2, weight=1)
         self.frame_3_1.tab("USB Files").grid_columnconfigure(3, weight=1)
         self.frame_3_1.tab("USB Files").grid_columnconfigure(4, minsize=5)
@@ -687,7 +685,7 @@ class Interface(customtkinter.CTk):
                 Exception_message(message=e)
             return select
         else:
-            Error_message(message="File was NOT selected", time=3000)
+            Error_message(message="File not selected", time=3000)
             return
 
     def but_tr_keep (self):
@@ -786,7 +784,7 @@ class Interface(customtkinter.CTk):
                         Error_message(message="Something went wrong")
 
             except IndexError:
-                Error_message(message="Select file to delete", time=3000)
+                Error_message(message="No file to selected", time=3000)
 
 
 
@@ -930,7 +928,7 @@ class Interface(customtkinter.CTk):
 
                 Error_message(message=message)
         except IndexError:
-            Error_message(message="Select Design Folder First")
+            Error_message(message="Select design folder first")
 
 
     def click_segmented_3_but(self):
@@ -1064,7 +1062,7 @@ class Interface(customtkinter.CTk):
                 self.tree_tab_D.selection_add(0)
             self.after(1000, lambda: self.change_label_none())
         except (AttributeError, FileNotFoundError):
-            Error_message(message="USB is not connected")
+            Error_message(message="USB not connected")
             return
 
 

@@ -19,13 +19,15 @@ TAB_NAME = ["Design Folders", "Config Files", "Machine Files"]
 TAB_BUTTON_WIDTH = 120
 TAB_BUTTON_HEIGHT = 40
 
+MESSAGE = "Two or more files are present on the USB. Select one!"
+
 
 
 class Message_box(tkinter.ttk.Treeview):
 
     def __init__(self, data, ui_command, **kwargs):
         self.frame()
-        self.flash=Button.flash
+        self.flash = Button.flash
         super(). __init__(master=self.tree_frame)
         self.data = data
         self.Treestyle()
@@ -39,9 +41,9 @@ class Message_box(tkinter.ttk.Treeview):
         self.box = customtkinter.CTkToplevel()
         width = self.box.winfo_screenwidth()
         height = self.box.winfo_screenheight()
-        self.box.geometry("+%d+%d" % ((width / 2) + 200, (height / 2) + 100))
-        self.box.minsize(width=500, height=250)
-        self.box.maxsize(width=500, height=250)
+        self.box.geometry("+%d+%d" % ((width / 2) - 200, (height / 2) - 100))
+        self.box.minsize(width=550, height=250)
+        self.box.maxsize(width=550, height=250)
         self.box.title("Data Error")
         self.box.rowconfigure(0, weight=1, minsize=60)
         self.box.rowconfigure(1, weight=2)
@@ -65,7 +67,7 @@ class Message_box(tkinter.ttk.Treeview):
         self.treestyle.configure("Treeview", background=customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][1],
                                  foreground=customtkinter.ThemeManager.theme["CTkLabel"]["text_color"][1],
                                  fieldbackground=customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][1],
-                                 borderwidth=0, font=FONT_TABLE, rowheight=40)
+                                 borderwidth=0, font=FONT_TABLE, rowheight=38)
         self.treestyle.configure("Treeview.Heading", font=FONT_HEADER,
                                  background=(customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][1]),
                                  foreground=FONT_NOT_SELECTED, borderwidth=0,
@@ -88,7 +90,7 @@ class Message_box(tkinter.ttk.Treeview):
         self["columns"] = ("Name", "Date")
         self.column("#0", anchor="w", width=55, minwidth=55, stretch=False)
         self.column("Name", anchor="w", width=350, minwidth=100)
-        self.column("Date", anchor="w", width=40, minwidth=40)
+        self.column("Date", anchor="w", width=40, minwidth=38)
         #      -    -------------- Create Headings --------------------------
         self.heading("#0", text="", anchor="w")
         self.heading("Name", text="Name", anchor="w")
@@ -119,7 +121,7 @@ class Message_box(tkinter.ttk.Treeview):
         self.button_select.configure(width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
 
         self.button_close = Button(master=self.box, text="Close", sticky=None, row=3, column=1, command=self.close_frame)
-        label = Label(master=self.box, text="Two or more files are present on the USB. Select one!", row=0, column=0)
+        label = Label(master=self.box, text="Select folder to manage !", row=0, column=0)
         label.grid(columnspan=2)
         label.configure(text_color=SELECTED_BLUE, font=FONT_LABEL_ERROR)
 

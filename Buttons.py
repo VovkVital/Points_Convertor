@@ -1,5 +1,5 @@
 import customtkinter
-import threading
+
 
 #  _________ Font _________
 FONT_BUTTON = ("Roboto", 16)
