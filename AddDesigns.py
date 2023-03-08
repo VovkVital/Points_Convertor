@@ -22,15 +22,15 @@ class Add_design():
         super().__init__()
 
     def save_btn_event(self, design, usb_path, event_save):
-        pattern = r"((?i)[a-z0-9 _-]*$)"
+        pattern = r"((?i)[a-z0-9 \._-]*$)"
         if re.fullmatch(pattern=pattern, string=str(design)):
-            design_name = design
+            design_name = str(design).strip()
             USB_PATH = usb_path
             if USB_PATH != "":
                 pass
-
-                if design_name != "":
-                    path = pathlib.Path(USB_PATH).joinpath(design_name)
+                if design_name != "" and design_name[0] != " " and design_name[0] != "." and design_name[0] != "_" \
+                        and design_name[0] != "-":
+                    path = pathlib.Path(USB_PATH).joinpath(str(design_name))
                     self.design_name = design_name
                     self.usb_path = str(usb_path)
                     if path.exists() and path.is_dir():
@@ -176,16 +176,19 @@ class Add_design():
 
 
     def remove_file (self, usb_path):
-        usb_path = usb_path
-        src = pathlib.Path(usb_path)
-        dst = pathlib.WindowsPath("~\\Desktop\\PC Deleted Files").expanduser()
+        src = usb_path = usb_path
+        dst = pathlib.WindowsPath("~\\Desktop\\USB Deleted Files").expanduser()
+        if not dst.exists():
+            folders = ["Designs", "Machine Files", "Config Files"]
+            for folder in range(0, len(folders)):
+                dst.joinpath(folders[folder]).mkdir(parents=True, exist_ok=True)
+        dst_folder = pathlib.WindowsPath("~\\Desktop\\USB Deleted Files\\Designs").joinpath(usb_path.name).expanduser()
         if src.is_dir():
-            dst = dst.joinpath("Designs")
-            if dst.exists():
-                shutil.rmtree(str(dst))
-                shutil.move(src=src, dst=dst)
+            if dst_folder.exists():
+                shutil.rmtree(dst_folder)
+                shutil.move(src=src, dst=dst_folder)
             else:
-                shutil.move(src=src, dst=dst)
+                shutil.move(src=src, dst=dst_folder)
         else:
             Error_message(message="Change design name\n and try it again")
 
