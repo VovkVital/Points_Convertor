@@ -3,15 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="371eae62-7493-4739-88b6-e95122b70036" name="Changes" comment="Minor changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AddDesigns.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddDesigns.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Add_design.json" beforeDir="false" afterPath="$PROJECT_DIR$/Add_design.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Buttons.py" beforeDir="false" afterPath="$PROJECT_DIR$/Buttons.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainTreeveiw.py" beforeDir="false" afterPath="$PROJECT_DIR$/MainTreeveiw.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pandas.py" beforeDir="false" afterPath="$PROJECT_DIR$/Pandas.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UsbError.py" beforeDir="false" afterPath="$PROJECT_DIR$/UsbError.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Warnings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Warnings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,13 +28,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/vovkv/Desktop/Repository/GSC 900 Points&quot;,
-    &quot;two.files.diff.last.used.file&quot;: &quot;C:/Users/vovkv/PycharmProjects/GSC 900 Points/file.csv&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/vovkv/PycharmProjects/Flight Check  to USA",
+    "two.files.diff.last.used.file": "C:/Users/vovkv/PycharmProjects/GSC 900 Points/file.csv"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\vovkv\AppData\Local\Programs\Python\Python310\Scripts" />
@@ -126,6 +117,8 @@
       <workItem from="1678057280889" duration="1581000" />
       <workItem from="1678133711528" duration="5879000" />
       <workItem from="1678139680926" duration="1955000" />
+      <workItem from="1678154286850" duration="73000" />
+      <workItem from="1678156944986" duration="345000" />
     </task>
     <task id="LOCAL-00001" summary="Added 4 buttons to the tabs and treeveiw did some minor changes to layout">
       <created>1670473646033</created>
