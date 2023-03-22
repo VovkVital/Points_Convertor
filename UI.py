@@ -166,7 +166,7 @@ class Interface(customtkinter.CTk):
 
         #----------------------------Columns----------------------
         self.frame_3_1.tab("USB Files").grid_columnconfigure(0, minsize=5)
-        #  Something is wron with button it is moving from side to side if minsize is not 200
+        #  Something is wrong with button it is moving from side to side if minsize is not 200
         self.frame_3_1.tab("USB Files").grid_columnconfigure(1, weight=1)
         self.frame_3_1.tab("USB Files").grid_columnconfigure(2, weight=1)
         self.frame_3_1.tab("USB Files").grid_columnconfigure(3, weight=1)
@@ -773,7 +773,7 @@ class Interface(customtkinter.CTk):
 
                         elif source.lower().endswith(".mch"):
                             self.click_mch()
-                            self.label_machine_files_m2.configure(text=f"Config Files: -- {len(LIST_MCG)}")
+                            self.label_machine_files_m2.configure(text=f"Machine Files: -- {len(LIST_MCG)}")
                             task = threading.Thread(target=FILES.delete_file, kwargs={"src": src, "dst": dst,
                                                                                       "dst_parent_folder": "Machine Files"})
                             task.daemon = True
