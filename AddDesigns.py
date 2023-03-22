@@ -7,7 +7,7 @@ import re
 import shutil
 
 
-SELECT_FILE_PATH = r"C:\Trimble Synchronizer Data\PC\Trimble SCS900 Data"
+PATH_SITEWORK_DIR = r"C:\Trimble Synchronizer Data\PC\Trimble SCS900 Data"
 
 
 
@@ -78,8 +78,8 @@ class Add_design():
 
     def add_file(self, event_svd):
         file_type = [("Machine Files", (".svd", ".svl", ".cfg")), ("All Files", "*.*")]
-        if pathlib.Path(SELECT_FILE_PATH).exists():
-            if selected_file := filedialog.askopenfilenames(initialdir=SELECT_FILE_PATH, filetypes=file_type):
+        if pathlib.Path(PATH_SITEWORK_DIR).exists():
+            if selected_file := filedialog.askopenfilenames(initialdir=PATH_SITEWORK_DIR, filetypes=file_type):
                 self.file_validation(selected_file=selected_file, event_btn=event_svd)
             else:
                 Error_message(message="Files not selected")

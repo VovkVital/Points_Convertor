@@ -4,7 +4,7 @@ import os
 from Warnings import Exception_message
 
 
-SELECT_FILE_PATH = "C:\Trimble Synchronizer Data\PC\Trimble SCS900 Data"
+PATH_SITEWORK_DIR = "C:\Trimble Synchronizer Data\PC\Trimble SCS900 Data"
 SAVE_FILE_PATH = os.path.expanduser("~/Desktop/Points GCS 900")
 S_FOLDER_NAME = "Point Folder GCS 900"
 

@@ -41,7 +41,8 @@ FONT_LABEL_BLUE = ("Roboto", 18, "bold")
 
 
 panda = CSV ()
-SELECT_FILE_PATH = r"C:\Trimble Synchronizer Data\PC\Trimble SCS900 Data"
+PATH_SITEWORK_DIR = r"C:\Trimble Synchronizer Data\PC\Trimble SCS900 Data"
+PATH_DESKTOP = pathlib.Path("~\\Desktop").expanduser()
 # - ----- Program's Titles, Names ----------
 PROGRAM_NAME = "File Manager"
 FRAME_PICK_YOUR_SYSTEM = "Choose your system"
@@ -674,9 +675,13 @@ class Interface(customtkinter.CTk):
 
 
     def event_button_select(self):
-        global TAB_NAME
+        global TAB_NAME, PATH_SITEWORK_DIR
         file_type = (("Point File", "*.csv"), ("All Files", "*.*"))
-        select = filedialog.askopenfilename(initialdir=SELECT_FILE_PATH, filetypes=file_type)
+        # chechking if path is valid
+        if pathlib.Path(PATH_SITEWORK_DIR).exists():
+            select = filedialog.askopenfilename(initialdir=PATH_SITEWORK_DIR, filetypes=file_type)
+        else:
+            select = filedialog.askopenfilename(initialdir=PATH_DESKTOP, filetypes=file_type)
         if select.lower().endswith(".csv"):
             self.button_tab_2_create_ds.configure(state="normal")
             self.button_create.configure(state="normal")
@@ -800,7 +805,7 @@ class Interface(customtkinter.CTk):
         global LIST_MCG
         try:
             if self.frame_tab_2.get() == TAB_NAME[0]:
-                selected_folder = filedialog.askdirectory(initialdir=pathlib.Path("~\\Desktop").expanduser())
+                selected_folder = filedialog.askdirectory(initialdir=PATH_DESKTOP)
                 if selected_folder:
                     folder_name = pathlib.Path(selected_folder).name
                     dst = pathlib.Path(USB.current_path).joinpath(folder_name)
@@ -840,8 +845,7 @@ class Interface(customtkinter.CTk):
                         pass
             elif self.frame_tab_2.get() == TAB_NAME[1] or self.frame_tab_2.get() == TAB_NAME[2]:
                 file_type = (("Machine Files", ("*.cfg", "*.mch")), ("All Files", "*.*"))
-                selected_file = filedialog.askopenfilename(initialdir=pathlib.Path("~\\Desktop").expanduser(),
-                                                           filetypes=file_type)
+                selected_file = filedialog.askopenfilename(initialdir=PATH_DESKTOP, filetypes=file_type)
                 if selected_file:
                     file_name = pathlib.Path(selected_file).name
                     dst = pathlib.Path(USB.current_path).joinpath(file_name)
@@ -966,10 +970,7 @@ class Interface(customtkinter.CTk):
             self.populate_treeveiw()
 
     def populate_treeveiw(self):
-        global LIST_DESIGN
-        global LIST_CFG
-        global LIST_MCG
-        global USB_PATH
+        global LIST_DESIGN, LIST_CFG, LIST_MCG, USB_PATH
         try:
             path = self.message_tree.file_selection()
         except AttributeError:
