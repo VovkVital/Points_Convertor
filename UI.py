@@ -298,6 +298,8 @@ class Interface(customtkinter.CTk):
         self.entry_design_name = customtkinter.CTkEntry(master=self.frame_3_1.tab("Add Design"), placeholder_text="Type Design Name",
                                                          corner_radius=15, width=ENTRY_WIDTH, height=ENTRY_HEIGHT)
         self.entry_design_name.grid(column=1, row=1, sticky="w",)
+        # Adding binding to the entry widget to display digital keyboard
+        self.entry_design_name.bind("<FocusIn>", self.keyboard_pop_out)
 
 
         self.label_tab_3_m = customtkinter.CTkLabel(master=self.frame_3_1.tab("Add Design"), text_color=SELECTED_BLUE,
@@ -551,6 +553,9 @@ class Interface(customtkinter.CTk):
                                                          corner_radius=15, width=ENTRY_WIDTH, height=ENTRY_HEIGHT,
                                                          placeholder_text="Enter Machine Name")
         self.entry_machine_name.grid(column=1, row=1, sticky="w")
+        # Adding binding to the entry widget to display digital keyboard
+        self.entry_machine_name.bind("<FocusIn>", self.keyboard_pop_out)
+
         if panda.get_machine_name() != "":
             self.entry_machine_name.insert(0, panda.get_machine_name())
         else:
@@ -1092,6 +1097,15 @@ class Interface(customtkinter.CTk):
 
         except Exception as e:
             Exception_message(message=e)
+
+    # Adding pop out digital keyboard when focus on entry widget
+    def keyboard_pop_out(self, event):
+        try:
+            os.system('wmic process where name="TabTip.exe" delete')
+            os.system("C:\\PROGRA~1\\COMMON~1\\MICROS~1\\ink\\tabtip.exe")
+        except Exception:
+            os.system("C:\\PROGRA~1\\COMMON~1\\MICROS~1\\ink\\tabtip.exe")
+
 
 
 
