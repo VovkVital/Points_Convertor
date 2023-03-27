@@ -147,6 +147,7 @@ class Interface(customtkinter.CTk):
         except AttributeError:
             pass
 
+
     def event_earthwork_btn(self):
         try:
             if self.button_earth_work_choice.cget("fg_color") == NOT_SELECTED:
