@@ -130,23 +130,41 @@ class Interface(customtkinter.CTk):
         self.create_buttons_add_design()
         self.TAB_NAME()
         self.message_box_m2()
+        self.frame_earthwork()
 
 
     def event_gcs_900(self):
         try:
-            self.frame_1_earth.grid_forget()
-            self.frame_3_1.grid(row=1, column=3, rowspan=3, sticky="sewn")
-            self.button_earth_work_choice.configure(fg_color=NOT_SELECTED)
-            self.button_gcs_900_choice.configure(fg_color=SELECTED_BLUE)
+            if self.button_gcs_900_choice.cget("fg_color") == NOT_SELECTED:
+                self.button_earth_work_choice.configure(fg_color=NOT_SELECTED)
+                self.frame_1_earth.grid_forget()
+                self.frame_3_1.grid(row=1, column=3, rowspan=3, sticky="sewn")
+            else:
+                self.frame_1_earth.grid_forget()
+                self.frame_3_1.grid(row=1, column=3, rowspan=3, sticky="sewn")
+                self.button_earth_work_choice.configure(fg_color=NOT_SELECTED)
+                self.button_gcs_900_choice.configure(fg_color=SELECTED_BLUE)
+        except AttributeError:
+            pass
+
+    def event_earthwork_btn(self):
+        try:
+            if self.button_earth_work_choice.cget("fg_color") == NOT_SELECTED:
+                self.button_gcs_900_choice.configure(fg_color=NOT_SELECTED)
+                self.frame_3_1.grid_forget()
+                self.frame_1_earth.grid(row=1, column=3, rowspan=3, sticky="sewn")
+
+            else:
+                self.button_earth_work_choice.configure(fg_color=SELECTED_BLUE)
+                self.button_gcs_900_choice.configure(fg_color=NOT_SELECTED)
+                self.frame_3_1.grid_forget()
+                self.frame_1_earth.grid(row=1, column=3, rowspan=3, sticky="sewn")
         except AttributeError:
             pass
 
 
 
     def frame_earthwork(self):
-        self.button_earth_work_choice.configure(fg_color=SELECTED_BLUE)
-        self.button_gcs_900_choice.configure(fg_color=NOT_SELECTED)
-        self.frame_3_1.grid_forget()
         self.frame_1_earth = customtkinter.CTkTabview(master=self, corner_radius=25, height=900,
                                                   segmented_button_selected_color=SELECTED_BLUE,
                                                   segmented_button_unselected_color=NOT_SELECTED,
@@ -160,6 +178,7 @@ class Interface(customtkinter.CTk):
         self.frame_1_earth.tab("Convert to Design").grid_rowconfigure(0, weight=1)
 
         self.frame_earth_frame = Earthwork(master=self.frame_1_earth.tab("Convert to Design"), row=0, column=0)
+        self.frame_1_earth.grid_forget()
         #
 
 
@@ -567,7 +586,7 @@ class Interface(customtkinter.CTk):
                width=MAIN_WIDTH, height=MAIN_HEIGHT, command=self.event_gcs_900)
 
         self.button_earth_work_choice = Button(master=self.frame_1_1, text="Earthwork", sticky=None, row=3, column=1,
-                                               width=MAIN_WIDTH, height=MAIN_HEIGHT, command=self.frame_earthwork)
+                                               width=MAIN_WIDTH, height=MAIN_HEIGHT, command=self.event_earthwork_btn)
 
         self.button_earth_work_choice.configure(fg_color=NOT_SELECTED)
 
