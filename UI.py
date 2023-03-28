@@ -18,6 +18,7 @@ from AddDesigns import Add_design
 import threading
 from UsbManagment import File_mangment
 from EarthworkUI import Earthwork
+from Frames import Frames
 FILES = File_mangment()
 
 USB = Usb_drive()
@@ -105,17 +106,14 @@ class Interface(customtkinter.CTk):
         self.title(PROGRAM_NAME)
         self.geometry(f"{Interface.WIDTH}x{Interface.HEIGHT}")
         self.wm_iconbitmap("./Images/teichert-ico.ico")
-        self.grid_columnconfigure(0, minsize=20)
-        self.grid_columnconfigure(1, minsize=300)
-        self.grid_columnconfigure(2, minsize=45)
-        self.grid_columnconfigure(3, weight=2)
-        self.grid_columnconfigure(4, minsize=20)
 
-        self.grid_rowconfigure(0, minsize=50)
-        self.grid_rowconfigure(1, minsize=300)
-        self.grid_rowconfigure(2, minsize=10)
-        self.grid_rowconfigure(3, weight=3)
-        self.grid_rowconfigure(4, minsize=20)
+        # Setting up grid values for the main app window with values as follows (index, weight, minsize)
+        grid_main_loop = {"rows":[(0, 0, 50), (1, 0, 300), (2, 0, 10), (3, 3, 0), (4, 0, 20)],
+                          "columns":[(0, 0, 20), (1, 0, 300), (2, 0, 45), (3, 2, 0), (4, 0, 20)]}
+        self.main_window = Frames(master=self, value=grid_main_loop)
+
+
+        # Function that calls its self back searching for the USB data
         self.after(4000, self.usb_search)
 
     #------------------------ Frames ---------------------------
@@ -175,34 +173,25 @@ class Interface(customtkinter.CTk):
             button.configure(width=180, font=FONT)
 
         self.frame_1_earth.add("Convert to Design")
-        self.frame_1_earth.tab("Convert to Design").grid_columnconfigure(0, weight=1)
-        self.frame_1_earth.tab("Convert to Design").grid_rowconfigure(0, weight=1)
+        # Setting up grid values for the frame with values as follows (index, weight, minsize)
+
+        grid_frame_1_earth = {"rows": [(0, 1, 0)], "columns": [(0, 1, 0)]}
+        self.window_frame_1_earth = Frames(master=self.frame_1_earth.tab("Convert to Design"), value=grid_frame_1_earth)
 
         self.frame_earth_frame = Earthwork(master=self.frame_1_earth.tab("Convert to Design"), row=0, column=0)
         self.frame_1_earth.grid_forget()
         #
-
-
-
-
     # ------------- Lable Frames -----------------
     def frame_col_1_1 (self):
         self.frame_1_1 = customtkinter.CTkFrame(master=self, corner_radius=25, height=215)
         self.frame_1_1.grid(row=3, column=1, sticky="swe")
-        self.frame_1_1.columnconfigure(0, minsize=10)
-        self.frame_1_1.columnconfigure(1, weight=1)
-        self.frame_1_1.columnconfigure(2, minsize=10)
+        # Setting up grid values for the frame with values as follows (index, weight, minsize)
+        grid_frame_1_1 = {"rows": [(0, 0, 10), (1, 1, 0), (2, 0, 10), (3, 1, 0), (4, 0, 5)],
+                          "columns": [(0, 0, 10), (1, 1, 0), (2, 0, 10)]}
+        self.window_1_1 = Frames(master=self.frame_1_1, value=grid_frame_1_1)
 
-        self.frame_1_1.rowconfigure(0, minsize=10)
-        self.frame_1_1.rowconfigure(1, weight=1)
-        self.frame_1_1.rowconfigure(2, minsize=10)
-        self.frame_1_1.rowconfigure(3, weight=1)
-        self.frame_1_1.rowconfigure(4, minsize=5)
         self.frame_1_1.grid_propagate(False)
         return self.frame_1_1
-
-
-
 
 
     def frame_col_3_1 (self):
@@ -219,71 +208,30 @@ class Interface(customtkinter.CTk):
             button.configure(width=180,  font=FONT)
 
         #----------------------------Columns----------------------
-        self.frame_3_1.tab("USB Files").grid_columnconfigure(0, minsize=5)
-        #  Something is wrong with button it is moving from side to side if minsize is not 200
-        self.frame_3_1.tab("USB Files").grid_columnconfigure(1, weight=1)
-        self.frame_3_1.tab("USB Files").grid_columnconfigure(2, weight=1)
-        self.frame_3_1.tab("USB Files").grid_columnconfigure(3, weight=1)
-        self.frame_3_1.tab("USB Files").grid_columnconfigure(4, minsize=5)
+        # Setting up grid values for the frame with values as follows (index, weight, minsize)
+        grid_usb_files = {"rows": [(0, 0, 5), (1, 0, 40), (2, 0, 5), (3, 5, 0), (4, 0, 10), (5, 1, 0)],
+                          "columns": [(0, 0, 5), (1, 1, 0), (2, 1, 0), (3, 1, 0), (4, 0, 5)]}
 
-        self.frame_3_1.tab("USB Files").grid_rowconfigure(0, minsize=5)
-        self.frame_3_1.tab("USB Files").grid_rowconfigure(1, minsize=40)
-        self.frame_3_1.tab("USB Files").grid_rowconfigure(2, minsize=5)
-        self.frame_3_1.tab("USB Files").grid_rowconfigure(3, weight=5)
-        self.frame_3_1.tab("USB Files").grid_rowconfigure(4, minsize=10)
-        self.frame_3_1.tab("USB Files").grid_rowconfigure(5, weight=1)
+        grid_add_design = {"rows": [(0, 0, 5), (1, 1, 0), (2, 0, 5), (3, 1, 0), (4, 0, 5), (5, 1, 0), (6, 0, 5),
+                                    (7, 1, 0), (8, 0, 5), (9, 1, 0), (10, 0, 5), (11, 1, 0), (12, 0, 5)],
+                          "columns": [(0, 0, 10), (1, 2, 0), (2, 0, 10), (3, 1, 0), (4, 0, 10)]}
 
-        self.frame_3_1.tab("Add Design").grid_columnconfigure(0, minsize=10)
-        self.frame_3_1.tab("Add Design").grid_columnconfigure(1, weight=2)
-        self.frame_3_1.tab("Add Design").grid_columnconfigure(2, minsize=10)
-        self.frame_3_1.tab("Add Design").grid_columnconfigure(3, weight=1)
-        self.frame_3_1.tab("Add Design").grid_columnconfigure(4, minsize=10)
+        grid_create_point = {"rows": [(0, 0, 10), (1, 1, 0), (2, 1, 0), (3, 1, 0), (4, 0, 15), (5, 0, 260), (6, 0, 5)],
+                           "columns": [(0, 0, 10), (1, 1, 0), (2, 0, 10), (3, 1, 0), (4, 0, 10)]}
 
-        self.frame_3_1.tab("Add Design").grid_rowconfigure(0, minsize=5)
-        self.frame_3_1.tab("Add Design").grid_rowconfigure(1, weight=1)
-        self.frame_3_1.tab("Add Design").grid_rowconfigure(2, minsize=5)
-        self.frame_3_1.tab("Add Design").grid_rowconfigure(3, weight=1)
-        self.frame_3_1.tab("Add Design").grid_rowconfigure(4, minsize=5)
-        self.frame_3_1.tab("Add Design").grid_rowconfigure(5, weight=1)
-        self.frame_3_1.tab("Add Design").grid_rowconfigure(6, minsize=5)
-        self.frame_3_1.tab("Add Design").grid_rowconfigure(7, weight=1)
-        self.frame_3_1.tab("Add Design").grid_rowconfigure(8, minsize=5)
-        self.frame_3_1.tab("Add Design").grid_rowconfigure(9, weight=1)
-        self.frame_3_1.tab("Add Design").grid_rowconfigure(10, minsize=5)
-        self.frame_3_1.tab("Add Design").grid_rowconfigure(11, weight=1)
-        self.frame_3_1.tab("Add Design").grid_rowconfigure(12, minsize=5)
-
-        self.frame_3_1.tab("Create Point File (.csv)").grid_columnconfigure(0, minsize=10)
-        self.frame_3_1.tab("Create Point File (.csv)").grid_columnconfigure(1, weight=1)
-        self.frame_3_1.tab("Create Point File (.csv)").grid_columnconfigure(2, minsize=10)
-        self.frame_3_1.tab("Create Point File (.csv)").grid_columnconfigure(3, weight=1)
-        self.frame_3_1.tab("Create Point File (.csv)").grid_columnconfigure(4, minsize=10)
-
-        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(0, minsize=10)
-        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(1, weight=1)
-        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(2, weight=1)
-        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(3, weight=1)
-        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(4, minsize=15)
-        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(5, minsize=260)
-        self.frame_3_1.tab("Create Point File (.csv)").grid_rowconfigure(6, minsize=5)
-
-
-
+        self.window_3_1_usb_files = Frames(master=self.frame_3_1.tab("USB Files"), value=grid_usb_files)
+        self.window_3_1_add_design = Frames(master=self.frame_3_1.tab("Add Design"), value=grid_add_design)
+        self.window_3_1_crete_point = Frames(master=self.frame_3_1.tab("Create Point File (.csv)"),
+                                             value=grid_create_point)
 
     def frame_message_box(self):
         self.frame_3_3 = customtkinter.CTkFrame(master=self.frame_3_1.tab("Create Point File (.csv)"), corner_radius=25)
         self.frame_3_3.grid(row=5, column=0, columnspan=5, rowspan=3, sticky="news")
-        self.frame_3_3.grid_rowconfigure(0, minsize=5)
-        self.frame_3_3.grid_rowconfigure(1, weight=1)
-        self.frame_3_3.grid_rowconfigure(2, weight=1)
-        self.frame_3_3.grid_rowconfigure(3, weight=1)
-        self.frame_3_3.grid_rowconfigure(4, weight=1)
-        self.frame_3_3.grid_rowconfigure(5, minsize=5)
 
-        self.frame_3_3.grid_columnconfigure(0, minsize=5)
-        self.frame_3_3.grid_columnconfigure(1, weight=2)
-        self.frame_3_3.grid_columnconfigure(2, minsize=5)
-
+        # Setting up grid values for the frame with values as follows (index, weight, minsize)
+        grid_message_box = {"rows": [(0, 0, 5), (1, 1, 0), (2, 1, 0), (3, 1, 0), (4, 1, 0), (5, 0, 5)],
+                           "columns": [(0, 0, 5), (1, 2, 0), (2, 0, 5)]}
+        self.window_3_1 = Frames(master=self.frame_3_3, value=grid_message_box)
 
     def frame_tab_2 (self):
         self.frame_tab_2 = customtkinter.CTkTabview(master=self.frame_3_1.tab("USB Files"),
@@ -300,18 +248,12 @@ class Interface(customtkinter.CTk):
         for button in self.frame_tab_2._segmented_button._buttons_dict.values():
             button.configure(width=150, font=FONT_SMALL)
 
-        self.frame_tab_2.tab("Design Folders").grid_columnconfigure(0, weight=1)
-        self.frame_tab_2.tab("Design Folders").grid_columnconfigure(1, minsize=15)
-        self.frame_tab_2.tab("Design Folders").grid_rowconfigure(0, weight=1)
-
-        self.frame_tab_2.tab("Machine Files").grid_columnconfigure(0, weight=1)
-        self.frame_tab_2.tab("Machine Files").grid_columnconfigure(1, minsize=15)
-        self.frame_tab_2.tab("Machine Files").grid_rowconfigure(0, weight=1)
-
-        self.frame_tab_2.tab("Config Files").grid_columnconfigure(0, weight=1)
-        self.frame_tab_2.tab("Config Files").grid_columnconfigure(1, minsize=15)
-        self.frame_tab_2.tab("Config Files").grid_rowconfigure(0, weight=1)
-
+        # Setting up grid values for the frame with values as follows (index, weight, minsize)
+        # combine values for the three tabs as it is same grid pattern
+        grid_tab_2_combined =  {"rows": [(0, 1, 0),], "columns": [(0, 1, 0), (1, 0, 15)]}
+        self.window_tab_2_design = Frames(self.frame_tab_2.tab("Design Folders"), value=grid_tab_2_combined)
+        self.window_tab_2_machine = Frames(self.frame_tab_2.tab("Machine Files"), value=grid_tab_2_combined)
+        self.window_tab_2_config = Frames(self.frame_tab_2.tab("Config Files"), value=grid_tab_2_combined)
 
     def create_buttons_tabs (self):
             self.button_tab_2_keep = Button(master=self.frame_3_1.tab("USB Files"), text="Keep", sticky="e",
@@ -402,13 +344,11 @@ class Interface(customtkinter.CTk):
             self.message_box_tab_2_all = customtkinter.CTkFrame(master=self.frame_3_1.tab("USB Files"),
                                                                 corner_radius=25)
             self.message_box_tab_2_all.grid(row=5, column=0, columnspan=4, sticky="news")
-            self.message_box_tab_2_all.rowconfigure(0, weight=1)
-            self.message_box_tab_2_all.rowconfigure(1, weight=1)
-            self.message_box_tab_2_all.rowconfigure(2, weight=1)
-            self.message_box_tab_2_all.rowconfigure(3, weight=1)
 
-            self.message_box_tab_2_all.columnconfigure(0, weight=1)
-            self.message_box_tab_2_all.columnconfigure(1, weight=1)
+            # Setting up grid values for the frame with values as follows (index, weight, minsize)
+            grid_message_box_tab_2 = {"rows": [(0, 1, 0), (1, 1, 0), (2, 1, 0), (3, 1, 0)],
+                                "columns": [(0, 1, 0), (1, 1, 0)]}
+            self.window_message_box_tab_2 = Frames(master=self.message_box_tab_2_all, value=grid_message_box_tab_2)
 
             # ------------------------------------------------------ Message Box labels ---------------------------------
             self.label_info_m2 = customtkinter.CTkLabel(master=self.message_box_tab_2_all, text=" -- System info --")

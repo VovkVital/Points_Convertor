@@ -1,5 +1,6 @@
 import customtkinter
 from Buttons import Button
+from Frames import Frames
 #  Fonts #
 FONT = ("Robot", 15, "bold")
 FONT_SMALL = ("Roboto", 14, "bold")
@@ -28,23 +29,11 @@ class Earthwork(customtkinter.CTk):
         super().__init__()
         self.frame = customtkinter.CTkFrame(master=master)
         self.frame.grid(sticky="news", row=row, column=column, rowspan=3, columnspan=3)
-        self.frame.grid_columnconfigure(0, minsize=20)
-        self.frame.grid_columnconfigure(1, weight=1)
-        self.frame.grid_columnconfigure(2, minsize=40)
-        self.frame.grid_columnconfigure(3, weight=1)
-        self.frame.grid_columnconfigure(4, minsize=20)
-
-        self.frame.grid_rowconfigure(0, minsize=20)
-        self.frame.grid_rowconfigure(1, weight=1)
-        self.frame.grid_rowconfigure(2, minsize=20)
-        self.frame.grid_rowconfigure(3, weight=1)
-        self.frame.grid_rowconfigure(4, minsize=20)
-        self.frame.grid_rowconfigure(5, weight=1)
-        self.frame.grid_rowconfigure(6, minsize=20)
-        self.frame.grid_rowconfigure(7, weight=1)
-        self.frame.grid_rowconfigure(8, minsize=20)
+        grid_layout = {"rows": [(0, 0, 20), (1, 1, 0), (2, 0, 20), (3, 1, 0), (4, 0, 20), (5, 1, 0), (6, 0, 20),
+                                    (7, 1, 0), (8, 0, 20)],
+                       "columns": [(0, 0, 20), (1, 1, 0), (2, 0, 40), (3, 1, 0), (4, 0, 20)]}
+        self.grid = Frames(master=self.frame, value=grid_layout)
         self.buttons()
-
 
     def buttons(self):
         self.select_button = Button(master=self.frame, text="Select", sticky="n", row=3, column=3)
