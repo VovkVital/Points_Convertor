@@ -1,7 +1,7 @@
 import tkinter
 from tkinter import ttk
 import customtkinter
-from Buttons import Button, Label
+from Widgets import Button, Label
 
 # _______ Colors _________
 SELECTED_BLUE = "#008fd7"

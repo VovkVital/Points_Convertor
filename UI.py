@@ -12,7 +12,7 @@ from datetime import datetime
 from UsbError import Message_box
 import re
 from MainTreeveiw import MainTree
-from Buttons import Button
+from Widgets import Button
 from Warnings import Exception_message, Error_message
 from AddDesigns import Add_design
 import threading
