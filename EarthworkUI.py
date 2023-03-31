@@ -1,8 +1,15 @@
+import glob
+import re
 import tkinter
+import num2words as n2w
 
 import customtkinter
 from Widgets import Button, Label
 from Frames import Frames
+from tkinter import filedialog
+from Warnings import Error_message
+
+import pathlib
 #  Fonts #
 FONT = ("Robot", 15, "bold")
 FONT_SMALL = ("Roboto", 14, "bold")
@@ -38,9 +45,12 @@ FONT_NOT_SELECTED = "gray60"
 FONT_SELECTED = "gray94"
 ROW_EVEN = customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][1]
 
+PATH_SITEWORK_DIR = r"C:\Trimble Synchronizer Data\PC\Trimble SCS900 Data"
+PATH_DESKTOP = pathlib.Path("~\\Desktop").expanduser()
+
 
 class Earthwork(customtkinter.CTk):
-    def __init__(self, master, row, column):
+    def __init__(self, master, row, column, command):
         super().__init__()
         self.frame = customtkinter.CTkFrame(master=master)
         self.frame.grid(sticky="news", row=row, column=column, rowspan=3, columnspan=3)
@@ -48,11 +58,11 @@ class Earthwork(customtkinter.CTk):
                                     (7, 1, 0), (8, 0, 20)],
                        "columns": [(0, 0, 50), (1, 1, 0), (2, 0, 40), (3, 1, 0), (4, 0, 50)]}
         self.grid = Frames(master=self.frame, value=grid_layout)
-        self.widgets()
+        self.widgets(command=command)
 
-    def widgets(self):
+    def widgets(self, command):
         self.select_button = Button(master=self.frame, text="Select", sticky="n", row=3, column=3)
-        self.select_button.configure(width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
+        self.select_button.configure(width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT, command=lambda:[command(),])
 
         self.confirm_btn = Button(master=self.frame, text="Confirm", sticky="n", row=5, column=3)
         self.confirm_btn.configure(width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
@@ -74,15 +84,70 @@ class Earthwork(customtkinter.CTk):
         self.label_message_row6.grid(columnspan=4)
         self.label_message_row7.grid(columnspan=4)
 
-        radio_var = customtkinter.IntVar(value=1)
+        self.radio_var = customtkinter.IntVar(value=1)
 
-        self.btn_radio_dsz = customtkinter.CTkRadioButton(master=self.frame, variable=radio_var, text="DSZ", value=1,
+        self.btn_radio_dsz = customtkinter.CTkRadioButton(master=self.frame, variable=self.radio_var, text="DSZ", value=1,
                                                           width=50, hover_color=SELECTED_BLUE, text_color=FONT_SELECTED,
                                                           fg_color=SELECTED_BLUE)
         self.btn_radio_dsz.grid(row=1, column=3, sticky="wn")
-        self.btn_radio_vcl = customtkinter.CTkRadioButton(master=self.frame, variable=radio_var, text="VCL", value=2,
+        self.btn_radio_vcl = customtkinter.CTkRadioButton(master=self.frame, variable=self.radio_var, text="VCL", value=2,
                                                           width=50, hover_color=SELECTED_BLUE, text_color=FONT_SELECTED,
                                                           fg_color=SELECTED_BLUE)
         self.btn_radio_vcl.grid(row=1, column=3, sticky="en")
+
+class Control:
+    source = None
+    def __init__(self):
+        pass
+    def select_btn(self):
+        if pathlib.Path(PATH_SITEWORK_DIR).exists():
+            selected_folder = filedialog.askdirectory(initialdir=PATH_SITEWORK_DIR)
+        else:
+            selected_folder = filedialog.askdirectory(initialdir=PATH_DESKTOP)
+        # verifaing if folder was selected
+        if selected_folder != "":
+            self.validation(path=selected_folder)
+        else:
+            Error_message(message="Folder not selected")
+
+    def validation(self, path, dsz=True):
+        # Making sure values are not assign to the source
+        self.source = None
+        # checking if folder has a svd, svl or vcl files
+        containing_file = [str(p) for p in pathlib.Path(path).glob("*.*") if
+                           re.fullmatch(pattern="(?i).*\.svd$|.*\.svl$|.*\.vcl$", string=str(p))]
+        # Counting available files
+        svd_count = [f for f in containing_file if f.endswith(".svd")]
+        svl_count = [f for f in containing_file if f.endswith(".svl")]
+        vcl_count = [f for f in containing_file if f.endswith(".vcl")]
+        # determining if design can be created and what files can be used
+        if dsz and len(svd_count) == 1 and len(svl_count)==1:
+            self.source = [svd_count[0],svl_count[0]]
+            return [svd_count[0],svl_count[0]]
+        elif dsz and len(vcl_count) == 1 and (len(svd_count)!= 1 or len(svl_count != 1)):
+            self.source = [vcl_count]
+        elif not dsz and len(vcl_count) == 1:
+            self.source = [vcl_count]
+        elif not dsz and len(vcl_count) !=1 and len(svd_count) == 1 and len(svl_count) == 1:
+            self.source = [svd_count, svl_count]
+        else:
+            # converting digit files count to words
+            svd_number = n2w.num2words(len(svd_count)).capitalize()
+            svl_number = n2w.num2words(len(svl_count)).capitalize()
+            vcl_number = n2w.num2words(len(vcl_count)).capitalize()
+            # Error message
+            message = f"{' '*20}Failed!!!\nFolder should contain\nOne .svd  and One .svl or One .vcl" \
+                      f"\ninstead  folder contains\n" \
+                      f"{svd_number} .svd, {svl_number} .svl, {vcl_number} .vcl"
+            # Warning pop our file
+            warning = Error_message(message=message, time=10000)
+            warning.label.configure(justify="left", anchor="center")
+
+
+
+
+
+
+
 
 

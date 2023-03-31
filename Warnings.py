@@ -57,8 +57,8 @@ class Error_message(tkinter.ttk.Treeview):
     def buttons(self, message):
         self.button_accept = Button(master=self.box, text="Accept", sticky=None, row=1, column=0,
                                     command=self.box.destroy)
-        label = Label(master=self.box, text=f"{message}", row=0, column=0)
-        label.configure(text_color=SELECTED_BLUE, font=FONT_LABEL_ERROR)
+        self.label = Label(master=self.box, text=f"{message}", row=0, column=0, sticky=None)
+        self.label.configure(text_color=SELECTED_BLUE, font=FONT_LABEL_ERROR)
 
     def close_frame(self, time=4000):
         self.after(time, lambda: self.box.destroy())
