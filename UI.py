@@ -19,6 +19,10 @@ import threading
 from UsbManagment import File_mangment
 from EarthworkUI import Earthwork, Control
 from Frames import Frames
+
+
+
+
 FILES = File_mangment()
 
 USB = Usb_drive()
@@ -129,6 +133,7 @@ class Interface(customtkinter.CTk):
         self.TAB_NAME()
         self.message_box_m2()
         self.frame_earthwork()
+
 
 
     def event_gcs_900(self):

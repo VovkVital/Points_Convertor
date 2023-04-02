@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="371eae62-7493-4739-88b6-e95122b70036" name="Changes" comment="Earthwork UI is got updated with the widgets">
+    <list default="true" id="371eae62-7493-4739-88b6-e95122b70036" name="Changes" comment="validation for Earthwork was finished">
+      <change afterPath="$PROJECT_DIR$/Logging.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AddDesigns.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddDesigns.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EarthworkUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/EarthworkUI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/File Manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/FileManager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Warnings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Warnings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,13 +50,14 @@
       <recent name="C:\Users\vovkv\PycharmProjects\GSC 900 Points" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\vovkv\Desktop\Repository\GSC 900 Points\logging" />
       <recent name="C:\Users\vovkv\Desktop\Repository\GSC 900 Points" />
       <recent name="C:\Users\vovkv\Desktop\Repository\GSC 900 Points\Images" />
       <recent name="C:\Users\vovkv\PycharmProjects\GSC 900 Points\Images" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="File Manager" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+    <configuration name="FileManager" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="GSC 900 Points" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -67,7 +70,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="C:\Users\vovkv\Desktop\Repository\GSC 900 Points\File Manager.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\vovkv\Desktop\Repository\GSC 900 Points\FileManager.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -153,7 +156,11 @@
       <workItem from="1680117251177" duration="11991000" />
       <workItem from="1680194598214" duration="8912000" />
       <workItem from="1680288481841" duration="4359000" />
-      <workItem from="1680293716883" duration="2635000" />
+      <workItem from="1680293716883" duration="3127000" />
+      <workItem from="1680304047041" duration="86000" />
+      <workItem from="1680388169327" duration="15538000" />
+      <workItem from="1680451212342" duration="1578000" />
+      <workItem from="1680452966942" duration="9950000" />
     </task>
     <task id="LOCAL-00001" summary="Added 4 buttons to the tabs and treeveiw did some minor changes to layout">
       <created>1670473646033</created>
@@ -246,7 +253,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680131884747</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="validation for Earthwork was finished">
+      <created>1680296635260</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1680296635260</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -275,14 +289,17 @@
     <MESSAGE value="Fixed bugs with switch buttons GCS 900 and Earthwork" />
     <MESSAGE value="Super class for grid layout was created, all the grid frame layouts were replaced using the Super Claa" />
     <MESSAGE value="Earthwork UI is got updated with the widgets" />
-    <option name="LAST_COMMIT_MESSAGE" value="Earthwork UI is got updated with the widgets" />
+    <MESSAGE value="validation for Earthwork was finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="validation for Earthwork was finished" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/GSC_900_Points$File_Manager.coverage" NAME="File Manager Coverage Results" MODIFIED="1680296133541" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/GSC_900_Points$File_Manager.coverage" NAME="FileManager Coverage Results" MODIFIED="1680413677645" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$GU.coverage" NAME="GU Coverage Results" MODIFIED="1669866100275" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/GSC_900_Points$test.coverage" NAME="test Coverage Results" MODIFIED="1680038185987" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/GSC_900_Points$FileManager.coverage" NAME="FileManager Coverage Results" MODIFIED="1680466328509" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/GSC_900_Points$test.coverage" NAME="test Coverage Results" MODIFIED="1680455218883" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$_01_Shrinking_Frame_to_it_is_content.coverage" NAME="_01_Shrinking Frame to it is content Coverage Results" MODIFIED="1669504419145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Flight Check  to USA/Help" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$credit.coverage" NAME="credit Coverage Results" MODIFIED="1670038730570" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Flight Check  to USA/Help" />
+    <SUITE FILE_PATH="coverage/GSC_900_Points$Logging.coverage" NAME="Logging Coverage Results" MODIFIED="1680456029903" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$UpdateManager.coverage" NAME="UpdateManager Coverage Results" MODIFIED="1679435553824" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$Custom_Tkinter.coverage" NAME="Custom Tkinter Coverage Results" MODIFIED="1669942119646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Flight Check  to USA/Help" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$USB.coverage" NAME="USB Coverage Results" MODIFIED="1670907576534" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
