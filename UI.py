@@ -729,10 +729,10 @@ class Interface(customtkinter.CTk):
                     row_count = 1
                     for find_index in list_pick[tab]:
                         selected_item = trees[tab].item(trees[tab].focus())
-
                         if find_index == selected_item["values"]:
                             index = list_pick[tab].index(find_index)
                             list_pick[tab].pop(index)
+                            self.logger.debug(f"Selected to keep {selected_item['values']}")
                     for item in range(len(trees[tab].get_children())):
                         selected_item = trees[tab].get_children()[0]
                         trees[tab].delete(selected_item)

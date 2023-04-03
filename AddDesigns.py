@@ -56,6 +56,7 @@ class Add_design():
                             with open("Add_design.json", "w") as file:
                                 json.dump(data, file, indent=4)
                             event_save()
+                            self.logger.debug("The file is writen to Add_design.json file")
 
                         except FileNotFoundError:
                             try:
@@ -68,6 +69,7 @@ class Add_design():
                             except Exception:
                                 Error_message(message="Something went wrong ):\nplease try it again")
                                 return
+                            self.logger.debug("The file is writen to Add_design.json file")
                 else:
                     Error_message(message="Save design name first", time=2000)
                     return
@@ -85,12 +87,14 @@ class Add_design():
         if pathlib.Path(PATH_SITEWORK_DIR).exists():
             if selected_file := filedialog.askopenfilenames(initialdir=PATH_SITEWORK_DIR, filetypes=file_type):
                 self.file_validation(selected_file=selected_file, event_btn=event_svd)
+                self.logger.debug(f"Add files to the design folder {selected_file}")
             else:
                 Error_message(message="Files not selected")
         else:
             desktop_path = pathlib.Path("~\\Desktop").expanduser()
             if selected_file := filedialog.askopenfilenames(initialdir=desktop_path, filetypes=file_type):
                 self.file_validation(selected_file=selected_file, event_btn=event_svd)
+                self.logger.debug(f"Add files to the design folder {selected_file}")
             else:
                 Error_message(message="Files not selected")
 
@@ -102,12 +106,14 @@ class Add_design():
         if usb_path.exists():
             if selected_file := filedialog.askopenfilenames(initialdir=usb_path, filetypes=file_type):
                 self.file_validation(selected_file=selected_file, event_btn=event_btn)
+                self.logger.debug(f"Add 'CFG'' files to the design folder {selected_file}")
             else:
                 Error_message(message="File not selected")
         else:
             desktop_path = pathlib.Path("~\\Desktop").expanduser()
             if selected_file := filedialog.askopenfilenames(initialdir=desktop_path, filetypes=file_type):
                 self.file_validation(selected_file=selected_file, event_btn=event_btn)
+                self.logger.debug(f"Add 'CFG'' files to the design folder {selected_file}")
             else:
                 Error_message(message="File not selected")
 
@@ -115,6 +121,7 @@ class Add_design():
         task = threading.Thread(target=self.move_files)
         task.daemon = True
         task.start()
+        self.logger.debug("Design Created on the USB")
 
 
 

@@ -121,7 +121,7 @@ class Message_box(tkinter.ttk.Treeview):
         self.button_select.configure(width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
 
         self.button_close = Button(master=self.box, text="Close", sticky=None, row=3, column=1, command=self.close_frame)
-        label = Label(master=self.box, text="Select folder to manage !", row=0, column=0)
+        label = Label(master=self.box, text="Select folder to manage !", row=0, column=0, sticky=None)
         label.grid(columnspan=2)
         label.configure(text_color=SELECTED_BLUE, font=FONT_LABEL_ERROR)
 

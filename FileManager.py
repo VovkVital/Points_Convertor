@@ -13,7 +13,7 @@ from Logging import MyLogger
 
 
 def main():
-    try:
+    # try:
         logger = MyLogger("App_")
         logger.app_start("App_initialization")
         # checks if application is already open
@@ -25,21 +25,21 @@ def main():
         else:
             screen = Interface()
             # Expands to the full screen
-            screen.state("zoomed")
+            # screen.state("zoomed")
             pd = CSV()
             if re.fullmatch(r".+?Machine Control Data", str(Usb_drive.USB_PATH), flags=re.IGNORECASE):
                 screen.multiple_files_usb()
             screen.mainloop()
-    except BaseException as err:
-        if bool(logger):
-            logger.app_crash("App_Crashed")
-            logger.exception(f"The App Crashed because of {err}")
-            sys.exit(1)
-        else:
-            logger = MyLogger("App_")
-            logger.app_crash("App_Crashed")
-            logger.exception(f"The App Crashed because of {err}")
-            sys.exit(1)
+    # except BaseException as err:
+    #     if bool(logger):
+    #         logger.app_crash("App_Crashed")
+    #         logger.exception(f"The App Crashed because of {err}")
+    #         sys.exit(1)
+    #     else:
+    #         logger = MyLogger("App_")
+    #         logger.app_crash("App_Crashed")
+    #         logger.exception(f"The App Crashed because of {err}")
+    #         sys.exit(1)
 
 
 
