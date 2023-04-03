@@ -52,47 +52,60 @@ class Button(customtkinter.CTkButton):
 class Label(customtkinter.CTkLabel):
     text_color = FONT_SELECTED
     text_size = FONT_LABEL
+
     def __init__(self, master, text, row, column, sticky, **kwargs):
+        if kwargs:
+            if kwargs["text_color"]:
+                self._font_color = kwargs["text_color"]
+            if kwargs["font"]:
+                self._font_size = kwargs["font"]
+        else:
+            self._font_color = self.text_color
+            self._font_size = self.text_size
+
         self._text = text
-        self._font_color = self.text_color
-        self._font_size = self.text_size
-        super().__init__(master=master, text=self._text, text_color=self._font_color, font=self._font_size, **kwargs)
-        self.grid(row=row, column=column, sticky=sticky, **kwargs)
-        self.configure(**kwargs)
+        super().__init__(master=master, text=self._text, text_color=self._font_color, font=self._font_size)
+
+        self.grid(row=row, column=column, sticky=sticky, )
+        # self.configure(**kwargs)
 
     @property
     def label_text(self):
         return self.cget("text")
+
     @label_text.setter
     def label_text(self, value):
         self.configure(text=value)
+
     @property
-    def font_size(self):
+    def label_size(self):
         return self.cget("font")
-    @font_size.setter
-    def font_size(self, value):
+
+    @label_size.setter
+    def label_size(self, value):
         self.configure(font=value)
+
     @property
-    def font_color(self):
+    def label_color(self):
         return self.cget("text_color")
-    @font_color.setter
-    def font_color(self, value):
+
+    @label_color.setter
+    def label_color(self, value):
         self.configure(text_color=value)
 
+    # alternative constructors for the labels
     @classmethod
     def label_blue_bold(cls, master, text, row, column, sticky):
-        cls.text_color = SELECTED_BLUE
-        cls.text_size = FONT_LABEL_BLUE
-        return Label(master=master, text=text, row=row, column=column, sticky=sticky)
+        return cls(master=master, text=text, row=row, column=column, sticky=sticky, font=FONT_LABEL_BLUE,
+                   text_color=SELECTED_BLUE)
+
 
     @classmethod
     def label_blue_big(cls, master, text, row, column, sticky):
-        cls.text_color = SELECTED_BLUE
-        cls.text_size = FONT_LABEL_BOLD
-        return cls(master=master, text=text, row=row, column=column, sticky=sticky)
+        return cls(master=master, text=text, row=row, column=column, sticky=sticky, text_color=SELECTED_BLUE,
+                   font=FONT_BIGGER_LABEL)
 
     @classmethod
     def label_small(cls, master, text, row, column, sticky):
-        cls.text_color = FONT_SELECTED
-        cls.text_size = FONT_LABEL_SMALL
-        return cls(master=master, text=text, row=row, column=column, sticky=sticky)
+        return cls(master=master, text=text, row=row, column=column, sticky=sticky, text_color=FONT_SELECTED,
+                   font=FONT_LABEL_SMALL)

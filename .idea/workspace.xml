@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="371eae62-7493-4739-88b6-e95122b70036" name="Changes" comment="Have way on logging implementation">
+    <list default="true" id="371eae62-7493-4739-88b6-e95122b70036" name="Changes" comment="Working on logging NOT FINISHED in the ereas catchin all imported values">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AddDesigns.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddDesigns.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Add_design.json" beforeDir="false" afterPath="$PROJECT_DIR$/Add_design.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FileManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/FileManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logging.py" beforeDir="false" afterPath="$PROJECT_DIR$/Logging.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainTreeveiw.py" beforeDir="false" afterPath="$PROJECT_DIR$/MainTreeveiw.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TempFile.json" beforeDir="false" afterPath="$PROJECT_DIR$/TempFile.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/USB.py" beforeDir="false" afterPath="$PROJECT_DIR$/USB.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Warnings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Warnings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Widgets.py" beforeDir="false" afterPath="$PROJECT_DIR$/Widgets.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logging/logger.log" beforeDir="false" afterPath="$PROJECT_DIR$/logging/logger.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,7 +158,8 @@
       <workItem from="1680304047041" duration="86000" />
       <workItem from="1680388169327" duration="15538000" />
       <workItem from="1680451212342" duration="1578000" />
-      <workItem from="1680452966942" duration="17842000" />
+      <workItem from="1680452966942" duration="18151000" />
+      <workItem from="1680485408258" duration="5247000" />
     </task>
     <task id="LOCAL-00001" summary="Added 4 buttons to the tabs and treeveiw did some minor changes to layout">
       <created>1670473646033</created>
@@ -279,7 +273,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680466509710</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Working on logging NOT FINISHED in the ereas catchin all imported values">
+      <created>1680482256257</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1680482256257</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -310,17 +311,19 @@
     <MESSAGE value="Earthwork UI is got updated with the widgets" />
     <MESSAGE value="validation for Earthwork was finished" />
     <MESSAGE value="Have way on logging implementation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Have way on logging implementation" />
+    <MESSAGE value="Working on logging NOT FINISHED in the ereas catchin all imported values" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working on logging NOT FINISHED in the ereas catchin all imported values" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/GSC_900_Points$File_Manager.coverage" NAME="FileManager Coverage Results" MODIFIED="1680413677645" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$GU.coverage" NAME="GU Coverage Results" MODIFIED="1669866100275" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/GSC_900_Points$FileManager.coverage" NAME="FileManager Coverage Results" MODIFIED="1680482029876" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/GSC_900_Points$test.coverage" NAME="test Coverage Results" MODIFIED="1680455218883" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/GSC_900_Points$FileManager.coverage" NAME="FileManager Coverage Results" MODIFIED="1680490658255" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/GSC_900_Points$test.coverage" NAME="test Coverage Results" MODIFIED="1680490391685" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$_01_Shrinking_Frame_to_it_is_content.coverage" NAME="_01_Shrinking Frame to it is content Coverage Results" MODIFIED="1669504419145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Flight Check  to USA/Help" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$credit.coverage" NAME="credit Coverage Results" MODIFIED="1670038730570" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Flight Check  to USA/Help" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$Logging.coverage" NAME="Logging Coverage Results" MODIFIED="1680456029903" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$UpdateManager.coverage" NAME="UpdateManager Coverage Results" MODIFIED="1679435553824" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/GSC_900_Points$Widgets.coverage" NAME="Widgets Coverage Results" MODIFIED="1680488938105" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$Custom_Tkinter.coverage" NAME="Custom Tkinter Coverage Results" MODIFIED="1669942119646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Flight Check  to USA/Help" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$USB.coverage" NAME="USB Coverage Results" MODIFIED="1670907576534" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$ReadUSB.coverage" NAME="ReadUSB Coverage Results" MODIFIED="1670901764699" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
