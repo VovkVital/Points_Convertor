@@ -6,6 +6,7 @@ from glob import glob
 from datetime import datetime
 
 
+
 class Usb_drive:
     usb_folders_design = []
     usb_file_cfg = []
@@ -19,6 +20,7 @@ class Usb_drive:
         self.list_mch()
         self.new = 0
         self.path_switch = 0
+
 
 
 
@@ -42,7 +44,6 @@ class Usb_drive:
                                 self.correct_usb.append(right_usb)
                                 Usb_drive.USB_PATH = self.current_path = pathlib.Path(self.directory_check).joinpath(check_path)
                                 self.path_switch = 1
-
                                 return self.current_path
 
 

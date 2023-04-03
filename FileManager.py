@@ -15,7 +15,7 @@ from Logging import MyLogger
 def main():
     try:
         logger = MyLogger("App_")
-        logger.info("App started")
+        logger.app_start("App_initialization")
         # checks if application is already open
         mutex = 'File Manager.exe'
         mutex_check = win32event.CreateMutex(None, False, 'File Manager.exe')
@@ -31,8 +31,18 @@ def main():
                 screen.multiple_files_usb()
             screen.mainloop()
     except BaseException as err:
-        logger.exception(f"App stopped because of ")
-        sys.exit(1)
+        if bool(logger):
+            logger.app_crash("App_Crashed")
+            logger.exception(f"The App Crashed because of {err}")
+            sys.exit(1)
+        else:
+            logger = MyLogger("App_")
+            logger.app_crash("App_Crashed")
+            logger.exception(f"The App Crashed because of {err}")
+            sys.exit(1)
+
+
+
 
 
 if __name__ == "__main__":

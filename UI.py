@@ -19,7 +19,7 @@ import threading
 from UsbManagment import File_mangment
 from EarthworkUI import Earthwork, Control
 from Frames import Frames
-
+import logging
 
 
 
@@ -133,6 +133,7 @@ class Interface(customtkinter.CTk):
         self.TAB_NAME()
         self.message_box_m2()
         self.frame_earthwork()
+        self.logger = logging.getLogger("App_."+__name__)
 
 
 
@@ -147,7 +148,8 @@ class Interface(customtkinter.CTk):
                 self.frame_3_1.grid(row=1, column=3, rowspan=3, sticky="sewn")
                 self.button_earth_work_choice.configure(fg_color=NOT_SELECTED)
                 self.button_gcs_900_choice.configure(fg_color=SELECTED_BLUE)
-        except AttributeError:
+        except AttributeError as err:
+            self.logger.warning(f"Exception occurred {err}")
             pass
 
 
@@ -163,7 +165,8 @@ class Interface(customtkinter.CTk):
                 self.button_gcs_900_choice.configure(fg_color=NOT_SELECTED)
                 self.frame_3_1.grid_forget()
                 self.frame_1_earth.grid(row=1, column=3, rowspan=3, sticky="sewn")
-        except AttributeError:
+        except AttributeError as err:
+            self.logger.warning(f"Exception occurred {err}")
             pass
 
 
@@ -426,7 +429,8 @@ class Interface(customtkinter.CTk):
                 if find_index == selected_item["values"]:
                     index = LIST_DESIGN.index(find_index)
                     LIST_DESIGN.pop(index)
-        except IndexError or KeyError:
+        except IndexError or KeyError as err:
+            self.logger.warning(f"Exception occurred {err}")
             pass
         for item in range(len(self.tree_tab_D.get_children())):
             selected_item = self.tree_tab_D.get_children()[0]
@@ -463,8 +467,10 @@ class Interface(customtkinter.CTk):
                 if find_index == selected_item["values"]:
                     index = LIST_CFG.index(find_index)
                     LIST_CFG.pop(index)
-        except IndexError or KeyError:
-                    pass
+        except IndexError or KeyError as err:
+            self.logger.warning(f"Exception occurred {err}")
+            pass
+
         for item in range(len(self.tree_tab_C.get_children())):
             selected_item = self.tree_tab_C.get_children()[0]
             self.tree_tab_C.delete(selected_item)
@@ -502,8 +508,10 @@ class Interface(customtkinter.CTk):
                 if find_index == selected_item["values"]:
                     index = LIST_MCG.index(find_index)
                     LIST_MCG.pop(index)
-        except IndexError or KeyError:
+        except IndexError or KeyError as err:
+            self.logger.warning(f"Exception occurred {err}")
             pass
+
         for item in range(len(self.tree_tab_M.get_children())):
             selected_item = self.tree_tab_M.get_children()[0]
             self.tree_tab_M.delete(selected_item)
@@ -661,12 +669,14 @@ class Interface(customtkinter.CTk):
     def save_machine_name(self, **kwargs):
         if kwargs:
             machine_name = kwargs["machine_name"]
+            self.logger.debug(f"Machine name {machine_name}")
             self.entry_machine_name.delete(0, END)
             self.entry_machine_name.insert(0, machine_name)
             self.label_machine_name.configure(f"Machine name:{' '*17}- {machine_name}")
             self.label_machine_name_m2.configure(text=f"Machine name :  {machine_name}")
         else:
             machine_name = self.entry_machine_name.get()
+            self.logger.debug(f"Machine name {machine_name}")
         try:
             with open("Settings.json", "w") as file:
                 upload_date = {"Machine Name": machine_name}
@@ -683,8 +693,10 @@ class Interface(customtkinter.CTk):
         # chechking if path is valid
         if pathlib.Path(PATH_SITEWORK_DIR).exists():
             select = filedialog.askopenfilename(initialdir=PATH_SITEWORK_DIR, filetypes=file_type)
+            self.logger.debug(f"Selected CSV {select}")
         else:
             select = filedialog.askopenfilename(initialdir=PATH_DESKTOP, filetypes=file_type)
+            self.logger.debug(f"Selected CSV {select}")
         if select.lower().endswith(".csv"):
             self.button_tab_2_create_ds.configure(state="normal")
             self.button_create.configure(state="normal")
@@ -744,7 +756,8 @@ class Interface(customtkinter.CTk):
                             trees[tab].selection_add(index-1)
                         else:
                             pass
-        except TypeError:
+        except TypeError as err:
+            self.logger.warning(f"Exception occurred {err}")
             pass
 
     def but_tr_delete (self):
@@ -755,6 +768,7 @@ class Interface(customtkinter.CTk):
             try:
                 if TAB_NAME[tab] == selected_tab:
                     selected_item = trees[tab].item(trees[tab].selection()[0])
+                    self.logger.debug(f"Selected to delete {selected_item}")
                     src = pathlib.Path(USB.current_path).joinpath(selected_item["values"][0])
                     src = pathlib.Path(src)
                     dst = pathlib.WindowsPath("~\\Desktop\\USB Deleted Files").expanduser()
@@ -793,8 +807,10 @@ class Interface(customtkinter.CTk):
                             task.start()
                         else:
                             Error_message(message="File was not deleted")
+                            self.logger.warning("File was not deleted")
                     else:
                         Error_message(message="Something went wrong")
+                        self.logger.warning("File was not deleted")
 
             except IndexError:
                 Error_message(message="No file to selected", time=3000)
@@ -809,6 +825,7 @@ class Interface(customtkinter.CTk):
         try:
             if self.frame_tab_2.get() == TAB_NAME[0]:
                 selected_folder = filedialog.askdirectory(initialdir=PATH_DESKTOP)
+                self.logger.debug(f"Add selected folder {selected_folder}")
                 if selected_folder:
                     folder_name = pathlib.Path(selected_folder).name
                     dst = pathlib.Path(USB.current_path).joinpath(folder_name)
@@ -849,6 +866,7 @@ class Interface(customtkinter.CTk):
             elif self.frame_tab_2.get() == TAB_NAME[1] or self.frame_tab_2.get() == TAB_NAME[2]:
                 file_type = (("Machine Files", ("*.cfg", "*.mch")), ("All Files", "*.*"))
                 selected_file = filedialog.askopenfilename(initialdir=PATH_DESKTOP, filetypes=file_type)
+                self.logger.debug(f"Add selected file {selected_file}")
                 if selected_file:
                     file_name = pathlib.Path(selected_file).name
                     dst = pathlib.Path(USB.current_path).joinpath(file_name)
@@ -905,14 +923,17 @@ class Interface(customtkinter.CTk):
 
                     else:
                         Error_message(message="Could not add selected file")
+                        self.logger.warning("Failed to add file")
                         pass
         except Exception as e:
+            self.logger.exception(value=e)
             Exception_message(message=e)
 
     def but_tr_cr(self):
         try:
             selected = self.tree_tab_D.item(self.tree_tab_D.focus())
             selected_file = selected["values"]
+            self.logger.debug(f"Trying to create CSV for the {selected_file}")
             design_name = selected_file[0]
             path = pathlib.Path(os.path.join(USB_PATH, ".Field-Data"))
             if path.exists():
@@ -969,6 +990,7 @@ class Interface(customtkinter.CTk):
                 time = datetime.fromtimestamp(path.stat().st_ctime).strftime('%m/%d/%Y')
                 files_to_show.append([file, time])
             self.message_tree = Message_box(data=files_to_show, ui_command=self.populate_treeveiw)
+            self.logger.debug(f"Multiple files USB {files_to_show}")
         else:
             self.populate_treeveiw()
 
@@ -982,7 +1004,8 @@ class Interface(customtkinter.CTk):
         try:
             USB.current_path = str(pathlib.Path(USB_PATH).joinpath(path))
             USB_PATH = USB.current_path
-        except TypeError:
+        except TypeError as err:
+            self.logger.warning(f"Exception occurred {err}")
             pass
         check = r"(?i).+MachIne Control Data.+Backup_MHG.+"
         LIST_DESIGN = USB.list_designs()
@@ -993,6 +1016,7 @@ class Interface(customtkinter.CTk):
         try:
             self.catch_m_name(path=USB.current_path)
             self.label_machine_name.configure(text=f"Machine name:{' ' * 17}- {self.entry_machine_name.get()}")
+            self.logger.debug(f"Current path {USB.current_path}")
         except AttributeError:
             pass
 
@@ -1001,6 +1025,7 @@ class Interface(customtkinter.CTk):
         if re.fullmatch(string=path, pattern=name_check):
             machine_name = re.findall(string=path, pattern=name_check)[0]
             self.save_machine_name(machine_name=machine_name)
+            self.logger.debug(f"Catch machine name: {machine_name}")
 
     def usb_search(self):
         global USB_PATH

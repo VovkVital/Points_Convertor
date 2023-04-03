@@ -4,19 +4,13 @@ import os
 import colorlog
 
 class MyLogger():
-    def __init__(self,name, **kwargs):
+    def __init__(self, name, **kwargs):
         # # checkin if folder is exists in the root of the app.Creates a new one if False
-        self.message = "App initialization"
-        if kwargs:
-            if kwargs["message"]:
-                self.message = kwargs["message"]
-            else:
-                self.message = "App initialization"
         log_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'logging')
         if not os.path.exists(log_dir):
             os.makedirs(log_dir)
         # Output log will be formatted to this formatter
-        formatter = logging.Formatter('%(asctime)s || %(name)s || %(levelname)s || %(funcName)s || %(message)s',
+        formatter = logging.Formatter('%(asctime)s || %(name)s || %(levelname)s || %(message)s',
                                       datefmt='%m-%d %H:%M')
         self.logger = logging.getLogger(name=name)
         self.logger.setLevel(logging.DEBUG)
@@ -30,8 +24,6 @@ class MyLogger():
 
         # "App initialization you have to have five line of log messages if you want to have color coded lines in the log
         # (it appears only color coded lines can be seen while opening in pycharm
-        for i in range(4):
-            self.logger.info(self.message)
 
     # different types of log messages is applied is defined below
     def debug(self, value):
@@ -51,5 +43,13 @@ class MyLogger():
 
     def exception(self, value):
         self.logger.exception(msg=value)
+
+    def app_crash(self, value):
+        for i in range(5):
+            self.logger.error(msg=value)
+    def app_start(self, value):
+        for i in range(5):
+            self.logger.info(msg=value)
+
 
 

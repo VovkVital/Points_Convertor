@@ -5,6 +5,7 @@ import threading
 from tkinter import filedialog
 import re
 import shutil
+import logging
 
 
 PATH_SITEWORK_DIR = r"C:\Trimble Synchronizer Data\PC\Trimble SCS900 Data"
@@ -20,9 +21,11 @@ class Add_design():
         self.design_name = ""
         self.usb_path = ""
         super().__init__()
+        self.logger = logging.getLogger("App_."+__name__)
 
     def save_btn_event(self, design, usb_path, event_save):
         pattern = r"((?i)[a-z0-9 \._-]*$)"
+        self.logger.debug(f"Values: Design name {design} || {usb_path}")
         if re.fullmatch(pattern=pattern, string=str(design)):
             design_name = str(design).strip()
             USB_PATH = usb_path
@@ -39,6 +42,7 @@ class Add_design():
                         Design_exists(message=message, command=lambda: [self.remove_file(usb_path=path),
                                                                         self.call_back_save_btn_event(path=path,
                                                                         event_save=event_save)])
+
                     else:
                         try:
                             with open("Add_design.json", "r") as file:

@@ -4,6 +4,7 @@ import os.path
 from datetime import datetime
 
 
+
 SELECTED_BLUE = "#008fd7"
 NOT_SELECTED = "#44657e"
 FONT_NOT_SELECTED = "gray60"
@@ -16,6 +17,7 @@ FONT_LABEL_ERROR = ("Roboto", 18, "bold")
 FONT = ("Roboto", 15, "bold")
 # _________ Tab Names _______
 TAB_NAME = ["Design Folders", "Config Files", "Machine Files"]
+
 
 class MainTree(ttk.Treeview):
     def __init__(self, master, data, **kwargs):

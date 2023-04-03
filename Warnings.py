@@ -2,6 +2,7 @@ import tkinter
 from tkinter import ttk
 import customtkinter
 from Widgets import Button, Label
+import logging
 
 # _______ Colors _________
 SELECTED_BLUE = "#008fd7"
@@ -26,13 +27,15 @@ class Error_message(tkinter.ttk.Treeview):
         self.flash=Button.flash
         super(). __init__(master=self.box)
         self.buttons(message=message)
+        self.logger = logging.getLogger("App_."+__name__)
         if kwargs:
             try:
                 if kwargs["time"]:
                     self.close_frame(time=kwargs["time"])
                 else:
                     self.close_frame()
-            except BaseException:
+            except BaseException as error:
+                self.logger.warning(f"Exception occurred: {error}")
                 self.close_frame()
         else:
             self.close_frame()
@@ -71,13 +74,15 @@ class Exception_message(tkinter.ttk.Treeview):
         super().__init__(master=self.box)
         self.buttons()
         self.text_box(message=message)
+        self.logger = MyLogger("App_."+__name__)
         if kwargs:
             try:
                 if kwargs["time"]:
                     self.close_frame(time=kwargs["time"])
                 else:
                     self.close_frame()
-            except BaseException:
+            except BaseException as error:
+                self.logger.warning(f"Exception occurred: {error}")
                 self.close_frame()
         else:
             self.close_frame()
@@ -112,6 +117,7 @@ class Design_exists(tkinter.ttk.Treeview):
         self.flash = Button.flash
         super().__init__(master=self.box)
         self.buttons(command=command, message=message)
+        self.logger = MyLogger("App_."+__name__)
 
         if kwargs:
             try:
@@ -119,7 +125,8 @@ class Design_exists(tkinter.ttk.Treeview):
                     self.close_frame(time=kwargs["time"])
                 else:
                     self.close_frame()
-            except BaseException:
+            except BaseException as error:
+                self.logger.warning(f"Exception occurred: {error}")
                 self.close_frame()
         else:
             self.close_frame()

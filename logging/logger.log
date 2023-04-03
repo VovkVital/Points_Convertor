@@ -1,0 +1,252 @@
+04-02 17:28 || App_ || INFO || App_initialization
+04-02 17:28 || App_ || INFO || App_initialization
+04-02 17:28 || App_ || INFO || App_initialization
+04-02 17:28 || App_ || INFO || App_initialization
+04-02 17:28 || App_ || INFO || App_initialization
+04-02 17:28 || App_.USB || WARNING || Error
+04-02 17:28 || App_.USB || WARNING || Error
+04-02 17:28 || App_.USB || WARNING || Error
+04-02 17:28 || App_.UI || DEBUG || Machine name MHG0233 14H
+04-02 17:28 || App_.UI || DEBUG || Catch machine name: MHG0233 14H
+04-02 17:28 || App_.UI || DEBUG || Current path D:\Machine Control Data\Backup_MHG0233 14H_20221214_230955
+04-02 17:29 || App_.USB || WARNING || Error
+04-02 17:29 || App_.USB || WARNING || Error
+04-02 17:29 || App_.USB || WARNING || Error
+04-02 17:29 || App_.USB || WARNING || Error
+04-02 17:29 || App_.USB || WARNING || Error
+04-02 17:29 || App_.USB || WARNING || Error
+04-02 17:29 || App_.UI || DEBUG || Machine name MHG0233 14H
+04-02 17:29 || App_.UI || DEBUG || Catch machine name: MHG0233 14H
+04-02 17:29 || App_.UI || DEBUG || Current path D:\Machine Control Data\Backup_MHG0233 14H_20221214_230955
+04-02 17:29 || App_.USB || WARNING || Error
+04-02 17:29 || App_.USB || WARNING || Error
+04-02 17:29 || App_.USB || WARNING || Error
+04-02 17:29 || App_.USB || WARNING || Error
+04-02 17:29 || App_.USB || WARNING || Error
+04-02 17:29 || App_.USB || WARNING || Error
+04-02 17:29 || App_.USB || WARNING || Error
+04-02 17:29 || App_.USB || WARNING || Error
+04-02 17:29 || App_.USB || WARNING || Error
+04-02 17:30 || App_.UI || DEBUG || Machine name MHG0233 14H
+04-02 17:30 || App_.UI || DEBUG || Catch machine name: MHG0233 14H
+04-02 17:30 || App_.UI || DEBUG || Current path D:\Machine Control Data\Backup_MHG0233 14H_20221214_230955
+04-02 17:31 || App_ || ERROR || App_Crashed
+04-02 17:31 || App_ || ERROR || App_Crashed
+04-02 17:31 || App_ || ERROR || App_Crashed
+04-02 17:31 || App_ || ERROR || App_Crashed
+04-02 17:31 || App_ || ERROR || App_Crashed
+04-02 17:31 || App_ || ERROR || The App Crashed because of 
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\FileManager.py", line 32, in main
+    screen.mainloop()
+  File "C:\Users\vovkv\AppData\Local\Programs\Python\Python310\lib\site-packages\customtkinter\windows\ctk_tk.py", line 158, in mainloop
+    super().mainloop(*args, **kwargs)
+  File "C:\Users\vovkv\AppData\Local\Programs\Python\Python310\lib\tkinter\__init__.py", line 1458, in mainloop
+    self.tk.mainloop(n)
+KeyboardInterrupt
+04-02 17:31 || App_ || INFO || App_initialization
+04-02 17:31 || App_ || INFO || App_initialization
+04-02 17:31 || App_ || INFO || App_initialization
+04-02 17:31 || App_ || INFO || App_initialization
+04-02 17:31 || App_ || INFO || App_initialization
+04-02 17:31 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:31 || App_.USB || WARNING || Error
+04-02 17:31 || App_.USB || WARNING || Error
+04-02 17:31 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:31 || App_.USB || WARNING || Error
+04-02 17:31 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:32 || App_.USB || WARNING || Error
+04-02 17:33 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:33 || App_.USB || WARNING || Error
+04-02 17:33 || App_.USB || WARNING || Error
+04-02 17:33 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:33 || App_.USB || WARNING || Error
+04-02 17:33 || App_.USB || WARNING || Error
+04-02 17:33 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:33 || App_.USB || WARNING || Error
+04-02 17:33 || App_.USB || WARNING || Error
+04-02 17:33 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:33 || App_.USB || WARNING || Error
+04-02 17:33 || App_.USB || WARNING || Error
+04-02 17:33 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:33 || App_.USB || WARNING || Error
+04-02 17:33 || App_.USB || WARNING || Error
+04-02 17:33 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:33 || App_.USB || WARNING || Error
+04-02 17:33 || App_.USB || WARNING || Error
+04-02 17:33 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:33 || App_.USB || WARNING || Error
+04-02 17:33 || App_.USB || WARNING || Error
+04-02 17:33 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:33 || App_.USB || WARNING || Error
+04-02 17:33 || App_.USB || WARNING || Error
+04-02 17:33 || App_.USB || ERROR || 'Usb_drive' object has no attribute 'current_path'
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\USB.py", line 53, in list_designs
+    for design_f in os.listdir(self.current_path):
+AttributeError: 'Usb_drive' object has no attribute 'current_path'
+04-02 17:33 || App_.USB || WARNING || Error
+04-02 17:33 || App_.USB || WARNING || Error
+04-02 17:33 || App_ || ERROR || App_Crashed
+04-02 17:33 || App_ || ERROR || App_Crashed
+04-02 17:33 || App_ || ERROR || App_Crashed
+04-02 17:33 || App_ || ERROR || App_Crashed
+04-02 17:33 || App_ || ERROR || App_Crashed
+04-02 17:33 || App_ || ERROR || The App Crashed because of 
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\FileManager.py", line 32, in main
+    screen.mainloop()
+  File "C:\Users\vovkv\AppData\Local\Programs\Python\Python310\lib\site-packages\customtkinter\windows\ctk_tk.py", line 158, in mainloop
+    super().mainloop(*args, **kwargs)
+  File "C:\Users\vovkv\AppData\Local\Programs\Python\Python310\lib\tkinter\__init__.py", line 1458, in mainloop
+    self.tk.mainloop(n)
+KeyboardInterrupt
+04-02 17:33 || App_ || INFO || App_initialization
+04-02 17:33 || App_ || INFO || App_initialization
+04-02 17:33 || App_ || INFO || App_initialization
+04-02 17:33 || App_ || INFO || App_initialization
+04-02 17:33 || App_ || INFO || App_initialization
+04-02 17:34 || App_.AddDesigns || DEBUG || Values: Design name fdf || 
+04-02 17:34 || App_.UI || DEBUG || Machine name MHG0233 14H
+04-02 17:34 || App_.UI || DEBUG || Catch machine name: MHG0233 14H
+04-02 17:34 || App_.UI || DEBUG || Current path D:\Machine Control Data\Backup_MHG0233 14H_20221214_230955
+04-02 17:34 || App_.AddDesigns || DEBUG || Values: Design name fdf || D:\Machine Control Data\Backup_MHG0233 14H_20221214_230955
+04-02 17:35 || App_.UI || DEBUG || Machine name MHG0233 14H
+04-02 17:35 || App_.UI || DEBUG || Selected CSV C:/Trimble Synchronizer Data/PC/Trimble SCS900 Data/iron.csv
+04-02 17:36 || App_ || ERROR || App_Crashed
+04-02 17:36 || App_ || ERROR || App_Crashed
+04-02 17:36 || App_ || ERROR || App_Crashed
+04-02 17:36 || App_ || ERROR || App_Crashed
+04-02 17:36 || App_ || ERROR || App_Crashed
+04-02 17:36 || App_ || ERROR || The App Crashed because of 
+Traceback (most recent call last):
+  File "C:\Users\vovkv\Desktop\Repository\GSC 900 Points\FileManager.py", line 32, in main
+    screen.mainloop()
+  File "C:\Users\vovkv\AppData\Local\Programs\Python\Python310\lib\site-packages\customtkinter\windows\ctk_tk.py", line 158, in mainloop
+    super().mainloop(*args, **kwargs)
+  File "C:\Users\vovkv\AppData\Local\Programs\Python\Python310\lib\tkinter\__init__.py", line 1458, in mainloop
+    self.tk.mainloop(n)
+KeyboardInterrupt
