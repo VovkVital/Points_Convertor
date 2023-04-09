@@ -12,6 +12,8 @@ class Usb_drive:
     usb_file_cfg = []
     usb_file_mch = []
     USB_PATH = ""
+    CORRECT_USB = []
+    AVAILABLE_USB = set()
 
     def __init__(self):
         self.detect_usb()
@@ -25,7 +27,6 @@ class Usb_drive:
 
 
     def detect_usb(self):
-        self.correct_usb = []
         drive_list = []
         drivebits=win32file.GetLogicalDrives()
         for d in range(1,26):
@@ -36,12 +37,13 @@ class Usb_drive:
                 t=win32file.GetDriveType(drname)
                 if t == win32file.DRIVE_REMOVABLE:
                     drive_list.append(drname)
+                    self.AVAILABLE_USB.add(drname)
                     for right_usb in drive_list:
                         if pathlib.Path(os.path.join(right_usb, "Machine Control Data")).exists():
                             Usb_drive.USB_PATH = self.directory_check = os.path.join(right_usb, "Machine Control Data")
                             check_path = self.multiple_files(os.listdir(self.directory_check))
                             if check_path != None:
-                                self.correct_usb.append(right_usb)
+                                self.CORRECT_USB.append(right_usb)
                                 Usb_drive.USB_PATH = self.current_path = pathlib.Path(self.directory_check).joinpath(check_path)
                                 self.path_switch = 1
                                 return self.current_path

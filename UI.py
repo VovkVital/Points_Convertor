@@ -17,7 +17,7 @@ from Warnings import Exception_message, Error_message
 from AddDesigns import Add_design
 import threading
 from UsbManagment import File_mangment
-from EarthworkUI import Earthwork, Control
+from EarthworkUI import Earthwork
 from Frames import Frames
 import logging
 
@@ -186,9 +186,8 @@ class Interface(customtkinter.CTk):
         grid_frame_1_earth = {"rows": [(0, 1, 0)], "columns": [(0, 1, 0)]}
         self.window_frame_1_earth = Frames(master=self.frame_1_earth.tab("Convert to Design"), value=grid_frame_1_earth)
 
-        self.Econrol = Control()
 
-        self.frame_earth_frame = Earthwork(master=self.frame_1_earth.tab("Convert to Design"), row=0, column=0, command=self.Econrol.select_btn)
+        self.frame_earth_frame = Earthwork(master=self.frame_1_earth.tab("Convert to Design"), row=0, column=0, avail_usb=Usb_drive.AVAILABLE_USB)
         self.frame_1_earth.grid_forget()
 
         #
