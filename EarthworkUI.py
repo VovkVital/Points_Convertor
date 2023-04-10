@@ -1,6 +1,5 @@
-import glob
+import threading
 import re
-import tkinter
 import num2words as n2w
 import shutil
 import customtkinter
@@ -11,6 +10,8 @@ from Warnings import Error_message
 import pathlib
 import os
 import logging
+import zipfile
+from glob import glob
 
 #  Fonts #
 FONT = ("Robot", 15, "bold")
@@ -64,6 +65,9 @@ class Earthwork(customtkinter.CTk):
         self.grid = Frames(master=self.frame, value=grid_layout)
         self.widgets(avai_usb=avail_usb)
         self.selected_folder = None
+        self.file_format = None
+        self.dsz = None
+        self.cal = None
         self.logger = logging.getLogger("App_." + __name__)
 
     def widgets(self, avai_usb):
@@ -88,10 +92,10 @@ class Earthwork(customtkinter.CTk):
                                                   text="Select your format preference", sticky="nw")
 
         self.label_message_row6 = Label.label_small(master=self.frame, row=7, column=1, sticky="nw",
-                                                    text="More info is comming")
+                                                    text="More info is coming")
 
         self.label_message_row7 = Label.label_small(master=self.frame, row=8, column=1, sticky="nw",
-                                                    text="More info is comming")
+                                                    text="More info is coming")
         self.label_message_row6.grid(columnspan=4)
         self.label_message_row7.grid(columnspan=4)
 
@@ -120,10 +124,14 @@ class Earthwork(customtkinter.CTk):
         else:
             Error_message(message="Folder not selected")
 
-    def validation(self, path, dsz=True):
+    def validation(self, path):
         # changing dsz depending on which radio button is selected True if variable 1 and False if variable 2
-        if self.radio_var.get() == 2:
-            dsz = False
+        if self.radio_var.get() == 1:
+            self.dsz = True
+        elif self.radio_var.get() == 2:
+            self.dsz = False
+
+
 
         # Making sure values are not assign to the source
         self.source = None
@@ -135,14 +143,18 @@ class Earthwork(customtkinter.CTk):
         svl_count = [f for f in containing_file if f.endswith(".svl")]
         vcl_count = [f for f in containing_file if f.endswith(".vcl")]
         # determining if design can be created and what files can be used
-        if dsz and len(svd_count) == 1 and len(svl_count)==1:
+        if self.dsz and len(svd_count) == 1 and len(svl_count)==1:
             self.source = [svd_count[0],svl_count[0]]
-        elif dsz and len(vcl_count) == 1 and (len(svd_count)!= 1 or len(svl_count != 1)):
+            self.file_format = ".dsz"
+        elif self.dsz and len(vcl_count) == 1 and (len(svd_count)!= 1 or len(svl_count != 1)):
             self.source = vcl_count
-        elif not dsz and len(vcl_count) == 1:
+            self.file_format = ".vcl"
+        elif not self.dsz and len(vcl_count) == 1:
             self.source = vcl_count
-        elif not dsz and len(vcl_count) !=1 and len(svd_count) == 1 and len(svl_count) == 1:
+            self.file_format = ".vcl"
+        elif not self.dsz and len(vcl_count) !=1 and len(svd_count) == 1 and len(svl_count) == 1:
             self.source = [svd_count, svl_count]
+            self.file_format = ".dsz"
         else:
             # converting digit files count to words
             svd_number = n2w.num2words(len(svd_count)).capitalize()
@@ -162,10 +174,6 @@ class Earthwork(customtkinter.CTk):
             #  finding project name and design
             project_name = self.name_adjustment(str(pathlib.Path(file_folder).parent.parent.name))
             design_name = self.name_adjustment(str(pathlib.Path(file_folder).name))
-            # incrementing design name  if design name is already exist on the USB
-            path = pathlib.Path(list(avail_usb)[0]).joinpath(PATH_EARTH_PART_1).joinpath(project_name).joinpath(
-                PATH_EARTH_PART_2).joinpath(design_name)
-            design_name = self.if_it_exist(path)
             #  checking length of the name to make sure it is fitting inside entry tab
             if len(project_name) > 40:
                 project_name_limited = project_name[:40]
@@ -180,12 +188,17 @@ class Earthwork(customtkinter.CTk):
     def creating_design(self, avail_usb):
 #          extracting name of the project and design from the entry tabs
         project_name = self.entry_project.get()
-        design_name = self.entry_design.get()
+        # dynamically assigning an extension for the design name
+        design_name = self.entry_design.get()+self.file_format
+        self.logger.debug(f"Earthwork design name is {design_name}")
+        self.logger.debug(f"Earthwork project name is {project_name}")
+
         if self.name_validation(project_name=project_name, design_name=design_name):
             path = pathlib.Path(list(avail_usb)[0]).joinpath(PATH_EARTH_PART_1).joinpath(project_name).joinpath(PATH_EARTH_PART_2).joinpath(design_name)
             if not path.exists():
-                os.makedirs(path, exist_ok=True)
-                self.move_design(source=self.source, dst=str(path))
+                # use parent of the path to make sure you are not creating extra folder with the file extension
+                os.makedirs(path.parent, exist_ok=True)
+                self.move_design(dst=str(path.parent))
             else:
                 Error_message("Design name is already exist\n change design name\n ")
         else:
@@ -209,38 +222,147 @@ class Earthwork(customtkinter.CTk):
             re.fullmatch(pattern=pattern, string=design_name, flags=re.IGNORECASE))
 
 
-    #  increment function if file is already exist in the dst
-    def if_it_exist(self, path):
-        design_name = path
-        pattern = r"-(\d+)$"
-        while pathlib.Path(design_name).exists():
-            match = re.search(pattern=pattern, string=str(design_name))
-            if match and match.group(1):
-                counter = int(match.group(1))
-                if counter is not None:
-                    counter += 1
-                    c_pattern =r"\d+$"
-                    # replacing the value at the end of the folder name
-                    design_name = re.sub(c_pattern, str(counter), str(design_name))
-            else:
-                design_name = str(design_name) + "-1"
-        else:
-            return pathlib.Path(design_name).name
     #  creates zip file and renames in dsz if len of the list (source) is more than one otherwise copying
     #  file to the destination directory
-    def move_design(self, source:list, dst:str)-> None:
-        if len(source) == 1:
-            src = source[0]
-            shutil.copy(src=src, dst=dst)
-        elif len(source) == 2:
-            src_1 = source[0]
-            src_2 = source[1]
+    def move_design(self, dst:str)-> None:
+        self.validation(path=self.selected_folder)
+        if len(self.source) == 1:
+            src = self.source[0]
+            dst = pathlib.Path(dst).joinpath(self.entry_design.get()+self.file_format)
+            def copy_with_callback(dst, src):
+                shutil.copy(dst=dst, src=src)
+            #  implementing Threading
+            task = threading.Thread(target=lambda:[shutil.copy(dst=dst, src=src)])
+            task.daemon = True
+            task.start()
+            # had add parent value to the dst to ger copied in the correct folder
+            self.copy_cal(src=src, dst=dst.parent)
+            # Temproraly solutin to give time to copy files to the destination usb, needs callback function for Threading
+            self.after(2000, lambda: Error_message("Earthwork design is created!"))
+            self.logger.debug(f"Earthwork design created at dst :{dst}")
+        elif len(self.source) == 2:
+            src_1 = self.source[0]
+            src_2 = self.source[1]
+            #  implementing Threading
+            task = threading.Thread(target=lambda: [self.zip_to_dsz(file_1=src_1, file_2=src_2, dst=str(dst))])
+            task.daemon = True
+            task.start()
+            # self.zip_to_dsz(file_1=src_1, file_2=src_2, dst=str(dst))
+            self.copy_cal(src=src_1, dst=dst)
+            # Temproraly solutin to give time to copy files to the destination usb, needs callback function for Threading
+            self.after(2000, lambda: Error_message("Earthwork design is created!"))
+            self.logger.debug(f"Earthwork design created at dst :{dst}")
         else:
-            self.logger.error(f"Move design function failed with the source: {source} at destination {dst}")
+            self.logger.error(f"Move design function failed with the source: {self.source} at destination {dst}")
             Error_message(message="Something went wrong\n while creating design")
 
-    def zip_to_dsz(self, file_1, file_2):
-        pass
+    #  zip function creates zip as .dsz and moves it the destination folder
+    def zip_to_dsz(self, file_1: str, file_2: str, dst: str) -> None:
+        file_name = self.entry_design.get() + self.file_format
+        dst = pathlib.Path(dst).joinpath(file_name)
+        with zipfile.ZipFile(str(dst), "w") as dsz_zip:
+            dsz_zip.write(file_1, pathlib.Path(file_1).name)
+            dsz_zip.write(file_2, pathlib.Path(file_2).name)
+    def copy_cal(self, src, dst):
+        src = pathlib.Path(src).parent.parent.parent
+        src = glob(f"{src}\\*.cal")
+        dst = pathlib.Path(dst).parent
+        if len(list(src)) == 1:
+            src = list(src)[0]
+            self.cal = str(src)
+            #  checking if .cal file is already exists
+            cal = glob(f"{dst}\\*.cal")
+            if len(cal) == 0:
+                shutil.copy(src=src, dst=dst)
+            return True
+        else:
+            return False
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

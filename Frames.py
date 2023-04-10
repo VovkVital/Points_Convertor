@@ -1,5 +1,3 @@
-import customtkinter
-
 
 class Frames():
     def __init__(self, master, value):
