@@ -74,7 +74,7 @@ class Earthwork(customtkinter.CTk):
         self.select_button = Button(master=self.frame, text="Select", sticky="n", row=3, column=3)
         self.select_button.configure(width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT, command=lambda:[self.select_btn(avail_usb=avai_usb)])
 
-        self.confirm_btn = Button(master=self.frame, text="Confirm", sticky="n", row=6, column=3,
+        self.confirm_btn = Button(master=self.frame, text="Confirm", sticky="n", row=7, column=3,
                                   command=lambda:[self.creating_design(avail_usb=avai_usb)])
         self.confirm_btn.configure(width=TAB_BUTTON_WIDTH, height=TAB_BUTTON_HEIGHT)
 
@@ -83,21 +83,21 @@ class Earthwork(customtkinter.CTk):
 
         self.entry_design = customtkinter.CTkEntry(master=self.frame, width=ENTRY_WIDTH, height=ENTRY_HEIGHT,
                                                     placeholder_text="Design Name")
-        self.entry_design.grid(row=6, column=1, columnspan=2, sticky="nw")
+        self.entry_design.grid(row=7, column=1, columnspan=2, sticky="nw")
 
         self.label_select = Label.label_blue_bold(master=self.frame, row=3, column=1,
                                                   text="Choose folder with machine files", sticky="nw")
 
         self.label_format = Label.label_blue_bold(master=self.frame, row=1, column=1,
-                                                  text="Select your format preference", sticky="nw")
+                                                  text="Select design file preference", sticky="nw")
 
-        self.label_message_row6 = Label.label_small(master=self.frame, row=7, column=1, sticky="nw",
-                                                    text="More info is coming")
+        self.label_message_row4 = Label.label_small(master=self.frame, row=4, column=1, sticky="nw",
+                                                    text="Project name")
 
-        self.label_message_row7 = Label.label_small(master=self.frame, row=8, column=1, sticky="nw",
-                                                    text="More info is coming")
+        self.label_message_row6 = Label.label_small(master=self.frame, row=6, column=1, sticky="nw",
+                                                    text="Design name")
+        self.label_message_row4.grid(columnspan=4)
         self.label_message_row6.grid(columnspan=4)
-        self.label_message_row7.grid(columnspan=4)
 
         self.radio_var = customtkinter.IntVar(value=1)
 
@@ -120,7 +120,7 @@ class Earthwork(customtkinter.CTk):
         if self.selected_folder != "":
             self.validation(path=self.selected_folder)
             if self.source is not None:
-                self.design_names(entry_value=self.entry_project.get(), file_folder=self.selected_folder, avail_usb=avail_usb)
+                self.design_names(file_folder=self.selected_folder)
         else:
             Error_message(message="Folder not selected")
 
@@ -168,58 +168,70 @@ class Earthwork(customtkinter.CTk):
             warning = Error_message(message=message, time=10000)
             warning.label.configure(justify="left", anchor="center")
 
-    def design_names(self, entry_value, file_folder, avail_usb):
-        #  checkin if folder was selected
-        if entry_value == "":
-            #  finding project name and design
-            project_name = self.name_adjustment(str(pathlib.Path(file_folder).parent.parent.name))
-            design_name = self.name_adjustment(str(pathlib.Path(file_folder).name))
-            #  checking length of the name to make sure it is fitting inside entry tab
-            if len(project_name) > 40:
-                project_name_limited = project_name[:40]
-                self.entry_project.insert(0, project_name_limited)
-            else:
-                self.entry_project.insert(0, project_name)
-            if len(design_name) > 40:
-                design_name_limited = project_name[:40]
-                self.entry_project.insert(0, design_name_limited)
-            else:
-                self.entry_design.insert(0, design_name)
-    def creating_design(self, avail_usb):
-#          extracting name of the project and design from the entry tabs
-        project_name = self.entry_project.get()
-        # dynamically assigning an extension for the design name
-        design_name = self.entry_design.get()+self.file_format
-        self.logger.debug(f"Earthwork design name is {design_name}")
-        self.logger.debug(f"Earthwork project name is {project_name}")
+    def design_names(self, file_folder):
 
-        if self.name_validation(project_name=project_name, design_name=design_name):
-            path = pathlib.Path(list(avail_usb)[0]).joinpath(PATH_EARTH_PART_1).joinpath(project_name).joinpath(PATH_EARTH_PART_2).joinpath(design_name)
-            if not path.exists():
-                # use parent of the path to make sure you are not creating extra folder with the file extension
-                os.makedirs(path.parent, exist_ok=True)
-                self.move_design(dst=str(path.parent))
-            else:
-                Error_message("Design name is already exist\n change design name\n ")
+        #  finding project name and design
+        project_name = self.name_adjustment(str(pathlib.Path(file_folder).parent.parent.name))
+        design_name = self.name_adjustment(str(pathlib.Path(file_folder).name))
+        #  checking length of the name to make sure it is fitting inside entry tab
+        self.entry_project.delete(0, "end")
+        self.entry_design.delete(0, "end")
+        if len(project_name) > 40:
+            project_name_limited = project_name[:40]
+            self.entry_project.insert(0, project_name_limited)
         else:
-            Error_message(message="Invalid name !!!\n\n(No symbols like %!^& etc.)")
-            return
+            self.entry_project.insert(0, project_name)
+        if len(design_name) > 40:
+            design_name_limited = project_name[:40]
+            self.entry_design.insert(0, design_name_limited)
+        else:
+            self.entry_design.insert(0, design_name)
+    def creating_design(self, avail_usb):
+        try:
+#          extracting name of the project and design from the entry tabs
+            project_name = self.name_adjustment(self.entry_project.get())
+            # dynamically assigning an extension for the design name
+            design_name = self.name_adjustment(self.entry_design.get())+self.file_format
+            self.logger.debug(f"Earthwork design name is {design_name}")
+            self.logger.debug(f"Earthwork project name is {project_name}")
+
+            if self.name_validation(project_name=project_name, design_name=design_name):
+                path = pathlib.Path(list(avail_usb)[0]).joinpath(PATH_EARTH_PART_1).joinpath(project_name).joinpath(PATH_EARTH_PART_2).joinpath(design_name)
+                if not path.exists():
+                    # use parent of the path to make sure you are not creating extra folder with the file extension
+                    try:
+                        os.makedirs(path.parent, exist_ok=True)
+                        self.move_design(dst=str(path.parent))
+                    except TypeError as err:
+                        Error_message("Name-tab can't be empty")
+                        self.logger.exception(err)
+                else:
+                    Error_message("Design name is already exist\n change design name\n ")
+            else:
+                Error_message(message="Invalid name !!!\n\n(No symbols like %!^& etc.)")
+                return
+        except TypeError as err:
+            Error_message("Name-tab can't be empty")
 
     #  correcting name that were extracted from project folders
     def name_adjustment(self, name):
         pattern_1 = r"^[-.]"
         name = re.sub(pattern_1, "_", name)
-        pattern = r"[^a-z0-9 ._\-]"
+        pattern = r"[^a-z0-9 _.\-]"
         name = re.sub(pattern, "_", name, flags=re.IGNORECASE)
         name = re.sub(r"\s+", " ", name)
+        name = re.sub(r"\.{2,}", "_", name)
         name = name.strip()
         return name
 
     # Validating the name again cause user might change after the extraction
     def name_validation (self, project_name, design_name):
         pattern = r"^[^-.]?[a-z0-9 ._\-]*$"
-        return bool(re.fullmatch(pattern=pattern, string=project_name, flags=re.IGNORECASE)) and bool(
-            re.fullmatch(pattern=pattern, string=design_name, flags=re.IGNORECASE))
+        if self.entry_design.get()=="" or self.entry_project.get()=="":
+            return False
+        else:
+            return bool(re.fullmatch(pattern=pattern, string=project_name, flags=re.IGNORECASE)) and bool(
+                re.fullmatch(pattern=pattern, string=design_name, flags=re.IGNORECASE))
 
 
     #  creates zip file and renames in dsz if len of the list (source) is more than one otherwise copying
@@ -228,7 +240,7 @@ class Earthwork(customtkinter.CTk):
         self.validation(path=self.selected_folder)
         if len(self.source) == 1:
             src = self.source[0]
-            dst = pathlib.Path(dst).joinpath(self.entry_design.get()+self.file_format)
+            dst = pathlib.Path(dst).joinpath(self.name_adjustment(self.name_adjustment(self.entry_design.get()))+self.file_format)
             def copy_with_callback(dst, src):
                 shutil.copy(dst=dst, src=src)
             #  implementing Threading
@@ -258,7 +270,7 @@ class Earthwork(customtkinter.CTk):
 
     #  zip function creates zip as .dsz and moves it the destination folder
     def zip_to_dsz(self, file_1: str, file_2: str, dst: str) -> None:
-        file_name = self.entry_design.get() + self.file_format
+        file_name = self.name_adjustment(self.entry_design.get()) + self.file_format
         dst = pathlib.Path(dst).joinpath(file_name)
         with zipfile.ZipFile(str(dst), "w") as dsz_zip:
             dsz_zip.write(file_1, pathlib.Path(file_1).name)
