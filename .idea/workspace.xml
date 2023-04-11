@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="371eae62-7493-4739-88b6-e95122b70036" name="Changes" comment="Fixed the issue with duplicate in the list after removing duplicate from USB">
+    <list default="true" id="371eae62-7493-4739-88b6-e95122b70036" name="Changes" comment="Test Version v1.0.1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AddDesigns.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddDesigns.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Add_design.json" beforeDir="false" afterPath="$PROJECT_DIR$/Add_design.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EarthworkUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/EarthworkUI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pandas.py" beforeDir="false" afterPath="$PROJECT_DIR$/Pandas.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TempFile.json" beforeDir="false" afterPath="$PROJECT_DIR$/TempFile.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FileManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/FileManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logging.py" beforeDir="false" afterPath="$PROJECT_DIR$/Logging.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Settings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -179,7 +177,9 @@
       <workItem from="1681178205883" duration="7618000" />
       <workItem from="1681185968060" duration="72000" />
       <workItem from="1681221631777" duration="30000" />
-      <workItem from="1681231678759" duration="6601000" />
+      <workItem from="1681231678759" duration="10252000" />
+      <workItem from="1681245042586" duration="651000" />
+      <workItem from="1681245842017" duration="2938000" />
     </task>
     <task id="LOCAL-00001" summary="Added 4 buttons to the tabs and treeveiw did some minor changes to layout">
       <created>1670473646033</created>
@@ -342,7 +342,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681185540173</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Test Version v1.0.1">
+      <created>1681239356482</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1681239356482</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -380,12 +387,13 @@
     <MESSAGE value="Finished first stage of Earthwork development, needs to be tested for bugs" />
     <MESSAGE value="Known bugs are fixed on Earthwork side" />
     <MESSAGE value="Fixed the issue with duplicate in the list after removing duplicate from USB" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed the issue with duplicate in the list after removing duplicate from USB" />
+    <MESSAGE value="Test Version v1.0.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test Version v1.0.1" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/GSC_900_Points$File_Manager.coverage" NAME="FileManager Coverage Results" MODIFIED="1680413677645" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$GU.coverage" NAME="GU Coverage Results" MODIFIED="1669866100275" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/GSC_900_Points$FileManager.coverage" NAME="FileManager Coverage Results" MODIFIED="1681239109067" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/GSC_900_Points$FileManager.coverage" NAME="FileManager Coverage Results" MODIFIED="1681248239561" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$test.coverage" NAME="test Coverage Results" MODIFIED="1681178409860" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/usefullscripts" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$_01_Shrinking_Frame_to_it_is_content.coverage" NAME="_01_Shrinking Frame to it is content Coverage Results" MODIFIED="1669504419145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Flight Check  to USA/Help" />
     <SUITE FILE_PATH="coverage/GSC_900_Points$credit.coverage" NAME="credit Coverage Results" MODIFIED="1670038730570" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Flight Check  to USA/Help" />

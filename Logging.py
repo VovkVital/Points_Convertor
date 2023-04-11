@@ -1,7 +1,7 @@
 import logging
 import logging.handlers
 import os
-import colorlog
+
 
 class MyLogger():
     def __init__(self, name, **kwargs):
