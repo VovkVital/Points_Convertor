@@ -74,7 +74,7 @@ class Exception_message(tkinter.ttk.Treeview):
         super().__init__(master=self.box)
         self.buttons()
         self.text_box(message=message)
-        self.logger = MyLogger("App_."+__name__)
+        self.logger = logging.getLogger("App_."+__name__)
         if kwargs:
             try:
                 if kwargs["time"]:
@@ -117,7 +117,7 @@ class Design_exists(tkinter.ttk.Treeview):
         self.flash = Button.flash
         super().__init__(master=self.box)
         self.buttons(command=command, message=message)
-        self.logger = MyLogger("App_."+__name__)
+        self.logger = logging.getLogger("App_."+__name__)
 
         if kwargs:
             try:
@@ -149,7 +149,7 @@ class Design_exists(tkinter.ttk.Treeview):
                                     command=lambda: [self.box.destroy(), command()])
         self.button_cansel = Button(master=self.box, text="Cancel", sticky=None, row=1, column=1,
                                     command=self.box.destroy)
-        label = Label(master=self.box, text=f"{message}", row=0, column=0)
+        label = Label(master=self.box, text=f"{message}", row=0, column=0, sticky=None)
         label.grid(columnspan=2)
         label.configure(text_color=SELECTED_BLUE, font=FONT_LABEL_ERROR)
 

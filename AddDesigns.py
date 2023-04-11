@@ -1,5 +1,6 @@
+import os
 import pathlib
-from Warnings import Error_message, Exception_message, Design_exists
+from Warnings import Error_message, Design_exists
 import json
 import threading
 from tkinter import filedialog
@@ -22,22 +23,29 @@ class Add_design():
         self.usb_path = ""
         super().__init__()
         self.logger = logging.getLogger("App_."+__name__)
+        self.AVAILABLE_USB = []
 
-    def save_btn_event(self, design, usb_path, event_save):
+    def save_btn_event(self, design, usb_path, event_save, available_usb):
         pattern = r"((?i)[a-z0-9 \._-]*$)"
         self.logger.debug(f"Values: Design name {design} || {usb_path}")
+        self.AVAILABLE_USB.append(list(available_usb)[0])
         if re.fullmatch(pattern=pattern, string=str(design)):
             design_name = str(design).strip()
             USB_PATH = usb_path
-            if USB_PATH != "":
-                pass
+            if len(list(available_usb)) > 0:
+                if USB_PATH == "":
+                    USB_PATH = pathlib.Path(list(available_usb)[0]).joinpath("Machine Control Data\All")
+                    USB_PATH = str(USB_PATH)
+                # if list(available_usb)[0] != "":
+                #     USB_PATH = list(available_usb)[0]
+                # print(USB_PATH)
+
                 if design_name != "" and design_name[0] != " " and design_name[0] != "." and design_name[0] != "-":
                     path = pathlib.Path(USB_PATH).joinpath(str(design_name))
                     self.design_name = design_name
-                    self.usb_path = str(usb_path)
+                    self.usb_path = str(USB_PATH)
                     if path.exists() and path.is_dir():
-                        message = f"The design name : {design_name}\n\nis already exist on the USB\n\n " \
-                                  "Do you want to remove it first ?"
+                        message = f"Duplicate design name found on USB\n\nRemove existing design from USB?"
                         Design_exists(message=message, command=lambda: [self.remove_file(usb_path=path),
                                                                         self.call_back_save_btn_event(path=path,
                                                                         event_save=event_save)])
@@ -74,6 +82,8 @@ class Add_design():
                     return
 
             else:
+                print("Yeap that is the error")
+                print(list(available_usb))
                 Error_message(message="USB not connected")
                 return
 
@@ -207,38 +217,43 @@ class Add_design():
             timer = threading.Timer(1.0, self.call_back_save_btn_event(path=path, event_save=event_save))
             timer.start()
         else:
-            self.save_btn_event(usb_path=self.usb_path, design=self.design_name, event_save=event_save)
+            self.save_btn_event(usb_path=self.usb_path, design=self.design_name, event_save=event_save,
+                                available_usb=self.AVAILABLE_USB[0])
 
 
     def move_files(self):
         with open("Add_design.json", "r") as file:
             data = json.load(file)
         directory = pathlib.Path(data["Design Path"])
+        # try:
         try:
             directory.mkdir()
-            if data["SVD_Path"] != "None":
-                shutil.copy(src=data["SVD_Path"], dst=str(directory))
-            if data["SVL_Path"] != "None":
-                shutil.copy(src=data["SVL_Path"], dst=str(directory))
-            if data["CFG_Path"] != "None":
-                shutil.copy(src=data["CFG_Path"], dst=str(directory))
-
-            try:
-                with open("Add_design.json", "r") as file:
-                    data = json.load(file)
-                data["SVD_Path"] = "None"
-                data["SVL_Path"] = "None"
-                data["CFG_Path"] = "None"
-
-                with open("Add_design.json", "w") as file:
-                    json.dump(data, file, indent=4)
-
-                Error_message(message="Design is created", time=3000)
-            except Exception:
-                Error_message(message="Something went wrong ):\nplease try it again")
-                return
+            print(f"Line 227 is now being excuted make dirs")
         except FileNotFoundError:
-            pass
+            print(data["Design Path"])
+            os.makedirs(name=data["Design Path"])
+
+        if data["SVD_Path"] != "None":
+            shutil.copy(src=data["SVD_Path"], dst=str(directory))
+        if data["SVL_Path"] != "None":
+            shutil.copy(src=data["SVL_Path"], dst=str(directory))
+        if data["CFG_Path"] != "None":
+            shutil.copy(src=data["CFG_Path"], dst=str(directory))
+        try:
+            with open("Add_design.json", "r") as file:
+                data = json.load(file)
+            data["SVD_Path"] = "None"
+            data["SVL_Path"] = "None"
+            data["CFG_Path"] = "None"
+            with open("Add_design.json", "w") as file:
+                json.dump(data, file, indent=4)
+            Error_message(message="Design is created", time=3000)
+        except Exception:
+            Error_message(message="Something went wrong ):\nplease try it again")
+            return
+        # except FileNotFoundError:
+        #     print("That is file not found error 252 line")
+        #     pass
 
 
 

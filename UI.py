@@ -925,7 +925,7 @@ class Interface(customtkinter.CTk):
                         self.logger.warning("Failed to add file")
                         pass
         except Exception as e:
-            self.logger.exception(value=e)
+            self.logger.exception(e)
             Exception_message(message=e)
 
     def but_tr_cr(self):
@@ -1016,7 +1016,8 @@ class Interface(customtkinter.CTk):
             self.catch_m_name(path=USB.current_path)
             self.label_machine_name.configure(text=f"Machine name:{' ' * 17}- {self.entry_machine_name.get()}")
             self.logger.debug(f"Current path {USB.current_path}")
-        except AttributeError:
+        except AttributeError as err:
+            self.logger.exception(err)
             pass
 
     def catch_m_name(self, path):
@@ -1054,7 +1055,8 @@ class Interface(customtkinter.CTk):
 
     def event_button_add_design(self):
         task = threading.Thread(Add_design().save_btn_event(design=self.entry_design_name.get(), usb_path=USB_PATH,
-                                                            event_save=self.event_button_save_name))
+                                                            event_save=self.event_button_save_name,
+                                                            available_usb=Usb_drive.AVAILABLE_USB))
         task.start()
 
     def event_button_add_file(self):
@@ -1076,11 +1078,23 @@ class Interface(customtkinter.CTk):
             count = 0
             row_count = 1
             dst = Add_design.DESIGN_PATH
-            file_to_append = [os.path.basename(str(dst)),
-                              datetime.fromtimestamp(os.path.getmtime(str(dst))).strftime('%m/%d/%Y')]
+            try:
+                file_to_append = [os.path.basename(str(dst)),
+                                  datetime.fromtimestamp(os.path.getmtime(str(dst))).strftime('%m/%d/%Y')]
+            except FileNotFoundError:
+                file_to_append = [os.path.basename(str(dst)),datetime.today().strftime('%m/%d/%Y')]
             for i in self.tree_tab_D.get_children():
                 self.tree_tab_D.delete(i)
-            LIST_DESIGN.insert(0, file_to_append)
+            try:
+                LIST_DESIGN.insert(0, file_to_append)
+            except AttributeError:
+                LIST_DESIGN = [[os.path.basename(str(dst)), datetime.today().strftime('%m/%d/%Y')]]
+            # leaves only unique values of the list
+            LIST_DESIGN = [list(x) for x in set(tuple(x) for x in LIST_DESIGN)]
+            # moving design that was just created to the index 0, to make sure to ger focus on it
+            index = LIST_DESIGN.index(file_to_append)
+            LIST_DESIGN.insert(0, LIST_DESIGN.pop(index))
+
             for record in LIST_DESIGN:
                 if count % 2 == 0:
                     self.tree_tab_D.insert(parent="", index="end", text=row_count, iid=count,
@@ -1095,7 +1109,7 @@ class Interface(customtkinter.CTk):
                 self.tree_tab_D.selection_add(0)
             self.after(1000, lambda: self.change_label_none())
         except (AttributeError, FileNotFoundError):
-            Error_message(message="USB not connected")
+            Error_message(message="USB not connected line 1107")
             return
 
 
