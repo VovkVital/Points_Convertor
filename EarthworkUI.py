@@ -211,6 +211,7 @@ class Earthwork(customtkinter.CTk):
                 Error_message(message="Invalid name !!!\n\n(No symbols like %!^& etc.)")
                 return
         except TypeError as err:
+            self.logger.exception(err)
             Error_message("Name-tab can't be empty")
 
     #  correcting name that were extracted from project folders
@@ -241,29 +242,37 @@ class Earthwork(customtkinter.CTk):
         if len(self.source) == 1:
             src = self.source[0]
             dst = pathlib.Path(dst).joinpath(self.name_adjustment(self.name_adjustment(self.entry_design.get()))+self.file_format)
-            def copy_with_callback(dst, src):
-                shutil.copy(dst=dst, src=src)
-            #  implementing Threading
-            task = threading.Thread(target=lambda:[shutil.copy(dst=dst, src=src)])
-            task.daemon = True
-            task.start()
-            # had add parent value to the dst to ger copied in the correct folder
-            self.copy_cal(src=src, dst=dst.parent)
-            # Temproraly solutin to give time to copy files to the destination usb, needs callback function for Threading
-            self.after(2000, lambda: Error_message("Earthwork design is created!"))
-            self.logger.debug(f"Earthwork design created at dst :{dst}")
+            # making sure we are able to find .cal file before creating job
+            if self.copy_cal(src_path=src, dst=dst.parent):
+                def copy_with_callback(dst, src):
+                    shutil.copy(dst=dst, src=src)
+                #  implementing Threading
+                task = threading.Thread(target=lambda:[shutil.copy(dst=dst, src=src)])
+                task.daemon = True
+                task.start()
+                # had add parent value to the dst to ger copied in the correct folder
+                # self.copy_cal(src_path=src, dst=dst.parent)
+                # Temproraly solutin to give time to copy files to the destination usb, needs callback function for Threading
+                self.after(2000, lambda: Error_message("Earthwork design is created!"))
+                self.logger.debug(f"Earthwork design created at dst :{dst}")
+            else:
+                Error_message("Design creation Failed")
         elif len(self.source) == 2:
             src_1 = self.source[0]
             src_2 = self.source[1]
-            #  implementing Threading
-            task = threading.Thread(target=lambda: [self.zip_to_dsz(file_1=src_1, file_2=src_2, dst=str(dst))])
-            task.daemon = True
-            task.start()
-            # self.zip_to_dsz(file_1=src_1, file_2=src_2, dst=str(dst))
-            self.copy_cal(src=src_1, dst=dst)
-            # Temproraly solutin to give time to copy files to the destination usb, needs callback function for Threading
-            self.after(2000, lambda: Error_message("Earthwork design is created!"))
-            self.logger.debug(f"Earthwork design created at dst :{dst}")
+            # making sure we are able to find .cal file before creating job
+            if self.copy_cal(src_path=src_1, dst=dst):
+                #  implementing Threading
+                task = threading.Thread(target=lambda: [self.zip_to_dsz(file_1=src_1, file_2=src_2, dst=str(dst))])
+                task.daemon = True
+                task.start()
+                # self.zip_to_dsz(file_1=src_1, file_2=src_2, dst=str(dst))
+                # self.copy_cal(src_path=src_1, dst=dst)
+                # Temproraly solutin to give time to copy files to the destination usb, needs callback function for Threading
+                self.after(2000, lambda: Error_message("Earthwork design is created!"))
+                self.logger.debug(f"Earthwork design created at dst :{dst}")
+            else:
+                Error_message("Design creation Failed")
         else:
             self.logger.error(f"Move design function failed with the source: {self.source} at destination {dst}")
             Error_message(message="Something went wrong\n while creating design")
@@ -275,10 +284,16 @@ class Earthwork(customtkinter.CTk):
         with zipfile.ZipFile(str(dst), "w") as dsz_zip:
             dsz_zip.write(file_1, pathlib.Path(file_1).name)
             dsz_zip.write(file_2, pathlib.Path(file_2).name)
-    def copy_cal(self, src, dst):
-        src = pathlib.Path(src).parent.parent.parent
+    def copy_cal(self, src_path, dst):
+        src = pathlib.Path(src_path).parent.parent.parent
         src = glob(f"{src}\\*.cal")
         dst = pathlib.Path(dst).parent
+        # if cal file was not find try a parent folder
+        if len(list(src)) == 0:
+            src = pathlib.Path(src_path).parent.parent.parent.parent
+            print(src)
+            src = glob(f"{src}\\*.cal")
+
         if len(list(src)) == 1:
             src = list(src)[0]
             self.cal = str(src)
@@ -288,6 +303,7 @@ class Earthwork(customtkinter.CTk):
                 shutil.copy(src=src, dst=dst)
             return True
         else:
+            Error_message("Calibration file was not found")
             return False
 
 

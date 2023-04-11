@@ -935,28 +935,29 @@ class Interface(customtkinter.CTk):
             self.logger.debug(f"Trying to create CSV for the {selected_file}")
             design_name = selected_file[0]
             path = pathlib.Path(os.path.join(USB_PATH, ".Field-Data"))
-            if path.exists():
-                design_path = path.joinpath(design_name)
-                if path.exists():
-                    self.label_selelected.configure(text="Selected File:         - File not selected")
-                    self.label_created_file_m2.configure(text="File Created: Desktop/Points GCS 900")
-                    self.label_created.configure(text="File Created:         - Desktop/Points GCS 900")
-                    # self.button_tab_2_create_ds.configure(state="disabled")
-                    self.event_button_create()
-                    if not design_path.exists():
-                        pathlib.Path(design_path).mkdir()
-                        panda.create_file(str(design_path))
-                        Error_message(message="Point file is created")
-                    else:
-                        panda.create_file(str(design_path))
-                        Error_message(message="Point file is created")
+            #  also checking in which folder we are working value for the All folder is hardcoded to chech as USB_PATH [-24:]
+            # if matches any of those it jupms to the next step
+            if path.exists() or str(USB_PATH).endswith("Machine Control Data\All"):
+                #  altering design path depends on which directory we are working in
+                if str(USB_PATH).endswith("Machine Control Data\All"):
+                    design_path = pathlib.Path(USB_PATH).joinpath(design_name)
                 else:
-                    pass
+                    design_path = path.joinpath(design_name)
+                self.label_selelected.configure(text="Selected File:         - File not selected")
+                self.label_created_file_m2.configure(text="File Created: Desktop/Points GCS 900")
+                self.label_created.configure(text="File Created:         - Desktop/Points GCS 900")
+                self.event_button_create()
+                if not design_path.exists():
+                    pathlib.Path(design_path).mkdir()
+                    panda.create_file(str(design_path))
+                    Error_message(message="Point file is created")
+                else:
+                    panda.create_file(str(design_path))
+                    Error_message(message="Point file is created")
             else:
-                message = "Can not create point file  \n" \
-                          "BOX version is below 13.15\n" \
-                          "or\n" \
-                          "not a GSC900 Backup file"
+                message = "Point file creation failed  \n" \
+                          "due to BOX version below 13.15\n" \
+                          "or folder type\n"
 
                 Error_message(message=message)
         except IndexError:
@@ -1094,6 +1095,7 @@ class Interface(customtkinter.CTk):
             # moving design that was just created to the index 0, to make sure to ger focus on it
             index = LIST_DESIGN.index(file_to_append)
             LIST_DESIGN.insert(0, LIST_DESIGN.pop(index))
+            self.logger.debug(f"New design add with name {file_to_append} (line 1097)")
 
             for record in LIST_DESIGN:
                 if count % 2 == 0:

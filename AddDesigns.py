@@ -26,70 +26,74 @@ class Add_design():
         self.AVAILABLE_USB = []
 
     def save_btn_event(self, design, usb_path, event_save, available_usb):
-        pattern = r"((?i)[a-z0-9 \._-]*$)"
-        self.logger.debug(f"Values: Design name {design} || {usb_path}")
-        self.AVAILABLE_USB.append(list(available_usb)[0])
-        if re.fullmatch(pattern=pattern, string=str(design)):
-            design_name = str(design).strip()
-            USB_PATH = usb_path
-            if len(list(available_usb)) > 0:
-                if USB_PATH == "":
-                    USB_PATH = pathlib.Path(list(available_usb)[0]).joinpath("Machine Control Data\All")
-                    USB_PATH = str(USB_PATH)
-                # if list(available_usb)[0] != "":
-                #     USB_PATH = list(available_usb)[0]
-                # print(USB_PATH)
+        try:
+            pattern = r"((?i)[a-z0-9 \._-]*$)"
+            self.logger.debug(f"Values: Design name {design} || {usb_path}")
+            self.AVAILABLE_USB.append(list(available_usb)[0])
+            if re.fullmatch(pattern=pattern, string=str(design)):
+                design_name = str(design).strip()
+                USB_PATH = usb_path
+                if len(list(available_usb)) > 0:
+                    if USB_PATH == "":
+                        USB_PATH = pathlib.Path(list(available_usb)[0]).joinpath("Machine Control Data\All")
+                        USB_PATH = str(USB_PATH)
+                    # if list(available_usb)[0] != "":
+                    #     USB_PATH = list(available_usb)[0]
+                    # print(USB_PATH)
 
-                if design_name != "" and design_name[0] != " " and design_name[0] != "." and design_name[0] != "-":
-                    path = pathlib.Path(USB_PATH).joinpath(str(design_name))
-                    self.design_name = design_name
-                    self.usb_path = str(USB_PATH)
-                    if path.exists() and path.is_dir():
-                        message = f"Duplicate design name found on USB\n\nRemove existing design from USB?"
-                        Design_exists(message=message, command=lambda: [self.remove_file(usb_path=path),
-                                                                        self.call_back_save_btn_event(path=path,
-                                                                        event_save=event_save)])
+                    if design_name != "" and design_name[0] != " " and design_name[0] != "." and design_name[0] != "-":
+                        path = pathlib.Path(USB_PATH).joinpath(str(design_name))
+                        self.design_name = design_name
+                        self.usb_path = str(USB_PATH)
+                        if path.exists() and path.is_dir():
+                            message = f"Duplicate design name found on USB\n\nRemove existing design from USB?"
+                            Design_exists(message=message, command=lambda: [self.remove_file(usb_path=path),
+                                                                            self.call_back_save_btn_event(path=path,
+                                                                            event_save=event_save)])
 
-                    else:
-                        try:
-                            with open("Add_design.json", "r") as file:
-                                data = json.load(file)
-                            Add_design.DESIGN_PATH = design_path = path
-                            data["Design Path"] = str(design_path)
-                            data["SVD_Path"] = "None"
-                            data["SVL_Path"] = "None"
-                            data["CFG_Path"] = "None"
-
-                            with open("Add_design.json", "w") as file:
-                                json.dump(data, file, indent=4)
-                            event_save()
-                            self.logger.debug("The file is writen to Add_design.json file")
-
-                        except FileNotFoundError:
+                        else:
                             try:
+                                with open("Add_design.json", "r") as file:
+                                    data = json.load(file)
+                                Add_design.DESIGN_PATH = design_path = path
+                                data["Design Path"] = str(design_path)
+                                data["SVD_Path"] = "None"
+                                data["SVL_Path"] = "None"
+                                data["CFG_Path"] = "None"
+
                                 with open("Add_design.json", "w") as file:
-                                    Add_design.DESIGN_PATH = design_path = path
-                                    upload_file = {"Design Path": str(design_path), "SVD_Path": "None", "SVL_Path": "None",
-                                                   "CFG_Path": "None"}
-                                    json.dump(upload_file, file, indent=4)
-                                    event_save()
-                            except Exception:
-                                Error_message(message="Something went wrong ):\nplease try it again")
-                                return
-                            self.logger.debug("The file is writen to Add_design.json file")
+                                    json.dump(data, file, indent=4)
+                                event_save()
+                                self.logger.debug("The file is writen to Add_design.json file")
+
+                            except FileNotFoundError:
+                                try:
+                                    with open("Add_design.json", "w") as file:
+                                        Add_design.DESIGN_PATH = design_path = path
+                                        upload_file = {"Design Path": str(design_path), "SVD_Path": "None", "SVL_Path": "None",
+                                                       "CFG_Path": "None"}
+                                        json.dump(upload_file, file, indent=4)
+                                        event_save()
+                                except Exception:
+                                    Error_message(message="Something went wrong ):\nplease try it again")
+                                    return
+                                self.logger.debug("The file is writen to Add_design.json file")
+                    else:
+                        Error_message(message="Save design name first", time=2000)
+                        return
+
                 else:
-                    Error_message(message="Save design name first", time=2000)
+                    print("Yeap that is the error")
+                    print(list(available_usb))
+                    Error_message(message="USB not connected")
                     return
 
             else:
-                print("Yeap that is the error")
-                print(list(available_usb))
-                Error_message(message="USB not connected")
+                Error_message(message="Invalid name !!!\n\n(No symbols like %!^& etc.)")
                 return
-
-        else:
-            Error_message(message="Invalid name !!!\n\n(No symbols like %!^& etc.)")
-            return
+        except IndexError as err:
+            self.logger.exception(err)
+            Error_message("USB not connected")
 
     def add_file(self, event_svd):
         file_type = [("Machine Files", (".svd", ".svl", ".cfg")), ("All Files", "*.*")]

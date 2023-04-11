@@ -2,6 +2,7 @@ import json
 import pandas as pd
 import os
 from Warnings import Exception_message
+import logging
 
 
 PATH_SITEWORK_DIR = "C:\Trimble Synchronizer Data\PC\Trimble SCS900 Data"
@@ -13,6 +14,7 @@ S_FOLDER_NAME = "Point Folder GCS 900"
 class CSV:
     def __init__(self):
         self.csv_version = "TEXT"
+        self.logger = logging.getLogger("App_." + __name__)
     def get_machine_name (self):
         try:
             with open("Settings.json", "r") as file:
@@ -39,18 +41,17 @@ class CSV:
             if len(args) > 0:
                 path = args[0]
                 machine_name = self.get_machine_name()
-                csv = final_rover.to_csv(fr"{path}\Points_{machine_name}_001.csv", index=False)
+                csv = final_rover.to_csv(fr"{path}\Points_{machine_name}_001.csv", index=False,)
             else:
                 if not os.path.isdir(home_dir):
                     os.makedirs(home_dir)
                 machine_name = self.get_machine_name()
                 csv = final_rover.to_csv(fr"{SAVE_FILE_PATH}\Points_{machine_name}_001.csv", index=False)
-        except KeyError as error:
-            Exception_message(message=error)
-        except json.decoder.JSONDecodeError as error:
-            Exception_message(message=error)
-        except FileNotFoundError as error:
-            Exception_message(message=error)
+
+        except (KeyError, json.decoder.JSONDecodeError, FileNotFoundError, PermissionError) as error:
+            Exception_message(error)
+            self.logger.exception(error)
+            print(error)
 
         finally:
             with open("TempFile.json", "w") as file:
